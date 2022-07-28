@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    background-color: rgb(36,36,36);
+}
+.navbar{
+    font-family: 'Assistant', sans-serif;
+    background-color: black;
+   
+}
+
+
+.nav-link{
+    color:white;
+    background-color: black;
+}
+
+.navbar-brand{
+    color: white;
+    font-weight: bolder;
+    font-size: 50px;
+}
+.navbar-nav{
+    background: transparent;
+}
+.logo-image{
+   align-items: center;
+   display: inline-block;
+     /* vertical-align: top; */
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    /* margin-top: 15px;   */
+    transform: scale(2.3);
+    margin-left: 20px;
+    background: transparent;
+}
+
+.nav-left{
+    width: 20%;
+    background: transparent;
+}
+
+.nav-right{
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    margin-right: 50px;
+    background: transparent;
+}
+
+.navLinks{
+    display: flex;
+    justify-content: space-between;
+   
+}
