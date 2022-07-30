@@ -1,8 +1,9 @@
 import React from 'react'
+import './CodeCrisp.css';
 
 function Post() {
     return (
-        <div>Post __nsajcacn</div>
+        <div>Nachiketa --Post</div>
     )
 }
 

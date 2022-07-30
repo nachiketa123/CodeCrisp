@@ -11,6 +11,9 @@ function Header() {
                 {/* Left Portion of Navbar */}
                 <div className='nav-left'>
                     <img className='logo-image' src={require('../images/logo.png')} />
+                    <a class="navbar-brand" href="#"
+                        style={{ fontSize: "30px", marginLeft: "15px" }}
+                    >CodeCrisp</a>
                 </div>
 
 
@@ -22,12 +25,12 @@ function Header() {
                 <div className="collapse navbar-collapse  nav-right" id="navbarSupportedContent">
 
                     {/* Search Bar */}
-                    <div className='searchBar'>
-                        <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search Developer" aria-label="Search" />
-                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                    </div>
+
+                    <form className="form-inline my-2  searchBar">
+                        <input className="mr-2 searchBar-input" type="search" placeholder="Search Developer" aria-label="Search" />
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+
 
                     {/* Navigation Link  */}
                     <div className='navLinks'>
