@@ -2,7 +2,7 @@
 *{
     padding: 0;
     margin: 0;
-    background-color: rgb(36,36,36);
+    background-color: rgb(80, 80, 80);
 }
 .navbar{
     font-family: 'Assistant', sans-serif;
@@ -69,42 +69,3 @@
    
 }
 
-.container-chatBox{
-    background-color: black;
-    display: flex;
-    flex: 0.20;
-    width: 20%;
-    height: 100vh;
-    flex-direction: column;
-    padding: 15px;
-    position: relative;
-}
-
-.chat-tile-thumbnail{
-    height: 80px;
-    width: 80px;
-    margin: auto;
-    border-radius: 1em;
-   
-}
-
-.chat-tile-username{
-    color: white;
-    
-}
-
-.chat-tile-lm{
-    color: white;
-}
-.chat-tile{
-    /* margin-top: 20px; */
-    background: transparent;
-    width: 100%;   
-    border-radius: 0.5em;
-    cursor: pointer;
-}
-
-.col-md-4{
-    display: flex;
-    align-items: center;
-}

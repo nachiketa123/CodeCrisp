@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.chat-box {
+    flex-basis: 50%;
+    flex-grow: 1;
+}
+
+.all-posts {
+    flex-basis: 80%;
+    flex-grow: 2;
+}
+
+.notification-panel {
+    flex-basis: 50%;
+    flex-grow: 1;
+}
