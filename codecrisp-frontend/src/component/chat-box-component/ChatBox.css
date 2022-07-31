@@ -1,0 +1,10 @@
+.container-chatBox{
+    background-color: black;
+    display: flex;
+    flex: 0.20;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    padding: 15px;
+    position: relative;
+}
