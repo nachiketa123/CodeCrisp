@@ -8,4 +8,20 @@
 .feed-body {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.chat-box {
+    flex-basis: 50%;
+    flex-grow: 1;
+}
+
+.all-posts {
+    flex-basis: 80%;
+    flex-grow: 2;
+}
+
+.notification-panel {
+    flex-basis: 50%;
+    flex-grow: 1;
 }

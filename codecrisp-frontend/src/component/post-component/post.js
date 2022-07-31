@@ -4,12 +4,12 @@ import heart  from '../../assets/fontawesome/svgs/regular/heart.svg';
 import comment  from '../../assets/fontawesome/svgs/regular/comment.svg';
 import share  from '../../assets/fontawesome/svgs/solid/share.svg';
 
-// import heart  from '../../assets/fontawesome/svgs/regular/heart.svg';
+
 class PostComponent extends Component {
     state = {  } 
     render() { 
         return (
-            <div className='card container'>
+            <div className='my-card container'>
                 <div className='user-details post-common'>
                     <div className='user-dp-info'> 
                         <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />

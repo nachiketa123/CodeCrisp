@@ -12,9 +12,15 @@ function App() {
           <Header />
         </div>
         <div className='feed-body'>
-          <ChatBox />
-          <AllPosts/>
-          
+          <div className='chat-box'>
+            <ChatBox />
+          </div>
+          <div className='all-posts'>
+            <AllPosts/>
+          </div>
+          <div className='notification-panel'>
+            {/* Right side notification panel */}
+          </div> 
         </div>
       </div>
       
