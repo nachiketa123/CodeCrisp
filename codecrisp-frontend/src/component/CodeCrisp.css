@@ -43,11 +43,24 @@
 }
 
 .nav-right{
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     width: 75%;
-    margin-right: 50px;
+    margin-right: 20px;
     background: transparent;
+}
+.searchBar{
+    display: flex;
+    width: 100%;
+    background:transparent;
+}
+.searchBar-input{
+    width: 80%;
+    background-color: white;
+    padding: 6px;
+    border: none;
+    border-radius: 0.5em;
+    border-color: 5px solid rgb(27,115,47);
 }
 
 .navLinks{
@@ -55,3 +68,4 @@
     justify-content: space-between;
    
 }
+
