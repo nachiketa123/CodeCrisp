@@ -12,7 +12,7 @@ class PostComponent extends Component {
             <div className='card container'>
                 <div className='user-details post-common'>
                     <div className='user-dp-info'> 
-                        <img className='dp-img' src={require('../../assets/icons/user-default-dp.png')} alt="Profile Picture" />
+                        <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                         <div className='user-info'>
                             <p style={{fontWeight:'bold',fontSize:'16px',margin:'0'}}>Here goes user name</p>
                             <p style={{color:'grey',fontSize:'12px',margin:'0'}}>Here goes user location</p>

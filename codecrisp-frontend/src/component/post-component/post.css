@@ -9,7 +9,8 @@
     border-color: rgb(45, 164, 9);
     justify-content: space-between;
     background: transparent;
-  }
+    margin: 15px auto;
+}
   .container {
     padding: 15px;
   }
