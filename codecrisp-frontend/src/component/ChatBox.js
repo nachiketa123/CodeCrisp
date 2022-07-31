@@ -6,6 +6,9 @@ function ChatBox() {
     return (
         <div>
             <div className="container-chatBox">
+                <h3
+                    style={{ color: "white", background: "transparent" }}
+                > Messages</h3>
                 <ChatTile />
 
                 {/* Search Bar for Friend Searching ...... */}
@@ -19,6 +22,7 @@ function ChatBox() {
                         >Search</button>
                     </div>
                 </div>
+
 
             </div>
         </div>
