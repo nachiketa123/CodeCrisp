@@ -1,0 +1,56 @@
+.title {
+ color: white;
+ margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.CommunityNotification{
+    height: 200px;
+    width: 90%;
+    background-color: rgb(220, 132, 25);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.TechNews{
+    height: 200px;
+    width: 90%;
+    background-color: rgb(21, 179, 42);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.Quotes{
+    height: 200px;
+    width: 90%;
+    background-color: rgb(240, 236, 231);
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flex-item{
+    height: 500px;
+    width: 25%;
+    display:flex;
+    flex-direction: column;
+    float:right;
+    border: 2px solid white;
+    border-radius: 0.5em;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
