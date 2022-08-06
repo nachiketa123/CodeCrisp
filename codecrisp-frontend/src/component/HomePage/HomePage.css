@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+    /* background: linear-gradient(to bottom, #7927b2, #fb3182); */
+
+
+.login-box-outer{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    align-items: center;
+    background: transparent;
+   
+    
+}
+
+
+.login-box{
+    
+    font-family: 'Assistant', sans-serif;
+    font-weight: 700;
+    color: white;
+    border: 2px solid white;
+    border-radius: 0.5em;
+    padding: 10px;
+    width: 40%;
+    box-shadow:  0 4px 8px 0 white;
+    background: transparent;
+}
+
+.footer{
+    width: 100%;
+    height: 100px;
+    color: white;
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+}
+
+.navbar-nav a:hover{
+    border-bottom: 2px solid white;
+    color: rgb(0, 251, 42);
+}
