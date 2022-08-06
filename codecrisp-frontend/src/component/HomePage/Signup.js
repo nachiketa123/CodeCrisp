@@ -2,9 +2,9 @@ import React from 'react'
 
 function Signup() {
     return (
-        <div>
-            <div className='back-down'>
-                <div className='login-box-outer'>
+        <div className='container'>
+            <div className='back-down row justify-content-md-center'>
+                <div className='login-box-outer  col col-sm-12 col-md-8 col-lg-6'>
 
                     <h1>SignUp</h1>
                     <div className='login-box'>
@@ -36,10 +36,6 @@ function Signup() {
                             </div>
 
 
-                            <div className="form-check">
-                                <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                            </div>
                             <button type="submit" className="btn btn-primary">SignUp</button>
 
                         </form>
