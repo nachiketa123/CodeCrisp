@@ -44,7 +44,7 @@ function Developer() {
                         <div class="card-body">
                             <h5 class="card-title">Luv Saini</h5>
                             <p class="card-text">
-                                Full Stack Developer |  Worked on both Frontend & Backend
+                                Database || Mongo || SQL Developer
                             </p>
                             <a href="#" class="btn btn-primary">LinkedIn Profile</a>
                         </div>
