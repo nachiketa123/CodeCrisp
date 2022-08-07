@@ -48,6 +48,7 @@
 
 .search {
     flex: 0 0 40%;
+    background-color: transparent;
 }
 
 .nav-right{
@@ -62,6 +63,7 @@
     display: flex;
     width: 100%;
     background:transparent;
+    justify-content: space-around;
 }
 .searchBar-input{
     width: 80%;
@@ -119,7 +121,7 @@
     }
 
     .search {
-        flex: 0 0 50%;
+        flex: 0 0 53%;
     }
 
     .searchBar-input {
@@ -129,7 +131,39 @@
     .nav-right{
         flex: 0 0 50%;
     }
-
-  
-
 }
+
+@media screen and (max-width: 576px) {
+
+    .navbar {
+        padding: 0;
+    }
+
+    .logo-image {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .navbar-brand {
+        display: none;
+    }
+
+    .search {
+        flex: 0 0 60%;
+        font-size: 12px;
+    }
+
+    .searchBar-input {
+        width: 50%;
+    }
+
+    .searchBar .btn {
+        font-size: 12px;
+    }
+}
+
+
+/* @media screen and (max-width: 320px) {
+
+    
+} */
