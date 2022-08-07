@@ -5,6 +5,10 @@
     flex-direction: column;
 }
 
+.header {
+    height: 4em;
+}
+
 .feed-body {
     display: flex;
     flex-direction: row;
