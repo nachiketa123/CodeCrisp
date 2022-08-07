@@ -2,7 +2,12 @@
 
     /* background: linear-gradient(to bottom, #7927b2, #fb3182); */
 
-
+.navbar{
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 102%;
+}
 .login-box-outer{
     margin-top: 50px;
     display: flex;
@@ -10,7 +15,7 @@
     color: white;
     align-items: center;
     background: transparent;
-   
+     justify-content: center;
     
 }
 
@@ -23,14 +28,17 @@
     border: 2px solid white;
     border-radius: 0.5em;
     padding: 10px;
-    width: 40%;
+    width: 100%;
     box-shadow:  0 4px 8px 0 white;
     background: transparent;
+   
 }
+
+
 
 .footer{
     width: 100%;
-    height: 100px;
+    height: 5vh;
     color: white;
     background-color: black;
     position: fixed;
@@ -40,10 +48,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
   
 }
 
 .navbar-nav a:hover{
     border-bottom: 2px solid white;
-    color: rgb(0, 251, 42);
+    background-color: white;
+    color: black;
+    border-radius: 0.5em;
+    text-decoration: none;
+    
+}
+
+.hompageButtons{
+    background: transparent;
+    display: flex;
+}
+
+.developerTile{
+    color: white;
+}
+
+.developerTile h5 {
+    font-weight: bolder;
+}
+
+.btn {
+    font-weight: bolder;
+}
+
+.card{
+   box-shadow:  1px 4px 10px 2px rgb(175, 85, 12);
+}
+
+.developersTile{
+ margin-top: 60px;
+ color: white;
 }
