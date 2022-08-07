@@ -86,10 +86,20 @@
     flex-direction: row;
   }
 
-  .post-actions img {
+  .post-actions .icon {
     height: 20px;
     width: 50%;
     background-color: white;
+    stroke: black;
+    stroke-width: 2.5em;
+  }
+
+  .post-actions .comment-img  {
+    height: 20px;
+    width: 50%;
+    background-color: white;
+    fill: black;
+    stroke-width: 0.05em;
   }
 
   .who-liked-post {

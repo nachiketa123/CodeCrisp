@@ -9,18 +9,18 @@ function App() {
   return (
     <div className="App">
 
-      <HomePage />
+      {/* <HomePage /> */}
 
       <div className='app-container'>
         <div className='header'>
-          {/* <Header /> */}
+          <Header />
         </div>
         <div className='feed-body'>
           <div className='chat-box'>
-            {/* <ChatBox /> */}
+            <ChatBox />
           </div>
           <div className='all-posts'>
-            {/* <AllPosts/> */}
+            <AllPosts/>
           </div>
           <div className='notification-panel'>
             {/* Right side notification panel */}
