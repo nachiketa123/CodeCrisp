@@ -14,8 +14,8 @@ function App() {
   return (
     <div className="App">
 
-      <Header />
-      <CommunityNotification/>
+      {/* <Header /> */}
+      
 
 
       {/* <HomePage /> */}
@@ -32,6 +32,7 @@ function App() {
             <AllPosts/>
           </div>
           <div className='notification-panel'>
+          <CommunityNotification/>
             {/* Right side notification panel */}
           </div>
         </div>
