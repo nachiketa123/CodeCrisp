@@ -20,6 +20,7 @@ const passportConfig = (passport) => {
                 }
                 return done(null, false);
             }
+
         ).catch(
             err => {
                 console.log("Auth Error passport.js");
