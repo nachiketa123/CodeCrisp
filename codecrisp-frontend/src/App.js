@@ -4,14 +4,25 @@ import './component/CodeCrisp.css';
 import ChatBox from './component/chat-box-component/ChatBox';
 import Header from './component/Header';
 
+
 // import HomePage from './component/HomePage/HomePage';
 import AllPosts from './component/post-component/all-posts';
 import CommunityNotification from './component/SideComponent';
+
+import CommunityNotification from './component/SideComponent';
+
+// import HomePage from './component/HomePage/HomePage';
+import AllPosts from './component/post-component/all-posts';
+
 
 
 function App() {
   return (
     <div className="App">
+
+
+      {/* <Header /> */}
+
 
 
       {/* <HomePage /> */}
@@ -28,6 +39,7 @@ function App() {
             <AllPosts />
           </div>
           <div className='notification-panel'>
+            <CommunityNotification />
             {/* Right side notification panel */}
           </div>
         </div>
@@ -37,6 +49,7 @@ function App() {
 
       <Header />
       <CommunityNotification />
+
 
     </div>
   );
