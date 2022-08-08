@@ -1,0 +1,28 @@
+
+.chat-tile-thumbnail{
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    border-radius: 1em;
+   
+}
+
+.chat-tile-username{
+    color: white;
+    
+}
+
+.chat-tile-lm{
+    color: white;
+}
+.chat-tile{
+    background: transparent;
+    width: 100%;   
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.col-md-4{
+    display: flex;
+    align-items: center;
+}
