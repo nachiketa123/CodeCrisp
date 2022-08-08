@@ -22,8 +22,8 @@ const PostComponent = ()=> {
                 <div className='user-dp-info'>
                     <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
-                        <p style={{ fontWeight: 'bold', fontSize: '16px', margin: '0' }}>Here goes user name</p>
-                        <p style={{ color: 'grey', fontSize: '12px', margin: '0' }}>Here goes user location</p>
+                        <p className = 'user-name'>Here goes user name</p>
+                        <p className = 'user-location'>Here goes user location</p>
                     </div>
                 </div>
                 <img className='post-menu-img' src={require('../../assets/icons/post_menu.png')} alt="post menu" />

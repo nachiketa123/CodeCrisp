@@ -128,9 +128,36 @@
         width: 70%;
     }
 
-    .nav-right{
-        flex: 0 0 50%;
+    .nav-right {
+        flex: 0 0 100%;
     }
+
+    .collapse .navbar-nav{
+        flex: 0 0 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: end; */
+    }
+    .collapsing .navbar-nav{
+        flex: 0 0 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: end; */
+    }
+
+    .nav-item {
+        margin-left: 5px;
+    }
+    .nav-link {
+        font-size: 16px;
+    }
+    .nav-item .btn {
+        font-size: 16px;
+    }
+
+  
 }
 
 @media screen and (max-width: 576px) {
@@ -160,6 +187,15 @@
     .searchBar .btn {
         font-size: 12px;
     }
+
+    .nav-link {
+        font-size: 12px;
+    }
+    .nav-item .btn {
+        font-size: 12px;
+    }
+
+
 }
 
 

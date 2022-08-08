@@ -57,6 +57,18 @@
     background:transparent;
   }
 
+  .user-info .user-name {
+    font-weight: bold; 
+    font-size: 13px;
+    margin: 0
+  }
+
+  .user-info .user-location {
+    color: grey;
+    font-size: 10px;
+    margin: 0;
+  }
+
   .post-menu-img {
     width: 8%;
     height: 20px;
@@ -152,4 +164,41 @@ input.comment-box:focus {
     font-size: 16px;
     color: rgb(255, 255, 255);
     opacity: 1;
+}
+
+
+@media screen and (max-width: 576px) {
+  .my-card {
+    width: 98%;
+  }
+  .dp-img {
+    width: 17%;
+    height: 45px;
+    margin: 8px;
+  }
+  .post-menu-img {
+    width: 7%;
+    height: 15px;
+  }
+
+  .user-info {
+    margin: 6px;
+    justify-content: space-around;
+  }
+
+  .user-name {
+    font-size: 11px;
+  }
+
+  .user-location {
+    font-size: 9px;
+  }
+
+  .chat-box {
+    display: none;
+  }
+
+  .notification-panel {
+    display: none;
+  }
 }
