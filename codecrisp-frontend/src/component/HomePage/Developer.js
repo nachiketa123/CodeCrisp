@@ -8,45 +8,45 @@ function Developer() {
 
                 <div className='col col-sm-12 col-md-4 col-lg-3 p-0 m-3 developerTile'>
 
-                    <div class="card">
+                    <div className="card">
                         <img src={require('../../assets/images/ayush.jpg')}
-                            class="card-img-top" alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">Ayush Kumar</h5>
-                            <p class="card-text">
+                            className="card-img-top" alt="..." />
+                        <div className="card-body">
+                            <h5 className="card-title">Ayush Kumar</h5>
+                            <p className="card-text">
                                 Full Stack Developer |  Worked on both Frontend & Backend
                             </p>
-                            <a href="#" class="btn btn-primary">LinkedIn Profile</a>
+                            <a href="#" className="btn btn-primary">LinkedIn Profile</a>
                         </div>
                     </div>
 
                 </div>
                 <div className='col col-sm-12 col-md-4 col-lg-3 p-0 m-3 developerTile'>
 
-                    <div class="card">
+                    <div className="card">
                         <img src={require('../../assets/images/nach_profile.jpg')}
-                            class="card-img-top" alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">Nachiketa Rajput</h5>
-                            <p class="card-text">
+                            className="card-img-top" alt="..." />
+                        <div className="card-body">
+                            <h5 className="card-title">Nachiketa Rajput</h5>
+                            <p className="card-text">
                                 Full Stack Developer |  Worked on both Frontend & Backend
                             </p>
-                            <a href="#" class="btn btn-primary">LinkedIn Profile</a>
+                            <a href="#" className="btn btn-primary">LinkedIn Profile</a>
                         </div>
                     </div>
 
                 </div>
 
                 <div className='col col-sm-12 col-md-4 col-lg-3 p-0 m-3 developerTile'>
-                    <div class="card">
+                    <div className="card">
                         <img src={require('../../assets/images/luv_profile.jpg')}
-                            class="card-img-top" alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">Luv Saini</h5>
-                            <p class="card-text">
+                            className="card-img-top" alt="..." />
+                        <div className="card-body">
+                            <h5 className="card-title">Luv Saini</h5>
+                            <p className="card-text">
                                 Database || Mongo || SQL Developer
                             </p>
-                            <a href="#" class="btn btn-primary">LinkedIn Profile</a>
+                            <a href="#" className="btn btn-primary">LinkedIn Profile</a>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ function Header() {
                         {/* Left Portion of Navbar */}
                         <div className='nav-left'>
                             <img className='logo-image' src={require('../images/logo.png')} />
-                            <a class="navbar-brand" href="#"
+                            <a className="navbar-brand" href="#"
                                 style={{ fontSize: "30px", marginLeft: "15px" }}
                             >CodeCrisp</a>
                         </div>
@@ -57,7 +57,7 @@ function Header() {
                                     </li>
 
                                     <li className="nav-item">
-                                        <button type="button" class="btn btn-primary">Logout</button>
+                                        <button type="button" className="btn btn-primary">Logout</button>
                                     </li>
                                 </ul>
                             </div>
