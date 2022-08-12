@@ -19,7 +19,8 @@
 .navbar-brand{
     color: white;
     font-weight: bolder;
-    font-size: 50px;
+    font-size: 30px;
+    margin-left: 15px;
 }
 .navbar-nav{
     background: transparent;
@@ -59,19 +60,41 @@
     flex: 0 0 40%;
     background: transparent;
 }
+
 .searchBar{
     display: flex;
-    width: 100%;
-    background:transparent;
-    justify-content: space-around;
+    width: 93%;
+    height: 85%;
+    background: white;
+    border: 1px solid black;
+    padding: 4px 12px;
+    border-radius: 2em;
+    justify-content: space-between;
 }
+
 .searchBar-input{
-    width: 80%;
+    flex-grow: 2;
     background-color: white;
-    padding: 6px;
     border: none;
     border-radius: 0.5em;
     border-color: 5px solid rgb(27,115,47);
+}
+
+.searchBar-input:focus {
+    outline: none;
+}
+
+.search-icon {
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+
+.bell-icon {
+    display: none;
+}
+.chat-icon {
+    display: none;
 }
 
 .navLinks{
@@ -121,11 +144,23 @@
     }
 
     .search {
-        flex: 0 0 53%;
+        flex: 0 0 50%;
     }
 
     .searchBar-input {
         width: 70%;
+    }
+
+    .bell-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+    }
+
+    .chat-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
     }
 
     .nav-right {
@@ -152,6 +187,7 @@
     }
     .nav-link {
         font-size: 16px;
+        background-color: transparent;
     }
     .nav-item .btn {
         font-size: 16px;
@@ -176,12 +212,13 @@
     }
 
     .search {
-        flex: 0 0 60%;
+        flex: 0 0 51%;
         font-size: 12px;
     }
 
     .searchBar-input {
         width: 50%;
+        font-size: 12px;
     }
 
     .searchBar .btn {
@@ -195,6 +232,25 @@
         font-size: 12px;
     }
 
+    .bell-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .chat-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .search-icon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .hamburger-icon {
+        width: 15px;
+        height: 15px;
+    }
 
 }
 
