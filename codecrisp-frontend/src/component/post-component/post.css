@@ -5,7 +5,7 @@
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1);
     transition: 0.3s;
-    width: 65%;
+    width: 88%;
     background-color: rgb(31,33,40);
     /* height: 400px; */
     border-radius: 1.5em;
@@ -53,19 +53,20 @@
   .user-info {
     display: flex;
     flex-direction: column;
+    flex: 1 0 80%;
     margin: 10px;
     background:transparent;
   }
 
   .user-info .user-name {
     font-weight: bold; 
-    font-size: 13px;
+    font-size: 15px;
     margin: 0
   }
 
   .user-info .user-location {
     color: grey;
-    font-size: 10px;
+    font-size: 12px;
     margin: 0;
   }
 
@@ -141,7 +142,7 @@
 }
 
 .comment-box{
-    width: 80%;
+    width: 88%;
     font-size: 14px;
     padding: 0 0 0 8px;
     color: grey;
