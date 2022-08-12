@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    
 }
 
 .chat-box {
@@ -28,4 +29,9 @@
 .notification-panel {
     flex-basis: 50%;
     flex-grow: 1;
+}
+@media screen and (max-width: 991px) {
+    .notification-panel {
+       display: none;
+    }
 }

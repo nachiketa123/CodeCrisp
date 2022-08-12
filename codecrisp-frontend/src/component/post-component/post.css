@@ -3,7 +3,7 @@
 .my-card {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1);
     transition: 0.3s;
     width: 65%;
     background-color: rgb(31,33,40);
@@ -170,7 +170,7 @@ input.comment-box:focus {
 
 @media screen and (max-width: 576px) {
   .my-card {
-    width: 98%;
+    width: 90%;
   }
   .dp-img {
     width: 17%;

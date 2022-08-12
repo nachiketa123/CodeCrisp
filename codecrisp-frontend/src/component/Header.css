@@ -2,7 +2,7 @@
     padding: 0;;
 }
 
-.navbar{
+.navbar-home{
     font-family: 'Assistant', sans-serif;
     background-color: black;
     display: flex;
@@ -102,11 +102,13 @@
 .bell-icon {
     display: none;
     cursor: pointer;
+   
 }
 .chat-icon {
     display: none;
     margin-left: 4px;
     cursor: pointer;
+
 }
 
 .navLinks{
@@ -122,8 +124,14 @@
 
 @media screen and (max-width: 1200px) {
     .nav-left{
-        flex-direction: column;
-        flex:0 0 10%
+        /* flex-direction: column; */
+        flex:0 0 10%;
+        align-items: center;
+    }
+    .logo-image{ 
+        width: 40px;
+        height: 40px;
+        
     }
 
     .navbar-brand {
@@ -146,22 +154,40 @@
 
 @media screen and (max-width: 991px) {
     .nav-left{
-        flex-direction: column;
+        /* flex-direction: column; */
         flex:0 0 5%;
     }
 
     .logo-image{ 
-        width: 45px;
-        height: 45px;
+        width: 35px;
+        height: 35px;
+    }
+    .hamburger-icon {
+        width: 30px;
+        height: 30px;
+        background: transparent;
+      
+    }
+    .navLinks {
+        background: transparent;
+    }
+
+    .nav-item{
+        background: transparent;
+    }
+    .nav-item:hover{
+       background-color: white;
+       border-radius: 0.5em;
+       padding: 2px 0px 2px 0px;
     }
 
     .navbar-brand {
         margin-left: 4px;
-        font-size: 30px;
+        font-size: 20px;
     }
 
     .search {
-        flex: 0 0 50%;
+        flex: 0 0 40%;
     }
 
     .searchBar-input {
@@ -170,14 +196,17 @@
 
     .bell-icon {
         display: block;
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
+        background: transparent;
+
     }
 
     .chat-icon {
         display: block;
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
+        background: transparent;
     }
 
     .nav-right {
@@ -220,8 +249,8 @@
     }
 
     .logo-image {
-        width: 25px;
-        height: 25px;
+        width: 30px;
+        height: 30px;
     }
     
     .navbar-brand {
@@ -252,23 +281,23 @@
     }
 
     .bell-icon {
-        width: 15px;
-        height: 15px;
+        width: 25px;
+        height: 25px;
     }
 
     .chat-icon {
-        width: 15px;
-        height: 15px;
+        width: 25px;
+        height: 25px;
     }
 
     .search-icon {
-        width: 10px;
-        height: 10px;
+        width: 15px;
+        height: 15px;
     }
 
     .hamburger-icon {
-        width: 15px;
-        height: 15px;
+        width: 25px;
+        height: 25px;
     }
 
 }

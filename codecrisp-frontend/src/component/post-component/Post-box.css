@@ -1,0 +1,96 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+.postBox-outer{
+    background-color: black;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5em;
+    margin: auto;
+    margin-top: 15px;
+    justify-content:  space-evenly;
+    border: 1px solid white;
+}
+
+.profile-photo{
+    background: transparent;
+    flex: 0 0 10%;
+    cursor: pointer;
+}
+
+.user-photo{
+    width: 50px;
+    height: 50px;
+    border-radius: 2em;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+.postBox-textArea{
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 80%;
+    /* flex-grow: 2; */
+    background: white;
+    background: transparent;
+}
+.postBox-text{
+    width: 100%;
+    
+    border-style: none;
+    background-color: rgb(243, 240, 240);
+    border-radius: 0.5em;
+    padding: 5px;
+    margin-right:15px ;
+    color: black;
+    font-weight: bold;
+   
+}
+
+.postBox-row1{
+    display: flex;
+    flex-direction: row;
+    color: black;
+    background: transparent;
+    align-items: center;
+}
+
+.postBox-row2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: white;
+    background: transparent;
+    font-weight: bold;
+   
+}
+
+.photo{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.icons-postbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+  
+}
+.video{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.article{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
