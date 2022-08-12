@@ -88,19 +88,28 @@
     width: 15px;
     height: 15px;
     background-color: white;
+    cursor: pointer;
 }
 
 .bell-icon {
     display: none;
+    cursor: pointer;
 }
 .chat-icon {
     display: none;
+    margin-left: 4px;
+    cursor: pointer;
 }
 
 .navLinks{
     display: flex;
     justify-content: space-between;
    
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    padding: 0.25rem 0.35rem;
 }
 
 @media screen and (max-width: 1200px) {
