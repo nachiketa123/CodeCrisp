@@ -1,6 +1,6 @@
 import React from 'react'
 import './Header.css';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaRegBell, FaRegComments, FaSearch } from 'react-icons/fa';
 
 function Header() {
     return (
@@ -10,8 +10,7 @@ function Header() {
                         {/* Left Portion of Navbar */}
                         <div className='nav-left'>
                             <img className='logo-image' src={require('../images/logo.png')} />
-                            <a class="navbar-brand" href="#"
-                                style={{ fontSize: "30px", marginLeft: "15px" }}
+                            <a className="navbar-brand" href="#"
                             >CodeCrisp</a>
                         </div>
 
@@ -19,16 +18,19 @@ function Header() {
                         <div className='search'>
                             <form className="form-inline my-2  searchBar">
                                 <input className="mr-2 searchBar-input" type="search" placeholder="Search Developer" aria-label="Search" />
-                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search'/>
                             </form>
                         </div>
+
+                        <FaRegBell color='white' className='bell-icon' title='notifications'/>
+                        <FaRegComments color='white' className='chat-icon' title='chat'/>
 
                           {/* Toggle Area */}
                           <button className='navbar-toggler' type="button" data-toggle="collapse" 
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
                         aria-expanded="false" aria-label="Toggle navigation">
                             
-                            <FaBars color='white'></FaBars>
+                            <FaBars color='white' className='hamburger-icon'></FaBars>
 
                         </button>
 
@@ -57,7 +59,7 @@ function Header() {
                                     </li>
 
                                     <li className="nav-item">
-                                        <button type="button" class="btn btn-primary">Logout</button>
+                                        <button type="button" className="btn btn-primary">Logout</button>
                                     </li>
                                 </ul>
                             </div>

@@ -51,16 +51,16 @@ const PostComponent = ()=> {
             <div className='username-caption'>
 
                 <p style={{ color: 'grey', fontSize: '12px', margin: '0' }}>
-                    <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '12px', margin: '0 10px 0 0', display: 'inline' }}>Nachu121</h3>
+                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '12px', margin: '0 10px 0 0', display: 'inline' }}>Nachu121</span>
                     This is my caption for the post
                 </p>
             </div>
             <div className='post-comments post-common'>
                 <button style={{ color: 'white', fontSize: '12px', margin: '0', background: "transparent" }} className="secondary">see all comments (11)</button>
-                <div class="comment-wrapper">
-                    <img src="img/smile.PNG" class="icon" alt="" />
-                    <input type="text" class="comment-box" placeholder="Add a comment" />
-                    <button class="comment-btn">post</button>
+                <div className="comment-wrapper">
+                    <img src="img/smile.PNG" className="icon" alt="" />
+                    <input type="text" className="comment-box" placeholder="Add a comment" />
+                    <button className="comment-btn">post</button>
                 </div>
             </div>
         </div>
