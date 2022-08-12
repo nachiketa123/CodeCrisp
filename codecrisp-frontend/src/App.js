@@ -18,13 +18,8 @@ function App() {
   return (
     <div className="App">
 
-
       {/* <Header /> */}
-
-
-
       {/* <HomePage /> */}
-
       <div className='app-container'>
         {/* <div className='header'> */}
         <Header />
@@ -42,8 +37,6 @@ function App() {
           </div>
         </div>
       </div>
-
-
 
       {/* <Header /> */}
       {/* <CommunityNotification /> */}
