@@ -21,7 +21,7 @@ function App() {
 
 
       <Provider store={myStore}>
-        <Signup />
+        {/* <Signup /> */}
         {/* <HomePage /> */}
         <div className='app-container'>
           {/* <div className='header'> */}
