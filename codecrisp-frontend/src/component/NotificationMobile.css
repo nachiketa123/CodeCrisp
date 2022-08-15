@@ -1,0 +1,18 @@
+.notification-mobile{
+    width: 90%;
+    background-color: green;
+    min-height: 40vh;
+    margin-right: 10px;
+    border-right: 1em;
+    padding: 5px;
+    position: absolute;
+   
+}
+
+.notification-tile{
+    background-color: white;
+    margin-bottom: 5px;
+    border-radius: 0.5em;
+    padding: 5px;
+    font-weight: bolder;
+}

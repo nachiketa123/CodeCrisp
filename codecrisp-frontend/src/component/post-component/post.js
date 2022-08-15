@@ -3,17 +3,17 @@ import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
 
 
-const PostComponent = ()=> {
+const PostComponent = () => {
 
-    const [state,setState] = useState({
-        like : false
+    const [state, setState] = useState({
+        like: false
     })
 
-    const handleClickLike = (e) =>{
-      setState({
-        ...state,
-        like: !state.like
-      })  
+    const handleClickLike = (e) => {
+        setState({
+            ...state,
+            like: !state.like
+        })
     }
 
     return (
@@ -22,8 +22,8 @@ const PostComponent = ()=> {
                 <div className='user-dp-info'>
                     <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
-                        <p className = 'user-name'>Here goes user name</p>
-                        <p className = 'user-location'>Here goes user location</p>
+                        <p className='user-name'>Here goes user name</p>
+                        <p className='user-location'>Here goes user location</p>
                     </div>
                 </div>
                 <img className='post-menu-img' src={require('../../assets/icons/post_menu.png')} alt="post menu" />
@@ -33,14 +33,14 @@ const PostComponent = ()=> {
                     <img className='post-img' src={require('../../assets/images/nach_profile.jpg')} alt="post" />
                 </div>
                 <div className='post-actions'>
-                    
-                    
-                    { 
-                        state.like ?(<FaHeart onClick={handleClickLike} className='icon' style={{color:'red', stroke:'red'}} 
-                                    color="white" title="like" /> )  
-                            : (<FaHeart onClick={handleClickLike} className='icon'  color="white" title="like" /> )
+
+
+                    {
+                        state.like ? (<FaHeart onClick={handleClickLike} className='icon' style={{ color: 'red', stroke: 'red' }}
+                            color="white" title="like" />)
+                            : (<FaHeart onClick={handleClickLike} className='icon' color="white" title="like" />)
                     }
-                    
+
                     <FaRegComment className='icon comment-img' color="white" title="comment" />
                     <FaShare className='icon share-img' color="white" title="share" />
                 </div>
