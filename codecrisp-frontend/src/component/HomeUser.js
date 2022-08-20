@@ -6,10 +6,15 @@ import AllPosts from './post-component/all-posts';
 import PostBox from './post-component/Post-box';
 import CommunityNotification from './SideComponent';
 import NotificationMobile from './NotificationMobile';
+import { connect } from 'react-redux';
+import { useEffect,useState } from 'react';
 
-function HomeUser() {
+function HomeUser(props) {
+    const [state, setState] = useState({
+        user:{}
+    })
+
     return (
-        <div>
             <div className='app-container'>
                 <div className='header'>
                     <Header />
@@ -30,8 +35,11 @@ function HomeUser() {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 
-export default HomeUser
+const mapStateToProps = (state) => ({
+    auth: state.authRed
+})
+
+export default connect(mapStateToProps)(HomeUser)

@@ -1,7 +1,8 @@
 import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers/RootReducer';
-
+import jwt_decode from 'jwt-decode';
+import { SET_USER } from './Action/Types';
 
 const initial = {};
 
@@ -16,4 +17,29 @@ const myStore = createStore(rootReducer
 let currentState = myStore.getState();
 
 
+
+/* 
+  Dispatch action to set the user 
+*/
+
+myStore.subscribe(() => {
+    let prevState = currentState;
+    currentState = myStore.getState();
+
+    //only check when token is changed 
+    if (prevState.authRed.token !== currentState.authRed.token) {
+
+        let token = currentState.authRed.token;
+        //if token is set then set the user i.e. login
+
+        //TODO: set header in axios as bearer token for private APIs
+        if (token) {
+            let user = jwt_decode(token);
+            myStore.dispatch({
+                type: SET_USER,
+                payload: user
+            })
+        }
+    }
+})
 export default myStore;

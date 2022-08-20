@@ -16,7 +16,7 @@ function Login(props) {
 
     useEffect(() => {
         if (props.auth.isAuthenticated) {
-            navigate("/authUser")
+            navigate("/")
         }
     }, [props.auth.isAuthenticated])
 

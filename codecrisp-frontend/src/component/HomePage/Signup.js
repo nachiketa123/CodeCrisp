@@ -1,12 +1,12 @@
-import React from 'react'
-import { useState } from 'react'
+import React,{ useState} from 'react'
+// import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../Action/AuthAction'
 
 function Signup(props) {
 
 
-
+    // const navigate = useNavigate();
 
     const [state, setState] = useState({
         name: "",
@@ -46,6 +46,7 @@ function Signup(props) {
 
         },
         )
+
 
     }
 

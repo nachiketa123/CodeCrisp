@@ -1,8 +1,15 @@
 import React from 'react'
 import './Header.css';
 import { FaBars, FaRegBell, FaRegComments, FaSearch } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { logOutUser } from '../Action/AuthAction';
 
-function Header() {
+function Header({ logOutUser, auth:{ user } }) {
+
+    const logMeOut = (e) =>{
+        logOutUser();
+    }
+
     return (
         <div>
             <div className='container-fluid'>
@@ -39,6 +46,10 @@ function Header() {
 
                         <div className='navLinks'>
                             <ul className="navbar-nav">
+                                {(user.name)?(<li className="nav-item">
+                                    <span className="nav-link" href="#">Hi! {user.name}<span className="sr-only">(current)</span></span>
+                                </li>):""
+                                }
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Feeds<span className="sr-only">(current)</span></a>
                                 </li>
@@ -59,7 +70,7 @@ function Header() {
                                 </li>
 
                                 <li className="nav-item">
-                                    <button type="button" className="btn btn-primary">Logout</button>
+                                    <button onClick={logMeOut} type="button" className="btn btn-primary">Logout</button>
                                 </li>
                             </ul>
                         </div>
@@ -71,8 +82,10 @@ function Header() {
         </div >
     )
 
-
-
 }
 
-export default Header
+const mapStateToProps = (state) =>({
+    auth: state.authRed 
+})
+
+export default connect(mapStateToProps,{ logOutUser })(Header)
