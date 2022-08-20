@@ -31,12 +31,21 @@ function Signup(props) {
         const newUser = {
             name: state.name,
             email: state.email,
-            phoneNo: state.phoneNo,
+            phoneno: state.phoneNo,
             age: state.age,
             password: state.password
         }
 
         props.signUp(newUser);
+        setState({
+            name: "",
+            email: "",
+            phoneNo: "",
+            age: "",
+            password: ""
+
+        },
+        )
 
     }
 

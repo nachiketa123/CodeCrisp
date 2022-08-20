@@ -7,6 +7,7 @@ import Signup from './Signup'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Footer from './Footer'
 import Developer from './Developer'
+import Home from './Home'
 
 
 
@@ -15,21 +16,21 @@ import Developer from './Developer'
 function HomePage() {
     return (
         <div className='background-homepage'>
-            <BrowserRouter>
 
-                <HeaderHome />
 
-                <Routes>
+            <HeaderHome />
 
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/developers" element={<Developer />} />
+            <Routes>
+                {/* <Route path="/" element={<Home />} /> */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/developers" element={<Developer />} />
+            </Routes>
 
-                </Routes>
 
-                <Footer />
+            <Footer />
 
-            </BrowserRouter>
+
         </div>
     )
 }

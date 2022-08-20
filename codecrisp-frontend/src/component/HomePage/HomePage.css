@@ -5,8 +5,9 @@
 .navbar{
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: 100;
     width: 100%;
+    background-color: black;
 }
 .login-box-outer{
     margin-top: 50px;
@@ -85,4 +86,10 @@
 .developersTile{
  margin-top: 60px;
  color: white;
+}
+
+.background-homePage{
+ position: relative;
+
+    
 }
