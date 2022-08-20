@@ -3,10 +3,11 @@ import './Header.css';
 import { FaBars, FaRegBell, FaRegComments, FaSearch } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { logOutUser } from '../Action/AuthAction';
+import { Link } from 'react-router-dom';
 
-function Header({ logOutUser, auth:{ user } }) {
+function Header({ logOutUser, auth: { user } }) {
 
-    const logMeOut = (e) =>{
+    const logMeOut = (e) => {
         logOutUser();
     }
 
@@ -46,16 +47,20 @@ function Header({ logOutUser, auth:{ user } }) {
 
                         <div className='navLinks'>
                             <ul className="navbar-nav">
-                                {(user.name)?(<li className="nav-item">
+                                {(user.name) ? (<li className="nav-item">
                                     <span className="nav-link" href="#">Hi! {user.name}<span className="sr-only">(current)</span></span>
-                                </li>):""
+                                </li>) : ""
                                 }
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Feeds<span className="sr-only">(current)</span></a>
                                 </li>
+
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Jobs</a>
+                                    <Link to='/jobs'>
+                                        <a className="nav-link" href="#">Jobs</a>
+                                    </Link>
                                 </li>
+
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Discuss</a>
                                 </li>
@@ -84,8 +89,8 @@ function Header({ logOutUser, auth:{ user } }) {
 
 }
 
-const mapStateToProps = (state) =>({
-    auth: state.authRed 
+const mapStateToProps = (state) => ({
+    auth: state.authRed
 })
 
-export default connect(mapStateToProps,{ logOutUser })(Header)
+export default connect(mapStateToProps, { logOutUser })(Header)

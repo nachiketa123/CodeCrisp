@@ -7,34 +7,32 @@ import PostBox from './post-component/Post-box';
 import CommunityNotification from './SideComponent';
 import NotificationMobile from './NotificationMobile';
 import { connect } from 'react-redux';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function HomeUser(props) {
     const [state, setState] = useState({
-        user:{}
+        user: {}
     })
 
     return (
-            <div className='app-container'>
-                <div className='header'>
-                    <Header />
+        <div className='app-container'>
+            <div className='header'>
+                <Header />
+            </div>
+            <div className='feed-body'>
+                <div className='chat-box'>
+                    <ChatBox />
                 </div>
-
-                <div className='feed-body'>
-                    <div className='chat-box'>
-                        <ChatBox />
-                    </div>
-                    <div className='all-posts'>
-                        <PostBox />
-                        <AllPosts />
-                    </div>
-                    <div className='notification-panel'>
-                        <CommunityNotification />
-                        <NotificationMobile />
-
-                    </div>
+                <div className='all-posts'>
+                    <PostBox />
+                    <AllPosts />
+                </div>
+                <div className='notification-panel'>
+                    <CommunityNotification />
                 </div>
             </div>
+
+        </div>
     )
 }
 
