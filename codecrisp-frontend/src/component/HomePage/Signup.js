@@ -37,6 +37,15 @@ function Signup(props) {
         }
 
         props.signUp(newUser);
+        setState({
+            name: "",
+            email: "",
+            phoneNo: "",
+            age: "",
+            password: ""
+
+        },
+        )
 
 
     }

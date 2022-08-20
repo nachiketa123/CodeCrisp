@@ -9,7 +9,7 @@ function NotificationMobile() {
                 >Notification</h4>
 
                 {[1, 2].map(e => (
-                    <div className='notification-tile'>
+                    <div className='notification-tile' key={e}>
                         Luv added Photo.
                     </div>
                 ))
