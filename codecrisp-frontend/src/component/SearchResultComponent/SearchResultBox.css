@@ -1,0 +1,33 @@
+li{
+    cursor: pointer;
+  
+}
+
+.image-search{
+    height: 50px;
+    width: 50px;
+    border-radius: 2em;
+}
+
+.search-user-name{
+    margin-left: 15px;
+}
+
+.search-icon{
+    margin-top: 15px ;
+    float: right;
+}
+
+.search-container{
+    z-index: 1;
+    background: transparent;
+    position: fixed;
+    margin-left: 25%;
+    margin-top: 50px !important; 
+}
+
+.search-box{
+    
+    background: transparent;
+    padding: 0;
+}

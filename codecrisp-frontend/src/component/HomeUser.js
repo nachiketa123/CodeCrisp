@@ -8,7 +8,8 @@ import CommunityNotification from './SideComponent';
 import NotificationMobile from './NotificationMobile';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
-
+import SearchResultBox from './SearchResultComponent/SearchResultBox'
+import './SearchResultComponent/SearchResultBox.css'
 function HomeUser(props) {
     const [state, setState] = useState({
         user: {}
@@ -31,6 +32,8 @@ function HomeUser(props) {
                     <CommunityNotification />
                 </div>
             </div>
+
+            <SearchResultBox />
 
         </div>
     )
