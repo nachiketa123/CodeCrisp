@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeUser from './component/HomeUser';
 import PrivateRoutes from './component/private-routing/private-routes';
 import Jobs from './component/Jobs';
+import Header from './component/Header';
+
 
 
 function App() {

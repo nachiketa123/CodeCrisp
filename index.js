@@ -6,8 +6,7 @@ const PassportConfig = require("./config/Passport");
 const userRoute = require("./routes/User-routes")
 const app = express();
 const bodyParser = require("body-parser");
-const { Passport } = require("passport");
-
+const searchRoute = require("./routes/Search-route")
 
 
 mongo.connect(dbURI).then(
@@ -29,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/api/user', userRoute)
+app.use('/api/user', searchRoute)
 
 app.listen(5000, () => {
     console.log("Server challu ho gya hai")

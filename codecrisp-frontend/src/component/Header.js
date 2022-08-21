@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Header.css';
 import { FaBars, FaRegBell, FaRegComments, FaSearch } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { logOutUser } from '../Action/AuthAction';
 import { Link } from 'react-router-dom';
+import { searchResult } from '../Action/SearchAction'
 
-function Header({ logOutUser, auth: { user } }) {
+function Header({ logOutUser, auth: { user }, search, searchResult }) {
+
+    const [state, setState] = useState({ searchtext: "" })
+
+
+    useEffect(() => {
+        console.log(search.user)
+    }, [search.user])
+
+    const onSearch = (e) => {
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        }
+        )
+
+    }
 
     const logMeOut = (e) => {
         logOutUser();
+    }
+
+    const onSearchClick = () => {
+        const userFind = { searchText: state.searchtext }
+        searchResult(userFind);
     }
 
     return (
@@ -18,15 +40,17 @@ function Header({ logOutUser, auth: { user } }) {
                     {/* Left Portion of Navbar */}
                     <div className='nav-left'>
                         <img className='logo-image' src={require('../images/logo.png')} />
-                        <a className="navbar-brand" href="#"
-                        >CodeCrisp</a>
+                        <Link to='/'>
+                            <a className="navbar-brand" href="#"
+                            >CodeCrisp</a>
+                        </Link>
                     </div>
 
                     {/* Search Bar */}
                     <div className='search'>
                         <form className="form-inline my-2  searchBar">
-                            <input className="mr-2 searchBar-input" type="search" placeholder="Search Developer" aria-label="Search" />
-                            <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search' />
+                            <input className="mr-2 searchBar-input" type="search" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
+                            <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search' onClick={onSearchClick} />
                         </form>
                     </div>
 
@@ -90,7 +114,8 @@ function Header({ logOutUser, auth: { user } }) {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.authRed
+    auth: state.authRed,
+    search: state.searchRed
 })
 
-export default connect(mapStateToProps, { logOutUser })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult })(Header)

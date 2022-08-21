@@ -2,9 +2,9 @@ import React from 'react'
 
 function Developer() {
     return (
-        <div className='container  developersTile'>
+        <div className='container developersTile'>
             <h1>Developers</h1>
-            <div className='row justify-content-md-center my-1'>
+            <div className='row mx-auto'>
 
                 <div className='col col-sm-12 col-md-4 col-lg-3 p-0 m-3 developerTile'>
 
