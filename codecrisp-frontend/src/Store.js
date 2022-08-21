@@ -3,6 +3,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers/RootReducer';
 import jwt_decode from 'jwt-decode';
 import { SET_USER } from './Action/Types';
+import setAuthHeader from './utility/set-auth-header';
 
 const initial = {};
 
@@ -33,6 +34,7 @@ myStore.subscribe(() => {
         //if token is set then set the user i.e. login
 
         //TODO: set header in axios as bearer token for private APIs
+        setAuthHeader(token);
         if (token) {
             let user = jwt_decode(token);
             myStore.dispatch({
@@ -40,6 +42,12 @@ myStore.subscribe(() => {
                 payload: user
             })
         }
+    }
+
+    // delete token when isAuthenticated is changed to false
+    if(prevState.authRed.isAuthenticated === true && currentState.authRed.isAuthenticated === false){
+        setAuthHeader(false);
+        
     }
 })
 export default myStore;

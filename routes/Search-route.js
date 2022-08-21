@@ -5,7 +5,8 @@ const router = express.Router()
 router.get('/', (req, res) => {
 
     const { searchText } = req.query;
-
+    if(searchText === "" || searchText === undefined)
+        return res.status(200).json([])
     User.find({ "name": { "$regex": searchText, "$options": "i" } }).limit(5).then(
         user => {
 

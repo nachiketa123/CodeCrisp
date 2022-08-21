@@ -5,19 +5,21 @@ import { connect } from 'react-redux';
 import { logOutUser } from '../Action/AuthAction';
 import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
+import isEmpty from '../utility/is-empty';
 
 function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
     const [state, setState] = useState({ searchtext: "" })
 
 
-    useEffect(() => {
-        console.log(search.user)
-    }, [search.user])
+    // useEffect(() => {
+    //     console.log(search.user)
+    // }, [search.user])
 
     useEffect(()=>{
-            const userFind = { searchText: state.searchtext }
-            searchResult(userFind);
+                const userFind = { searchText: state.searchtext }
+                searchResult(userFind);
+            
     },[state.searchtext])
 
     const onSearch = (e) => {
@@ -51,7 +53,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                     {/* Search Bar */}
                     <div className='search'>
                         <form className="form-inline my-2  searchBar">
-                            <input className="mr-2 searchBar-input" type="text" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
+                            <input className="mr-2 searchBar-input" type="text" autocomplete="off" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
                             <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search' onClick={onSearchClick} />
                         </form>
                     </div>

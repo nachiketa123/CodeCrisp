@@ -9,8 +9,25 @@ import HomeUser from './component/HomeUser';
 import PrivateRoutes from './component/private-routing/private-routes';
 import Jobs from './component/Jobs';
 import Header from './component/Header';
+import setAuthHeader from './utility/set-auth-header';
+import jwtDecode from 'jwt-decode';
+import { SET_USER } from './Action/Types';
 
+/* 
+    before App renders we need to check if the user is already logged in(by checking token in localStorage)
+    if user is logged in then we SET_USER using redux and component will be rendered accordingly
+*/
+const token = localStorage.getItem("token");
 
+setAuthHeader(token);
+
+if(token){
+  let user = jwtDecode(token);
+  myStore.dispatch({
+    type:SET_USER,
+    payload: user
+  })
+}
 
 function App() {
   return (

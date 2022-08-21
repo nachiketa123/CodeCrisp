@@ -1,6 +1,12 @@
 import React from 'react'
 import { FaSearch } from 'react-icons/fa';
-function SearchResultBox() {
+import { connect } from 'react-redux';
+import isEmpty from '../../utility/is-empty';
+
+
+
+function SearchResultBox({ search: {user} }) {
+
     return (
         <div className='container search-container'>
 
@@ -8,10 +14,14 @@ function SearchResultBox() {
                 <div className='col col-sm-10 col-md-6 col-lg-4 p-0'>
 
                     <ul class="list-group list-group-flush">
-                        {[1, 2, 3, 4, 5].map(e => (<li class="list-group-item"><img
+                        { (!isEmpty(user)) ? user.map(e => (<li class="list-group-item"><img
                             className='image-search'
-                            src={require('../../assets/images/luv_profile.jpg')} alt="search_image" /><a className='search-user-name' href='#'>Luv Saini</a><FaSearch color='grey' className="search-icon" title='search' />
-                        </li>))}
+                            src={require('../../assets/images/luv_profile.jpg')} 
+                            alt="search_image" />
+                            <a className='search-user-name' href='#'>{e.name}</a>
+                            <FaSearch color='grey' className="search-icon" title='search' />
+                        </li>)):""
+                        }
 
                     </ul>
                 </div>
@@ -20,7 +30,11 @@ function SearchResultBox() {
     )
 }
 
-export default SearchResultBox
+const mapStateToProps = (state) => ({
+    search: state.searchRed
+})
+
+export default connect(mapStateToProps)(SearchResultBox)
 
 
 

@@ -1,9 +1,10 @@
 import { GET_USER, GET_ERROR, LOGIN_SUCCESS, SET_USER, LOGOUT_USER } from '../Action/Types';
+import isEmpty from '../utility/is-empty';
 
 const initialState = {
     isAuthenticated: false
     , user: {}
-    , token: ""
+    , token: localStorage.getItem("token")
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,7 +19,8 @@ const authReducer = (state = initialState, action) => {
         case SET_USER:      
                             return {
                                 ...state,
-                                user: action.payload
+                                user: action.payload,
+                                isAuthenticated: !isEmpty(action.payload)
                             }
 
         case LOGOUT_USER:
