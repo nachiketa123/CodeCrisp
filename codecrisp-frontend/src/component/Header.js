@@ -15,13 +15,16 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
         console.log(search.user)
     }, [search.user])
 
+    useEffect(()=>{
+            const userFind = { searchText: state.searchtext }
+            searchResult(userFind);
+    },[state.searchtext])
+
     const onSearch = (e) => {
         setState({
             ...state,
             [e.target.name]: e.target.value
-        }
-        )
-
+        })
     }
 
     const logMeOut = (e) => {
@@ -29,8 +32,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
     }
 
     const onSearchClick = () => {
-        const userFind = { searchText: state.searchtext }
-        searchResult(userFind);
+        
     }
 
     return (
