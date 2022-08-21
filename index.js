@@ -28,7 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/api/user', userRoute)
-app.use('/api/searchroute', searchRoute)
+app.use('/api/searchuser', searchRoute)
+
 
 app.listen(5000, () => {
     console.log("Server challu ho gya hai")

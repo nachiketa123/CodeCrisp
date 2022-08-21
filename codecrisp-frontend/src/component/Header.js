@@ -51,7 +51,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                     {/* Search Bar */}
                     <div className='search'>
                         <form className="form-inline my-2  searchBar">
-                            <input className="mr-2 searchBar-input" type="search" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
+                            <input className="mr-2 searchBar-input" type="text" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
                             <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search' onClick={onSearchClick} />
                         </form>
                     </div>

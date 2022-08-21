@@ -2,7 +2,7 @@ const express = require("express")
 const User = require("../model/User")
 const router = express.Router()
 
-router.get('/searchuser', (req, res) => {
+router.get('/', (req, res) => {
 
     const { searchText } = req.query;
 
