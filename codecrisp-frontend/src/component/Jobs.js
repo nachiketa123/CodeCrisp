@@ -11,7 +11,6 @@ function Jobs({ jobReducer }) {
 
     useEffect((e) => {
         jobDetails();
-        jobdummy();
     }, [])
 
 
@@ -51,5 +50,5 @@ const mapStateToProps = (state) => ({
     jobReducer: state.jobReducer
 })
 
-export default connect(mapStateToProps, { jobDetails, jobdummy, searchResult })(Jobs)
+export default connect(mapStateToProps, { jobDetails })(Jobs)
 
