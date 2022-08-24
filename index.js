@@ -7,7 +7,7 @@ const userRoute = require("./routes/User-routes")
 const app = express();
 const bodyParser = require("body-parser");
 const searchRoute = require("./routes/Search-route")
-
+const jobRoute = require('./routes/Job-route')
 
 mongo.connect(dbURI).then(
     () => {
@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 
 app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
-
+app.use('/api/jobs', jobRoute)
 
 app.listen(5000, () => {
     console.log("Server challu ho gya hai")

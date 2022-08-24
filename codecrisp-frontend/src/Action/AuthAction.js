@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER } from './Types';
+import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER, GET_ALL_JOB } from './Types';
 
 
 /*
@@ -23,16 +23,16 @@ export const signUp = (userData) => (dispatch) => {
 export const signIn = (userData) => (dispatch) => {
     axios.post('/api/user/login', userData).then(
         res => {
-            dispatch({ 
-                type: LOGIN_SUCCESS, 
-                payload: res.data 
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
             })
         }
     ).catch(
         err => {
-            console.log('error',err)
-            dispatch({ 
-                type: GET_ERROR, 
+            console.log('error', err)
+            dispatch({
+                type: GET_ERROR,
                 payload: err.response.data,
             })
         }
@@ -43,9 +43,11 @@ export const signIn = (userData) => (dispatch) => {
 /*
     Action creator: Log out User
 */
-export const logOutUser = () => (dispatch) =>{
+export const logOutUser = () => (dispatch) => {
+    console.log('logout')
     dispatch({
         type: LOGOUT_USER,
-        payload:{}
+        payload: {}
     })
 }
+

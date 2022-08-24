@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import isEmpty from '../utility/is-empty';
 
+
 function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
     const [state, setState] = useState({ searchtext: "" })
@@ -16,11 +17,11 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
     //     console.log(search.user)
     // }, [search.user])
 
-    useEffect(()=>{
-                const userFind = { searchText: state.searchtext }
-                searchResult(userFind);
-            
-    },[state.searchtext])
+    useEffect(() => {
+        const userFind = { searchText: state.searchtext }
+        searchResult(userFind);
+
+    }, [state.searchtext])
 
     const onSearch = (e) => {
         setState({
@@ -34,7 +35,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
     }
 
     const onSearchClick = () => {
-        
+
     }
 
     return (
