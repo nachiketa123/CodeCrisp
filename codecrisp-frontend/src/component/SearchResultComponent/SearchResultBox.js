@@ -5,7 +5,7 @@ import isEmpty from '../../utility/is-empty';
 
 
 
-function SearchResultBox({ search: {user} }) {
+function SearchResultBox({ search: { user } }) {
 
     return (
         <div className='container search-container'>
@@ -14,13 +14,13 @@ function SearchResultBox({ search: {user} }) {
                 <div className='col col-sm-10 col-md-6 col-lg-4 p-0'>
 
                     <ul class="list-group list-group-flush">
-                        { (!isEmpty(user)) ? user.map(e => (<li class="list-group-item"><img
+                        {(!isEmpty(user)) ? user.map(e => (<li class="list-group-item"><img
                             className='image-search'
-                            src={require('../../assets/images/luv_profile.jpg')} 
+                            src={require('../../assets/images/luv_profile.jpg')}
                             alt="search_image" />
                             <a className='search-user-name' href='#'>{e.name}</a>
                             <FaSearch color='grey' className="search-icon" title='search' />
-                        </li>)):""
+                        </li>)) : ""
                         }
 
                     </ul>

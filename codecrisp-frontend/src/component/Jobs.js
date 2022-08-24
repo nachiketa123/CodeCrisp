@@ -1,20 +1,36 @@
 import React from 'react'
 import Header from './Header'
 import './Job.css'
+import { jobDetails, jobdummy } from '../Action/JobAction'
+import { searchResult } from '../Action/SearchAction'
+import { connect } from 'react-redux'
+import { useEffect } from 'react'
 
-function Jobs() {
+
+function Jobs({ jobReducer }) {
+
+    useEffect((e) => {
+        jobDetails();
+        jobdummy();
+    }, [])
+
+
     return (
         <div>
             <Header />
             <div className='container'>
                 <div className='row'>
-                    {[1, 2, 3, 4, 5, 6].map((e) => (
+                    {jobReducer.jobsData.map((e) => (
                         <div className='col-sm-10 col-md-6 col-lg-4 mx-auto'>
                             <div className="card my-4">
                                 <img className="card-img-top" src={require('../images/amazon_logo.png')} alt="Card image cap" />
                                 <div className="card-body">
-                                    <h5 className="card-title">Amazon SDE 1</h5>
-                                    <p className="card-text">Job Description: Need to work as full time Java Developer...</p>
+                                    <h5 className="card-title">{e.jobname}</h5>
+                                    <p className="card-text">{e.jobdesc}</p>
+                                    <p className="card-text">Company: {e.company}</p>
+                                    <p className="card-text">Location: {e.joblocation}</p>
+                                    <p className="card-text">Start Date: {e.startdate}</p>
+                                    <p className="card-text">End Date: {e.enddate}</p>
                                 </div>
 
                                 <div className="card-body">
@@ -31,4 +47,9 @@ function Jobs() {
     )
 }
 
-export default Jobs
+const mapStateToProps = (state) => ({
+    jobReducer: state.jobReducer
+})
+
+export default connect(mapStateToProps, { jobDetails, jobdummy, searchResult })(Jobs)
+
