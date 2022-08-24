@@ -44,16 +44,15 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                     {/* Left Portion of Navbar */}
                     <div className='nav-left'>
                         <img className='logo-image' src={require('../images/logo.png')} />
-                        <Link to='/'>
-                            <a className="navbar-brand" href="#"
-                            >CodeCrisp</a>
+                        <Link to='/' className="navbar-brand"
+                            >CodeCrisp
                         </Link>
                     </div>
 
                     {/* Search Bar */}
                     <div className='search'>
                         <form className="form-inline my-2  searchBar">
-                            <input className="mr-2 searchBar-input" type="text" autocomplete="off" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
+                            <input className="mr-2 searchBar-input" type="text" autoComplete="off" placeholder="Search Developer" aria-label="Search" name="searchtext" value={state.searchtext} onChange={onSearch} />
                             <FaSearch color='seagreen' className="search-icon my-2 my-sm-0" title='search' onClick={onSearchClick} />
                         </form>
                     </div>
@@ -84,9 +83,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link to='/jobs'>
-                                        <a className="nav-link" href="#">Jobs</a>
-                                    </Link>
+                                    <Link className="nav-link" to="/jobs">Jobs</Link>
                                 </li>
 
                                 <li className="nav-item">
