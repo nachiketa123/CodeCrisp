@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #config items
-./config/Key.js
+/config/Key.js
+/config/cloudinary.js

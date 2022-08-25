@@ -1,8 +1,9 @@
 const express = require("express")
 const User = require("../model/User")
 const router = express.Router()
+const passport = require('passport')
 
-router.get('/', (req, res) => {
+router.get('/', passport.authenticate('jwt',{session:false}), (req, res) => {
 
     const { searchText } = req.query;
     if(searchText === "" || searchText === undefined)

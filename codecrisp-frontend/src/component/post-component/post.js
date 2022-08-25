@@ -3,7 +3,7 @@ import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-const PostComponent = () => {
+const PostComponent = ({username,location,avatar,postText,imageURL}) => {
 
     const [state, setState] = useState({
         like: false
@@ -22,15 +22,15 @@ const PostComponent = () => {
                 <div className='user-dp-info'>
                     <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
-                        <p className='user-name'>Here goes user name</p>
-                        <p className='user-location'>Here goes user location</p>
+                        <p className='user-name'>{username? username: 'Here goes user name'}</p>
+                        <p className='user-location'>{location? location:'Here goes user location'}</p>
                     </div>
                 </div>
                 <BsThreeDotsVertical color='white' className='post-menu-img' title="post menu" />
             </div>
             <div className='post-body post-common'>
                 <div className='main-post'>
-                    <img className='post-img' src={require('../../assets/images/nach_profile.jpg')} alt="post" />
+                    <img className='post-img' src={imageURL?imageURL:require('../../assets/images/nach_profile.jpg')} alt="post" />
                 </div>
                 <div className='post-actions'>
 
@@ -51,8 +51,8 @@ const PostComponent = () => {
             <div className='username-caption'>
 
                 <p style={{ color: 'grey', fontSize: '15px', margin: '0' }}>
-                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '15px', margin: '0 10px 0 0', display: 'inline' }}>Nachu121</span>
-                    This is my caption for the post
+                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '15px', margin: '0 10px 0 0', display: 'inline' }}>{username?username:'Nachu121'}</span>
+                    {postText?postText:'This is my caption for the post'}
                 </p>
             </div>
             <div className='post-comments post-common'>
