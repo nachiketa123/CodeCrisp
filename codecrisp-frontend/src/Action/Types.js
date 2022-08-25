@@ -5,3 +5,5 @@ export const SET_USER = "SET_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const SEARCH_RESULT = "SEARCH_RESULT";
 export const GET_ALL_JOB = "GET_ALL_JOB";
+export const USER_ADDED_NEW_POST = "USER_ADDED_NEW_POST";
+export const SET_LOADING_ONN = "SET_LOADING_ONN";

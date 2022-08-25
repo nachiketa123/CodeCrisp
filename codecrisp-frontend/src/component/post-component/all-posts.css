@@ -4,4 +4,21 @@
     /* background-color: ; */
 }
 
+.loading-icon {
+    display: flex;
+    justify-content: center;
+    margin: 25px
+}
+
+.upload-icon-img{
+    animation-name: loading_change_color;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading_change_color {
+    0% {color: rgb(187, 171, 80);}
+    50% {color: white;}
+    100% {color: black;}
+}
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
