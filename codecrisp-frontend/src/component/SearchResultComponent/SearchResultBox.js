@@ -13,8 +13,10 @@ function SearchResultBox({ search: { user } }) {
             <div className='row search-box'>
                 <div className='col col-sm-10 col-md-6 col-lg-4 p-0'>
 
-                    <ul class="list-group list-group-flush">
-                        {(!isEmpty(user)) ? user.map(e => (<li class="list-group-item"><img
+
+                    <ul className="list-group list-group-flush">
+                        { (!isEmpty(user)) ? user.map(e => (<li key={e._id} className="list-group-item"><img
+
                             className='image-search'
                             src={require('../../assets/images/luv_profile.jpg')}
                             alt="search_image" />

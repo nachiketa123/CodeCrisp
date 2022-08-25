@@ -1,17 +1,28 @@
-import axios from 'axios';
-import { GET_ALL_JOB } from './Types';
-
-export const jobDetails = () => (dispatch) => {
+import axios from "axios";
+import { GET_ALL_JOB, GET_ERROR } from "./Types";
 
 
-    console.log("aagya")
+export const getAllJobs = () => (dispatch) => {
+    console.log('getAllJobs is called');
+
     axios.get('/api/jobs').then(
+        res => {
+            dispatch({
+                type: GET_ALL_JOB,
+                payload: res.data
+            })
+        }
 
-        jobsData => {
-            console.log(jobsData);
-            dispatch({ type: GET_ALL_JOB, payload: jobsData.data });
+    ).catch(
+        err => {
+            dispatch({
+                type: GET_ERROR,
+                payload: err.response.data
+            })
+            console.log('getAllJobs Error ', err.response.data)
         }
     )
 
 }
+
 

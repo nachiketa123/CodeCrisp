@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
-
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const PostComponent = () => {
 
@@ -26,7 +26,7 @@ const PostComponent = () => {
                         <p className='user-location'>Here goes user location</p>
                     </div>
                 </div>
-                <img className='post-menu-img' src={require('../../assets/icons/post_menu.png')} alt="post menu" />
+                <BsThreeDotsVertical color='white' className='post-menu-img' title="post menu" />
             </div>
             <div className='post-body post-common'>
                 <div className='main-post'>

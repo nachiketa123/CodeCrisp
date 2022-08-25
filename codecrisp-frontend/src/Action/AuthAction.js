@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER } from './Types';
+import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER, GET_ALL_JOB } from './Types';
 
 
 /*
@@ -44,8 +44,10 @@ export const signIn = (userData) => (dispatch) => {
     Action creator: Log out User
 */
 export const logOutUser = () => (dispatch) => {
+    console.log('logout')
     dispatch({
         type: LOGOUT_USER,
         payload: {}
     })
 }
+

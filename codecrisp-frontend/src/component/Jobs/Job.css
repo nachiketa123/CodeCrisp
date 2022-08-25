@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+
+.container{
+    margin-top: 8vh;
+    padding: 25px;
+  
+}
+.card{
+    box-shadow: none;
+    color: white;
+    cursor: pointer;
+}
+
+.JobDetailsBoxBackground{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.JobDetailsBox{
+    height: 70vh;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.5em;
+}
+
+.JobDetails-left{
+    width: 40%;
+    background-color: white;
+    overflow-y: scroll;
+    padding: 10px;
+}
+.JobDetails-left-title{
+    background-color: black;
+    z-index: 100;
+    color: white;
+    font-size: 25px;
+    border-radius: 0.3em;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.JobDetails-right{  
+    background-color: rgb(255, 255, 255);
+    z-index: 100;;
+    width: 60%;    
+    padding: 10px;
+    overflow-y: scroll;
+}
+h6{
+    background: transparent;
+    font-family:  Roboto;
+    font-weight: bolder;
+}
+h2{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+p{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+.list-job-points{
+    margin-left: 20px;
+    background: transparent;
+}
+.job-description {
+    margin-top: 15px;
+    background: transparent;
+    color: white;
+    font-weight: 400;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

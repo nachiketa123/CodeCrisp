@@ -45,9 +45,9 @@ myStore.subscribe(() => {
     }
 
     // delete token when isAuthenticated is changed to false
-    if(prevState.authRed.isAuthenticated === true && currentState.authRed.isAuthenticated === false){
+    if (prevState.authRed.isAuthenticated === true && currentState.authRed.isAuthenticated === false) {
         setAuthHeader(false);
-        
+
     }
 })
 export default myStore;

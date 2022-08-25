@@ -7,11 +7,13 @@ import HomePage from './component/HomePage/HomePage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeUser from './component/HomeUser';
 import PrivateRoutes from './component/private-routing/private-routes';
-import Jobs from './component/Jobs';
+import Jobs from './component/Jobs/Jobs.js';
 import Header from './component/Header';
 import setAuthHeader from './utility/set-auth-header';
 import jwtDecode from 'jwt-decode';
 import { SET_USER } from './Action/Types';
+import JobDetails from './component/Jobs/JobDetails';
+import Discuss from './component/Discuss/Discuss';
 
 /* 
     before App renders we need to check if the user is already logged in(by checking token in localStorage)
@@ -21,10 +23,10 @@ const token = localStorage.getItem("token");
 
 setAuthHeader(token);
 
-if(token){
+if (token) {
   let user = jwtDecode(token);
   myStore.dispatch({
-    type:SET_USER,
+    type: SET_USER,
     payload: user
   })
 }
@@ -40,8 +42,8 @@ function App() {
           <Routes>
             <Route path='*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
-            <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
-
+            <Route path='/jobs' element={<PrivateRoutes component={JobDetails} />} />
+            <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
           </Routes>
         </BrowserRouter>
 
