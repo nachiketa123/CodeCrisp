@@ -10,9 +10,15 @@ import { getAllUserPosts } from '../../Action/PostAction';
 
 const AllPosts = ({postReducer: {allUserPosts,loading}, auth: { user }, getAllUserPosts }) => {
 
+    let ignore=false
     //when component renders load all the users post
     useEffect(()=>{
-        getAllUserPosts(user.id)
+        if(!ignore)
+            getAllUserPosts(user.id)
+        
+        return ()=>{
+            ignore = true
+        }
     },[])
     return (
         (loading? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={400}> </FaUpload></div> :(

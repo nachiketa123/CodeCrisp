@@ -12,6 +12,7 @@ import Header from './component/Header';
 import setAuthHeader from './utility/set-auth-header';
 import jwtDecode from 'jwt-decode';
 import { SET_USER } from './Action/Types';
+import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
 
 /* 
     before App renders we need to check if the user is already logged in(by checking token in localStorage)
@@ -41,6 +42,7 @@ function App() {
             <Route path='*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
             <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
+            <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
 
           </Routes>
         </BrowserRouter>

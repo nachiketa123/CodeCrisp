@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const searchRoute = require("./routes/Search-route")
 const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
+const friendRoutes = require('./routes/Friend-route')
 
 mongo.connect(dbURI).then(
     () => {
@@ -32,6 +33,7 @@ app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post',postRoutes)
+app.use('/api/friend',friendRoutes)
 
 app.listen(5000, () => {
     console.log("Server challu ho gya hai")

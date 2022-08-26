@@ -28,9 +28,7 @@ function HeaderHome() {
                     <div className="navbar-nav">
                         <a className="nav-item nav-link nav-options" href="#">About Us<span className="sr-only">(current)</span></a>
                         <a className="nav-item nav-link" href="#">Features</a>
-                        <Link to='/developers'>
-                            <a className="nav-item nav-link" href="#">Developer</a>
-                        </Link>
+                        <Link to='/developers' className="nav-item nav-link" href="#">Developer</Link>
                         <a className="nav-item nav-link" href="#">ContactUs</a>
                     </div>
 
