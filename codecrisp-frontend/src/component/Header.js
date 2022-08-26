@@ -44,7 +44,8 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                 <nav className="navbar navbar-home navbar-expand-lg">
                     {/* Left Portion of Navbar */}
                     <div className='nav-left'>
-                        <img className='logo-image' src={require('../images/logo.png')} />
+                        <Link to='/'> <img className='logo-image' src={require('../images/logo.png')} />
+                        </Link>
                         <Link to='/' className="navbar-brand"
                             >CodeCrisp
                         </Link>

@@ -56,4 +56,15 @@ router.post('/addPost',passport.authenticate('jwt',{session:false}),async (req,r
     
 })
 
+router.get('/getAllUserPosts/:user_id',passport.authenticate('jwt',{ session: false }),(req,res)=>{
+    const user_id = req.params.user_id;
+    UserPost.find({user:user_id})
+        .then(allPosts=>{
+            return res.status(200).json(allPosts)
+        })
+        .catch(err=>{
+            return res.status(400).json(err)
+        })
+})
+
 module.exports = router;
