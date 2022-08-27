@@ -9,8 +9,8 @@ function ChatBox() {
                 <h3
                     style={{ color: "black", background: "transparent" }}
                 > Messages</h3>
-                <div class="input-group mb-3 search-message">
-                    <input type="text" class="form-control search-input-message" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                <div className="input-group mb-3 search-message">
+                    <input type="text" className="form-control search-input-message" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 </div>
                 <ChatTile />
 

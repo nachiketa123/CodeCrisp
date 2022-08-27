@@ -22,13 +22,21 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
 router.get('/:id', (req, res) => {
     const _id = req.params.id;
+    const error = {}
     Job.findById(_id).then(
         user => {
-            return res.status(200).json(user);
+            if(user)
+                return res.status(200).json(user);
+            else{
+                error.pageNotFound = 'Job Id not available'
+                return res.status(404).json(error)
+            }
+                
         }
     ).catch(
         err => {
-            res.status(400).json(err);
+            error.pageNotFound = 'Job Id not available'
+            res.status(404).json(error);
         }
     )
 })

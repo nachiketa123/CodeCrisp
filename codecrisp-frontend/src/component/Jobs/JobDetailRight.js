@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../Jobs/Job.css'
 function JobDetailRight({ jobdescription, jobtitle, company }) {
+
+
     return (
 
         <div className="JobDetails-right">
