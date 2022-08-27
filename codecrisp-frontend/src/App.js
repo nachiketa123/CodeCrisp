@@ -14,6 +14,8 @@ import jwtDecode from 'jwt-decode';
 import { SET_USER } from './Action/Types';
 import JobDetails from './component/Jobs/JobDetails';
 import Discuss from './component/Discuss/Discuss';
+import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
+
 
 /* 
     before App renders we need to check if the user is already logged in(by checking token in localStorage)
@@ -38,14 +40,17 @@ function App() {
       <Provider store={myStore}>
 
         <BrowserRouter>
-
           <Routes>
             <Route path='*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
             <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
+            <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
             <Route path='/jobs/*' element={<PrivateRoutes component={JobDetails} />} />
             <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
+
           </Routes>
+
+
         </BrowserRouter>
 
 

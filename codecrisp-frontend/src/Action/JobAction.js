@@ -2,8 +2,8 @@ import axios from "axios";
 import { GET_ALL_JOB, GET_ERROR } from "./Types";
 
 
+
 export const getAllJobs = () => (dispatch) => {
-    console.log('getAllJobs is called');
 
     axios.get('/api/jobs').then(
         res => {

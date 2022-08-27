@@ -8,12 +8,11 @@ function HeaderHome() {
         <div>
 
             <nav className="navbar navbar-expand-lg">
-                <Link to='/'>
-                    <a className="navbar-brand" href="#"
+                <Link to='/' className="navbar-brand" 
                         style={{ fontSize: "30px", marginLeft: "5px" }}
-                    >CodeCrisp</a>
+                    >CodeCrisp</Link>
 
-                </Link>
+                
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon">
                     </span>
@@ -28,9 +27,7 @@ function HeaderHome() {
                     <div className="navbar-nav">
                         <a className="nav-item nav-link nav-options" href="#">About Us<span className="sr-only">(current)</span></a>
                         <a className="nav-item nav-link" href="#">Features</a>
-                        <Link to='/developers'>
-                            <a className="nav-item nav-link" href="#">Developer</a>
-                        </Link>
+                        <Link to='/developers' className="nav-item nav-link" href="#">Developer</Link>
                         <a className="nav-item nav-link" href="#">ContactUs</a>
                     </div>
 

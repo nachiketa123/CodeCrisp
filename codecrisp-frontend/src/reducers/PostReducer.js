@@ -1,4 +1,4 @@
-import { SET_LOADING_ONN, USER_ADDED_NEW_POST } from "../Action/Types";
+import { GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST } from "../Action/Types";
 
 const initialState = {
     allUserPosts:[],
@@ -12,6 +12,12 @@ const PostReducer = (state = initialState,action) =>{
                 ...state,
                 newPost:action.payload,
                 allUserPosts:[...state.allUserPosts,action.payload],
+                loading:false
+            }
+        case GET_ALL_USER_POST:
+            return{
+                ...state,
+                allUserPosts:action.payload,
                 loading:false
             }
         case SET_LOADING_ONN:

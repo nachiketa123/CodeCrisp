@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostComponent from './post';
 import { connect } from 'react-redux';
-import  PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import isEmpty from '../../utility/is-empty';
-import {compareDateDesc} from '../../utility/custom-sort';
+import { compareDateDesc } from '../../utility/custom-sort';
 import { FaUpload } from 'react-icons/fa';
 import './all-posts.css';
+import { getAllUserPosts } from '../../Action/PostAction';
 
-const AllPosts = ({postReducer: {allUserPosts,loading}}) => {
+const AllPosts = ({ postReducer: { allUserPosts, loading }, auth: { user }, getAllUserPosts }) => {
+
+    let ignore = false
+    //when component renders load all the users post
+    useEffect(() => {
+        if (!ignore)
+            getAllUserPosts(user.id)
+
+        return () => {
+            ignore = true
+        }
+    }, [])
     return (
-        (loading? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={400}> </FaUpload></div> :(
-            
-            <div className='all-posts'>
-            {!isEmpty(allUserPosts)? 
-                allUserPosts.sort(compareDateDesc).map(post=>(
-                    <PostComponent username={post.name} location={post.location} avatar={post.avatar} 
-                                    postText={post.postText} imageURL={post.imageUrls?post.imageUrls[0]:undefined}/>
+        (loading ? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={200}> </FaUpload></div> : (
 
-                ))
-                
-                :''}
-        </div>
+            <div className='all-posts'>
+                {!isEmpty(allUserPosts) ?
+                    allUserPosts.sort(compareDateDesc).map(post => (
+                        <PostComponent key={post._id} username={post.name} location={post.location} avatar={post.avatar}
+                            postText={post.postText} imageURL={post.imageUrls ? post.imageUrls[0] : undefined} />
+
+                    ))
+
+                    : ''}
+            </div>
         ))
-        
+
 
 
     );
@@ -30,11 +42,14 @@ const AllPosts = ({postReducer: {allUserPosts,loading}}) => {
 
 AllPosts.propTypes = {
     postReducer: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    getAllUserPosts: PropTypes.func.isRequired
 
 }
 
 const mapStateToProps = (state) => ({
-    postReducer: state.postReducer
+    postReducer: state.postReducer,
+    auth: state.authRed
 })
 
-export default connect(mapStateToProps)(AllPosts);
+export default connect(mapStateToProps, { getAllUserPosts })(AllPosts);

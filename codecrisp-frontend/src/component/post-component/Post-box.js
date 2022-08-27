@@ -20,7 +20,6 @@ function PostBox({auth : {user} ,addPost}) {
     let ignore = false; 
     useEffect(()=>{
        if(ignore === false){
-            console.log('rendering')
             state.files.map((e)=>{
                 const reader = new FileReader();
                 reader.onloadend = ()=> {
@@ -69,7 +68,8 @@ function PostBox({auth : {user} ,addPost}) {
             ...state,
             inputFile:'',
             files:[],
-            urls:[]
+            urls:[],
+            postText:''
         })
     }
 

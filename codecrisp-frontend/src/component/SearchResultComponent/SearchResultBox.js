@@ -2,7 +2,7 @@ import React from 'react'
 import { FaSearch } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import isEmpty from '../../utility/is-empty';
-
+import { Link } from 'react-router-dom';
 
 
 function SearchResultBox({ search: { user } }) {
@@ -20,7 +20,7 @@ function SearchResultBox({ search: { user } }) {
                             className='image-search'
                             src={require('../../assets/images/luv_profile.jpg')}
                             alt="search_image" />
-                            <a className='search-user-name' href='#'>{e.name}</a>
+                            <Link className='search-user-name' to={`/userProfile/${e._id}`}>{e.name}</Link>
                             <FaSearch color='grey' className="search-icon" title='search' />
                         </li>)) : ""
                         }

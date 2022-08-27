@@ -45,7 +45,7 @@ export const signIn = (userData) => (dispatch) => {
     Action creator: Log out User
 */
 export const logOutUser = () => (dispatch) => {
-    console.log('logout')
+    // console.log('logout')
     dispatch({
         type: LOGOUT_USER,
         payload: {}

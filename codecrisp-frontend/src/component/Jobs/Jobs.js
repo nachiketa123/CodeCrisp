@@ -1,11 +1,14 @@
+
+import { Link } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import Header from '../Header'
-import '../Jobs/Job.css'
+import './Job.css'
 import { connect } from 'react-redux';
 import { getAllJobs } from '../../Action/JobAction';
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import Header from '../Header';
+// >>>>>>> nachiketa1:codecrisp-frontend/src/component/Jobs.js
 
-function Jobs({ jobReducer }) {
+function Jobs({ jobReducer, getAllJobs }) {
 
 
 
@@ -21,7 +24,7 @@ function Jobs({ jobReducer }) {
             <div className='container'>
                 <div className='row'>
                     {jobReducer.jobsData.map((e) => (
-                        <div className='col-sm-10 col-md-6 col-lg-4 mx-auto'>
+                        <div key={e._id} className='col-sm-10 col-md-6 col-lg-4 mx-auto'>
                             <div className="card my-4">
                                 <img className="card-img-top" src={require('../../images/amazon_logo.png')} alt="Card image cap" />
                                 <div className="card-body card-body-job">
@@ -47,11 +50,17 @@ function Jobs({ jobReducer }) {
     )
 }
 
+Jobs.propTypes = {
+    jobReducer: PropTypes.object.isRequired,
+    getAllJobs: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
     jobReducer: state.jobReducer
 });
 
 
-export default connect(mapStateToProps, getAllJobs)(Jobs)
+export default connect(mapStateToProps, { getAllJobs })(Jobs)
+// >>>>>>> nachiketa1:codecrisp-frontend/src/component/Jobs.js
 
 
