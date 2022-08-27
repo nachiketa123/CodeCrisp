@@ -37,14 +37,19 @@ function App() {
       <Provider store={myStore}>
 
         <BrowserRouter>
+          <div className='app-container'>
+            <div className='header'>
+                  <Header />
+            </div>
+            <Routes>
+              <Route path='*' element={<HomePage />} />
+              <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
+              <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
+              <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
 
-          <Routes>
-            <Route path='*' element={<HomePage />} />
-            <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
-            <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
-            <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
-
-          </Routes>
+            </Routes>
+          </div>
+          
         </BrowserRouter>
 
 

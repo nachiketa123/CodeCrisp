@@ -1,10 +1,10 @@
 import React,{ useEffect} from 'react'
-import Header from './Header'
 import './Job.css'
 import { connect } from 'react-redux';
 import { getAllJobs } from '../Action/JobAction';
+import PropTypes from 'prop-types';
 
-function Jobs({ jobReducer }) {
+function Jobs({ jobReducer, getAllJobs }) {
 
     useEffect(() => {
         getAllJobs();
@@ -13,11 +13,10 @@ function Jobs({ jobReducer }) {
 
     return (
         <div>
-            <Header />
             <div className='container'>
                 <div className='row'>
                     {jobReducer.jobsData.map((e) => (
-                        <div className='col-sm-10 col-md-6 col-lg-4 mx-auto'>
+                        <div key = {e._id} className='col-sm-10 col-md-6 col-lg-4 mx-auto'>
                             <div className="card my-4">
                                 <img className="card-img-top" src={require('../images/amazon_logo.png')} alt="Card image cap" />
                                 <div className="card-body">
@@ -43,9 +42,14 @@ function Jobs({ jobReducer }) {
     )
 }
 
+Jobs.propTypes = {
+    jobReducer: PropTypes.object.isRequired,
+    getAllJobs: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
     jobReducer: state.jobReducer
 });
 
-export default connect(mapStateToProps, getAllJobs)(Jobs)
+export default connect(mapStateToProps, {getAllJobs})(Jobs)
 
