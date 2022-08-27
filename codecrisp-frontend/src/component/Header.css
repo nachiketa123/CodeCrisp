@@ -18,7 +18,7 @@
 }
 
 .nav-link:hover{
-    background-color: white;
+    background-color: black;
     border-radius: 0.5em;
     color: black;
     transition-delay: 5ms;
@@ -31,7 +31,8 @@
     margin-left: 15px;
 }
 .navbar-nav{
-    background: transparent;
+    /* background: transparent; */
+    /* background-color: black; */
     display: flex;
     justify-content: space-between;
 }
@@ -66,7 +67,7 @@
     /* width: 75%;
     margin-right: 20px; */
     flex: 0 0 40%;
-    background: transparent;
+    background: black;
 }
 
 .searchBar{
@@ -114,7 +115,7 @@
 .navLinks{
     display: flex;
     justify-content: space-between;
-   
+    background-color: black;
 }
 
 .navbar-toggler:focus {
@@ -169,7 +170,7 @@
       
     }
     .navLinks {
-        background: transparent;
+        background: black;
     }
 
     .nav-item{
@@ -233,7 +234,7 @@
     }
     .nav-link {
         font-size: 16px;
-        background-color: transparent;
+        background-color: black;
     }
     .nav-item .btn {
         font-size: 16px;

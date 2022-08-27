@@ -42,7 +42,8 @@ function App() {
           <Routes>
             <Route path='*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
-            <Route path='/jobs' element={<PrivateRoutes component={JobDetails} />} />
+            <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
+            <Route path='/jobs/*' element={<PrivateRoutes component={JobDetails} />} />
             <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
           </Routes>
         </BrowserRouter>

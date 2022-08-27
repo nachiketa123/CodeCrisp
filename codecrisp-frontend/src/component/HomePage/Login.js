@@ -43,20 +43,34 @@ function Login(props) {
             <div className='back-down row justify-content-md-center' >
                 <div className='login-box-outer   col col-sm-12 col-md-8 col-lg-6'>
 
-                    <h1>Login</h1>
-                    <div className='login-box'>
-                        <form>
+                    <h1>LOGIN</h1>
+                    <div className='login-box'
+                        style={{ backgroundColor: "white" }}
+                    >
+                        <form
+                            style={{ backgroundColor: "transparent" }}
+                        >
 
-                            <div className="form-group">
-                                <label htmlFor="exampleInputEmail1">Email address</label>
+                            <div className="form-group"
+                                style={{ backgroundColor: "white", color: "black" }}
+                            >
+                                <label htmlFor="exampleInputEmail1"
+                                    style={{ backgroundColor: "white", color: "black" }}
+                                >Email address</label>
                                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
                                     name="email" value={state.email} onChange={onChangeLogin}
                                 />
-                                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <small id="emailHelp" className="form-text text-muted"
+                                    style={{ backgroundColor: "white" }}
+                                >We'll never share your email with anyone else.</small>
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Password</label>
+                            <div className="form-group"
+                                style={{ backgroundColor: "white", color: "black" }}
+                            >
+                                <label htmlFor="exampleInputPassword1"
+                                    style={{ backgroundColor: "white", color: "black" }}
+                                >Password</label>
                                 <input type="password" className="form-control" id="exampleInputPassword1"
                                     name="password" value={state.password} onChange={onChangeLogin} placeholder="Password" />
                             </div>

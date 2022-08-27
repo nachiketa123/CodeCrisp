@@ -1,22 +1,70 @@
-
-.chat-tile-thumbnail{
-    height: 80px;
-    width: 80px;
-    margin: auto;
-    border-radius: 1em;
-   
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik:wght@300&display=swap');
+.chat-tile-outer{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 70px;
+    background: transparent;
+    cursor: pointer;
 }
 
-.chat-tile-username{
-    color: white;
+.chat-tile-left{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
     
 }
 
+.chat-tile-right{
+display: flex;
+flex-direction: column;
+width: 80%;
+background: transparent;
+}
+
+.chat-tile-right-lower{
+    background:transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    }
+    
+
+.chat-tile-right-upper{
+    background:transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.chat-tile-thumbnail{
+    height: 55px;
+    width: 55px;
+    border-radius: 2em;
+}
+
+.chat-tile-username{
+    color: black!important;
+    font-size: medium;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+}
+
 .chat-tile-lm{
-    color: white;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+}
+
+.chat-tile-body{
+    background-color: white;
 }
 .chat-tile{
-    background: transparent;
     width: 100%;   
     border-radius: 0.5em;
     cursor: pointer;
@@ -26,3 +74,5 @@
     display: flex;
     align-items: center;
 }
+
+

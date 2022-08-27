@@ -30,6 +30,7 @@ export const signIn = (userData) => (dispatch) => {
         }
     ).catch(
         err => {
+            alert("Incorrect Password")
             console.log('error', err)
             dispatch({
                 type: GET_ERROR,

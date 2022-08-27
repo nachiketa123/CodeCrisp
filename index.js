@@ -25,13 +25,13 @@ PassportConfig(passport);
 
 
 
-app.use(bodyParser.urlencoded({limit:'100mb', extended: false }))
-app.use(bodyParser.json({limit:'100mb'})),
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }))
+app.use(bodyParser.json({ limit: '100mb' })),
 
-app.use('/api/user', userRoute)
+    app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
-app.use('/api/post',postRoutes)
+app.use('/api/post', postRoutes)
 
 app.listen(5000, () => {
     console.log("Server challu ho gya hai")

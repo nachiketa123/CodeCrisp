@@ -4,58 +4,29 @@ import './ChatTile.css';
 function ChatTile() {
     return (
         <>
-            <div className="card mb-1 chat-tile">
-                <div className="row no-gutters chat-tile-outer">
-                    <div className="col-md-4"
-                    >
-                        <img
-                            className="chat-tile-thumbnail"
-                            src={require('../../assets/images/luv_profile.jpg')} alt="..." />
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h5 className="card-title chat-tile-username">Luv Saini</h5>
-                            {/* <p className="card-text chat-tile-lm">"Last Messages"</p> */}
-                            <p className="card-text chat-tile-lm">"Last Messages"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="card mb-1 chat-tile">
-                <div className="row no-gutters chat-tile-outer">
-                    <div className="col-md-4"
-                    >
-                        <img
-                            className="chat-tile-thumbnail"
-                            src={require('../../assets/images/nach_profile.jpg')} alt="..." />
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h5 className="card-title chat-tile-username">Nachiketa</h5>
-                            {/* <p className="card-text chat-tile-lm">"Last Messages"</p> */}
-                            <p className="card-text chat-tile-lm">"last seen message"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="card mb-1 chat-tile">
-                <div className="row no-gutters chat-tile-outer">
-                    <div className="col-md-4"
-                    >
-                        <img
-                            className="chat-tile-thumbnail"
-                            src={require('../../assets/images/ayush.jpg')} alt="..." />
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h5 className="card-title chat-tile-username">Ayush</h5>
-                            {/* <p className="card-text chat-tile-lm">"Last Messages"</p> */}
-                            <p className="card-text chat-tile-lm">"last seen message"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {[1, 2, 3, 4, 5].map(e => (<div className="chat-tile-outer">
 
+                <div className="chat-tile-left mb-2"
+                >
+                    <img
+                        className="chat-tile-thumbnail"
+                        src={require('../../assets/images/ayush.jpg')} alt="..." />
+                </div>
+                <div className="chat-tile-right">
+
+                    <div className='chat-tile-right-upper'>
+                        <h5 className="chat-tile-username">Ayush Kumar</h5>
+                        <h6 className="chat-tile-username">4:30 PM</h6>
+                    </div>
+                    <div className='chat-tile-right-lower'>
+                        <p className="chat-tile-lm">Hello</p>
+                        <p className="chat-tile-lm">*</p>
+                    </div>
+
+                </div>
+
+            </div>
+            ))}
 
         </>
     )

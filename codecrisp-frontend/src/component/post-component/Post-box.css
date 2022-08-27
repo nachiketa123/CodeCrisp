@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
 
 .postBox-outer{
-    background-color: black;
+    background-color: white;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -12,6 +12,7 @@
     padding: 10px;
     justify-content:  space-between;
     border: 1px solid white;
+    margin-top: 50px;
 }
 
 .profile-photo{
@@ -60,7 +61,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: white;
+    color: black;
     background: transparent;
     font-weight: bold;
     padding: 0 15px;
@@ -81,6 +82,7 @@
     align-items: center;
     cursor: pointer;
     margin: 0;
+    background: transparent;
 }
 .video{
     width: 25px;

@@ -3,6 +3,7 @@
 .app-container {
     display: flex;
     flex-direction: column;
+
 }
 
 .header {
@@ -17,16 +18,20 @@
 }
 
 .chat-box {
+
     flex-basis: 50%;
     flex-grow: 1;
+    justify-content: center;
 }
 
 .all-posts {
     flex-basis: 80%;
     flex-grow: 2;
+    justify-content: center;
 }
 
 .notification-panel {
+    justify-content: center;
     flex-basis: 50%;
     flex-grow: 1;
 }

@@ -3,12 +3,12 @@
 
 .container{
     margin-top: 8vh;
-    padding: 25px;
+    padding: 20px;
+    border-radius: 0.5em;
   
 }
 .card{
     box-shadow: none;
-    color: white;
     cursor: pointer;
 }
 
@@ -25,7 +25,14 @@
     display: flex;
     flex-direction: row;
     border-radius: 0.5em;
+    color: white;
 }
+.card-body-job{
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
 
 .JobDetails-left{
     width: 40%;
@@ -55,8 +62,14 @@ h6{
     background: transparent;
     font-family:  Roboto;
     font-weight: bolder;
+    color: black;
 }
 h2{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+.card-title{
     background: transparent;
     color: black;
     font-family:  Roboto;

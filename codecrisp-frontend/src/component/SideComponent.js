@@ -3,7 +3,8 @@ import './SideComponent.css'
 const CommunityNotification = () => {
     return (
         <div >
-            <div className='flex-item'>
+            <div className='flex-item'
+                style={{ marginTop: "50px" }}>
                 <div className='title'> CommunityNotification </div>
                 <div className='CommunityNotification' >
 
