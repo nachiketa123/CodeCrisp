@@ -20,7 +20,7 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
         <div className='my-card container'>
             <div className='user-details post-common'>
                 <div className='user-dp-info'>
-                    <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
+                    <img className='dp-img' src={avatar?avatar:require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
                         <p className='user-name'>{username ? username : 'Here goes user name'}</p>
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>

@@ -4,7 +4,8 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const { secretKey } = require("../config/Key")
-
+const cloudinary = require('../config/cloudinary')
+const passport = require("passport")
 
 
 router.post('/signup',
@@ -45,7 +46,8 @@ router.post('/login', (req, res) => {
                     const payload = {
                         id: user.id,
                         email: user.email,
-                        name: user.name
+                        name: user.name,
+                        avatar: user.avatar
                     }
                     jwt.sign(payload, secretKey, { expiresIn: 3600 }, (err, token) => {
                         return res.status(200).json({ token: "Bearer " + token })
@@ -58,6 +60,30 @@ router.post('/login', (req, res) => {
 
 })
 
+router.post('/update-profile-picture',passport.authenticate('jwt',{ session: false }),(req,res)=>{
+    const { user_id,base64ImgURI } = req.body;
+    const error ={}
+    User.findById(user_id)
+        .then( async user=>{
+            if(user){ 
+                const cloudinaryImg = await cloudinary.uploader.upload(base64ImgURI,{ upload_preset: 'codecrisp_media'})
+                user.avatar = cloudinaryImg.url;
+                user.save()
+                    .then(user=>{
+                        return res.status(200).json(user.avatar)
+                    })
+            }
+            else{
+                //return 404
+                error.pageNotFound = 'User not found'
+                return res.status(404).json(error)
+            }
+        } ).catch(err=>{
+            error.pageNotFound = 'User not found '+err
+            return res.status(404).json(error)
+        })
+
+})
 
 
 module.exports = router

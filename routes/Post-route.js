@@ -5,6 +5,7 @@ const isEmpty = require('../utility/is-empty')
 const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
+const User = require('../model/User')
 
 const uploadImagesToCloudinary = (imageUrls) =>{
     return new Promise(async (resolve,reject)=>{
@@ -56,22 +57,32 @@ router.post('/addPost',passport.authenticate('jwt',{session:false}),async (req,r
     
     if(!isEmpty(imageUrls)){
         uploadImagesToCloudinary(imageUrls).then(urls=>{
-            const newPostData = {
-                imageUrls: urls,
-                postText,
-                location,
-                name,
-                user
-            }
-            const newPost = new UserPost(newPostData)
-            newPost.save()
-                    .then(data=>{
-                        return res.status(200).json(data)
-                    })
-                    .catch(err=>{
-                        errors.dberror = err
-                        return res.status(400).json(errors)
-                    })
+
+            //Fetch Users avatar to be added in Post
+            User.findById(user)
+                .then(myuser=>{
+                    const newPostData = {
+                        imageUrls: urls,
+                        postText,
+                        location,
+                        name,
+                        user,
+                        avatar:myuser.avatar
+                    }
+                    const newPost = new UserPost(newPostData)
+                    newPost.save()
+                            .then(data=>{
+                                return res.status(200).json(data)
+                            })
+                            .catch(err=>{
+                                errors.dberror = err
+                                return res.status(400).json(errors)
+                            })
+                }).catch(err=>{
+                    errors.pageNotFound = 'user not found '+err
+                    return res.status(404).json(errors)
+                })
+            
         })
         .catch(err=>{
             errors.upload = err
