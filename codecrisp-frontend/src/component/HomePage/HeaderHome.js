@@ -8,12 +8,11 @@ function HeaderHome() {
         <div>
 
             <nav className="navbar navbar-expand-lg">
-                <Link to='/'>
-                    <a className="navbar-brand" href="#"
+                <Link to='/' className="navbar-brand" 
                         style={{ fontSize: "30px", marginLeft: "5px" }}
-                    >CodeCrisp</a>
+                    >CodeCrisp</Link>
 
-                </Link>
+                
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon">
                     </span>
