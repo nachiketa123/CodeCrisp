@@ -27,7 +27,7 @@ const AllPosts = ({ postReducer: { allUserPosts, loading }, auth: { user }, getA
                 {!isEmpty(allUserPosts) ?
                     allUserPosts.sort(compareDateDesc).map(post => (
                         <PostComponent key={post._id} username={post.name} location={post.location} avatar={post.avatar}
-                            postText={post.postText} imageURL={post.imageUrls ? post.imageUrls[0] : undefined} />
+                            postid={post._id} postText={post.postText} imageURL={post.imageUrls ? post.imageUrls[0] : undefined} />
 
                     ))
 

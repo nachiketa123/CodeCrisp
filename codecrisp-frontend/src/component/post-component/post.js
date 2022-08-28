@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { connect } from 'react-redux';
+import { likeUpdate } from '../../Action/PostAction'
 
-const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
+const PostComponent = ({ username, location, avatar, postText, imageURL, postid, likeUpdate, postReducer, authRed }) => {
 
     const [state, setState] = useState({
-        like: false
+        like: false,
+
     })
 
-    const handleClickLike = (e) => {
+    const handleClickLike = (event, postid) => {
+        const userObj = { postid: postid, userid: authRed.user.id };
+        likeUpdate(userObj);
         setState({
             ...state,
             like: !state.like
@@ -24,7 +29,7 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
                 style={{ backgroundColor: "white" }}
             >
                 <div className='user-dp-info'>
-                    <img className='dp-img' src={require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
+                    <img className='dp-img' src={avatar ? avatar : require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
                         <p className='user-name'>{username ? username : 'Here goes user name'}</p>
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>
@@ -46,15 +51,18 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
                     {
                         state.like ? (<FaHeart onClick={handleClickLike} className='icon' style={{ color: 'red', stroke: 'red' }}
                             color="white" title="like" />)
-                            : (<FaHeart onClick={handleClickLike} className='icon' color="white" title="like" />)
+                            : (<FaHeart onClick={event => handleClickLike(event, postid)} className='icon' color="white" title="like" />)
                     }
 
                     <FaRegComment className='icon comment-img' color="white" title="comment" />
                     <FaShare className='icon share-img' color="white" title="share" />
                 </div>
                 <div className='who-liked-post'
-                    style={{ backgroundColor: "white" }}
+                    style={{ backgroundColor: "white", justifyContent: "space-between" }}
                 >
+                    <p
+                        style={{ fontWeight: "bolder" }}
+                    >121 likes</p>
                     <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: '0', background: 'transparent', margin: '2px 10px 8px 0' }}> someone liked your post</p>
                 </div>
             </div>
@@ -89,5 +97,9 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
     );
 }
 
+const mapStateToProps = (state) => ({
+    postReducer: state.postReducer,
+    authRed: state.authRed
+})
 
-export default PostComponent;
+export default connect(mapStateToProps, { likeUpdate })(PostComponent);

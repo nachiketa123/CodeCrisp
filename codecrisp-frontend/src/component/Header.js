@@ -95,7 +95,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                                     <Link className="nav-link" to="/friends">Friends</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Profile</a>
+                                    <Link className="nav-link" to={`/userProfile/${user.id}`}>Profile</Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Settings</a>

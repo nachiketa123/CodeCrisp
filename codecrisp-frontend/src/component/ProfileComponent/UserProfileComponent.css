@@ -1,0 +1,83 @@
+.profile-component-container {
+    padding: 20px;
+}
+
+.profile-summary-container {
+    border: 1px solid black;
+    border-radius: 1em;
+    height: 600px;
+    padding: 10px;
+    width: 30%;
+}
+
+.user-profile-div {
+    border: 1px solid green;
+    height: 300px;
+    border-radius: 1em;
+    position: relative;
+}
+
+img.user-profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1em;
+}
+
+
+.change-profile-picture-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: white;
+    border-bottom-left-radius: 1em; 
+    border-top-right-radius: 1em;
+    padding: 3px;
+}
+
+.change-profile-picture-icon:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.user-profile-img-default {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 1em;
+}
+
+.basic-info-div {
+    padding: 15px 0 0 5px;
+}
+
+li.basic-info {
+    list-style: none;
+}
+
+.onpreview-save-btn{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+.onpreview-cancel-btn{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.profile-pic-change-loading-icon {
+    position: absolute;
+    top: 135px;
+    left: 39%;
+    animation-name: loading_change_color;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading_change_color {
+    0% {color: rgb(187, 171, 80);}
+    50% {color: white;}
+    100% {color: black;}
+}

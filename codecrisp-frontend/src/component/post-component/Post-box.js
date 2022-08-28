@@ -48,7 +48,7 @@ function PostBox({auth : {user} ,addPost}) {
         })
     }
     const handleImageUpload = (e)=>{
-        console.log(e.target.files)
+        // console.log(e.target.files)
         setState({
             ...state,
             files:[...e.target.files]
@@ -81,7 +81,7 @@ function PostBox({auth : {user} ,addPost}) {
 
                     <img
                         className='user-photo'
-                        src={require('../../assets/images/nach_profile.jpg')} alt="Profile Photo" />
+                        src={user.avatar?user.avatar:require('../../assets/images/nach_profile.jpg')} alt="Profile Photo" />
                 </div>
                 <div className='postBox-textArea'>
 
@@ -97,7 +97,7 @@ function PostBox({auth : {user} ,addPost}) {
                 <label htmlFor='upload-photo' className='icons-postbox'>
                     <FaFileImage color='seagreen' className='photo' />Photo
                 </label>
-                <input name="inputFile" onChange={handleImageUpload} type='file' id='upload-photo' formAction='images/*' value={state.inputFile} multiple style={{display:'none'}}  />
+                <input name="inputFile" onChange={handleImageUpload} type='file' id='upload-photo'  value={state.inputFile} multiple style={{display:'none'}}  />
                 <a className='icons-postbox'><FaVideo color='blue'
                     className='video' />Video</a>
                 <a className='icons-postbox'><FaRegStickyNote color='red'

@@ -1,5 +1,7 @@
 import axios from "axios"
-import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST } from "./Types"
+import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, LIKE_POST } from "./Types"
+
+
 
 export const addPost = (postData) => (dispatch) => {
     dispatch({
@@ -39,4 +41,16 @@ export const getAllUserPosts = (user_id) => (dispatch) => {
                 payload: err.response.data
             })
         })
+}
+
+export const likeUpdate = (userData) => (dispatch) => {
+
+    axios.post('/api/post/postlike', userData).then(
+        res => {
+            dispatch({ type: LIKE_POST, payload: res.data })
+        }
+
+    )
+
+
 }
