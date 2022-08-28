@@ -7,13 +7,13 @@
     border-radius: 1em;
     height: 600px;
     padding: 10px;
-    width: 30%;
 }
 
 .user-profile-div {
     border: 1px solid green;
     height: 300px;
     border-radius: 1em;
+    max-width: 400px;
     position: relative;
 }
 
