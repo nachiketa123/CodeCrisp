@@ -6,16 +6,16 @@ import extractUserIdFromURL from '../../utility/UrlidExtract';
 import './UserProfileComponent.css'
 import { MdModeEditOutline } from 'react-icons/md';
 import { FaUserAlt,FaUpload } from 'react-icons/fa';
-import { changeMyProfilePicture } from '../../Action/ProfileAction';
+import { changeMyProfilePicture, setProfilePictureLoadingOff } from '../../Action/ProfileAction';
 import isEmpty from '../../utility/is-empty';
 
-const UserProfileComponent = ( { auth:{ user }, SendFriendRequest, changeMyProfilePicture } ) => {
+const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, SendFriendRequest, changeMyProfilePicture, setProfilePictureLoadingOff } ) => {
 
     const [state, setState] = useState({
         profile_user_id:'',
         add_friend_btn_state:true,
         profileImgFile:'',
-        profileImgUrl:''
+        profileImgUrl:'',
     })
 
 
@@ -58,6 +58,17 @@ const UserProfileComponent = ( { auth:{ user }, SendFriendRequest, changeMyProfi
             ignore2 = true
         }
     },[state.profileImgFile])
+
+    //for showing loading while user changes new profile picture
+    let ignore3 = false
+    useEffect(()=>{
+        if(!ignore3)
+            setProfilePictureLoadingOff();
+
+        return ()=>{
+            ignore3 = true
+        }
+    },[user.avatar])
     
     const toggleAddFriendButtonState = ()=>{
         setState({
@@ -92,7 +103,7 @@ const UserProfileComponent = ( { auth:{ user }, SendFriendRequest, changeMyProfi
         setState({
             ...state,
             profileImgUrl:'',
-            profileImgFile:''
+            profileImgFile:'',
         })
         const user_data = {
             user_id : user.id,
@@ -115,18 +126,18 @@ const UserProfileComponent = ( { auth:{ user }, SendFriendRequest, changeMyProfi
             <div className='profile-summary-container'>
                 <div className="user-profile-div">
 
-                    {user.loadingForProfilePictureChange
-                    ?<div><FaUpload className='profile-pic-change-loading-icon' color='white' size={50}> </FaUpload></div>
+                    {loadingForProfilePictureChange
+                    ?(<div><FaUpload className='profile-pic-change-loading-icon' color='white' size={50}> </FaUpload></div>)
                     
-                    : state.profileImgUrl ? 
-                        (<div className='user-profile-img-preview-div'>
+                    : state.profileImgUrl 
+                        ?(<div className='user-profile-img-preview-div'>
                             <img className='user-profile-img' src={state.profileImgUrl} alt="User Profile preview" />
                             <button onClick={handleSaveProfilePic} className='onpreview-save-btn btn btn-primary'>Save</button>
                             <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
                          </div>)
-                    : (!isEmpty(user) && !isEmpty(user.avatar)) ? <img className='user-profile-img' src={user.avatar} alt="User Profile Pic" /> 
-                    
-                    : <FaUserAlt size="100" className='user-profile-img-default'/>
+                        : (!isEmpty(user) && !isEmpty(user.avatar))   
+                            ? (<img className='user-profile-img' src={user.avatar} alt="User Profile Pic" />) 
+                            : (<FaUserAlt size="100" className='user-profile-img-default'/>)
                     }
                     
                     
@@ -153,11 +164,12 @@ const UserProfileComponent = ( { auth:{ user }, SendFriendRequest, changeMyProfi
 UserProfileComponent.propTypes = {
     SendFriendRequest : PropTypes.func.isRequired, 
     auth: PropTypes.object.isRequired,
-    changeMyProfilePicture: PropTypes.func.isRequired
+    changeMyProfilePicture: PropTypes.func.isRequired,
+    setProfilePictureLoadingOff: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state)=> ({
     auth: state.authRed
 })
  
-export default connect(mapStateToProps, { SendFriendRequest,changeMyProfilePicture })(UserProfileComponent);
+export default connect(mapStateToProps, { SendFriendRequest,changeMyProfilePicture,setProfilePictureLoadingOff })(UserProfileComponent);

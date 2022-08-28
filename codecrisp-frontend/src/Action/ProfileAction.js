@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_ERROR, SET_USER_PROFILE_PICTURE,SET_USER_PROFILE_PICTURE_LOADING_ONN } from "./Types"
+import { GET_ERROR, SET_USER_PROFILE_PICTURE,SET_USER_PROFILE_PICTURE_LOADING_ONN,SET_USER_PROFILE_PICTURE_LOADING_OFF } from "./Types"
 
 export const changeMyProfilePicture = (user_data) => (dispatch) =>{
     dispatch({
@@ -20,5 +20,12 @@ export const changeMyProfilePicture = (user_data) => (dispatch) =>{
                 type: GET_ERROR,
                 payload:err.response.data
             })
+    })
+}
+
+export const setProfilePictureLoadingOff =()=> (dispatch)=>{
+    dispatch({
+        type: SET_USER_PROFILE_PICTURE_LOADING_OFF,
+        payload:{}
     })
 }

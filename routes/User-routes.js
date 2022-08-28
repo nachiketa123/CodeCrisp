@@ -4,10 +4,49 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const { secretKey } = require("../config/Key")
-const cloudinary = require('../config/cloudinary')
+// const cloudinary = require('../config/cloudinary')
 const passport = require("passport")
+const UserPost = require('../model/UserPost')
+const cloudinaryUploader = require('../utility/cloudinaryUploader')
+const isEmpty = require("../utility/is-empty")
 
 
+const getPostForUser = (user_id) =>{
+    return new Promise((resolve,reject)=>{
+        UserPost.find({user:user_id})
+        .then(allPosts=>{
+            resolve(allPosts) 
+        })
+        .catch(err=>{
+            reject(err) 
+        })
+    })
+    
+}
+
+const updateAvatarInAllPost = (postArray,avatarURL) =>{
+    return new Promise(async (resolve,reject)=>{
+        if( isEmpty(postArray) || isEmpty(avatarURL) ){
+            console.log('true url',avatarURL)
+            reject('Something went wrong while creating post array') 
+            return;
+        }
+           
+        await postArray.map(async post=>{
+            post.avatar = avatarURL;
+            await post.save()
+        })
+        resolve(postArray);
+    })
+}
+
+
+
+/*
+    @route:     /api/user/signup
+    @desc:      For registering new user 
+    @access:    Public
+*/
 router.post('/signup',
     (req, res) => {
         const { name, email, phoneno, age, password } = req.body //Destructoring..
@@ -28,6 +67,12 @@ router.post('/signup',
         })
     })
 
+
+/*
+    @route:     /api/user/login
+    @desc:      For Login in the registered user 
+    @access:    Public
+*/
 router.post('/login', (req, res) => {
     const { email, password } = req.body //Destructoring..
     const err = {}
@@ -60,17 +105,36 @@ router.post('/login', (req, res) => {
 
 })
 
+/*
+    @route:     /api/user/update-profile-picture
+    @desc:      For Changing the user profile avatar, makes changes in user.avatar & all the users post avatar
+    @access:    Private
+*/
+
 router.post('/update-profile-picture',passport.authenticate('jwt',{ session: false }),(req,res)=>{
     const { user_id,base64ImgURI } = req.body;
     const error ={}
     User.findById(user_id)
         .then( async user=>{
             if(user){ 
-                const cloudinaryImg = await cloudinary.uploader.upload(base64ImgURI,{ upload_preset: 'codecrisp_media'})
-                user.avatar = cloudinaryImg.url;
-                user.save()
-                    .then(user=>{
-                        return res.status(200).json(user.avatar)
+
+                cloudinaryUploader([base64ImgURI])
+                    .then(cloudinaryImg=>{
+
+                        //change users avatar
+                        user.avatar = cloudinaryImg[0];
+                        user.save()
+                            .then(async user=>{
+
+                                try{
+                                    let UserPostArray = await getPostForUser(user_id)
+                                    UserPostArray =  await updateAvatarInAllPost(UserPostArray,cloudinaryImg[0]);
+                                    return res.status(200).json(user.avatar)
+                                }catch(err){
+                                    return res.status(400).json(err)
+                                }
+                                
+                            })
                     })
             }
             else{

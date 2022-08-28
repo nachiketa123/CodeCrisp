@@ -1,29 +1,11 @@
 const express = require('express');
 const UserPost = require('../model/UserPost')
-const cloudinary = require('../config/cloudinary')
 const isEmpty = require('../utility/is-empty')
 const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
 const User = require('../model/User')
-
-const uploadImagesToCloudinary = (imageUrls) =>{
-    return new Promise(async (resolve,reject)=>{
-        const imageUrlsAfterUpload = [];
-        for(let i=0; i<imageUrls.length; ++i){
-            try{
-                let uploadRes = await cloudinary.uploader.upload(imageUrls[i],{ upload_preset: 'codecrisp_media'})
-                imageUrlsAfterUpload.push(uploadRes.url)
-            }
-            catch(error){
-                console.error('Error: Something went wrong while uploading images '+error);
-            }
-            
-        }
-        resolve(imageUrlsAfterUpload)   
-    })
-    
-}
+const cloudinaryUploader = require('../utility/cloudinaryUploader');
 
 const getPostForUser = (user_id) =>{
     return new Promise((resolve,reject)=>{
@@ -51,12 +33,18 @@ const getPostForUser = (user_id) =>{
     
 }
 
+/*
+    @route:     /api/post/addPost
+    @desc:      To add new post for a user
+    @access:    Private
+*/
 router.post('/addPost',passport.authenticate('jwt',{session:false}),async (req,res)=>{
     const { imageUrls, postText, location, name, user } = req.body;
     const errors ={};
     
     if(!isEmpty(imageUrls)){
-        uploadImagesToCloudinary(imageUrls).then(urls=>{
+        
+        cloudinaryUploader(imageUrls).then(urls=>{
 
             //Fetch Users avatar to be added in Post
             User.findById(user)
@@ -94,6 +82,12 @@ router.post('/addPost',passport.authenticate('jwt',{session:false}),async (req,r
     
 })
 
+
+/*
+    @route:     /api/post/getAllUserPosts/:user_id
+    @desc:      To get all the post of the user and also all the posts of all the user's friends
+    @access:    Private
+*/
 router.get('/getAllUserPosts/:user_id',passport.authenticate('jwt',{ session: false }),(req,res)=>{
     const user_id = req.params.user_id;
     //Find all the friends
@@ -107,6 +101,27 @@ router.get('/getAllUserPosts/:user_id',passport.authenticate('jwt',{ session: fa
 
             
         })
+    
+})
+
+
+/*
+    @route:     /api/post/getAllUserPosts/:user_id
+    @desc:      To get all the post of specific user only
+    @access:    Private
+*/
+router.get('/getUserPostsByUserId/:user_id'
+            ,passport.authenticate( 'jwt',{ session: false } ) 
+            ,async (req,res)=>{
+
+            const user_id = req.params.user_id;
+            //Find all the users post
+            try{
+                const usersPost = await getPostForUser(user_id)
+                return res.status(200).json(usersPost)
+            }catch(err){
+                return res.status(400).json(err)
+            }
     
 })
 
