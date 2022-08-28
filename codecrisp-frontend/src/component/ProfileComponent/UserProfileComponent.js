@@ -148,10 +148,10 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, S
                     
                 </div>
                 <div className='basic-info-div'>
-                    <h5 style={{color:'blue'}}>{''}UserName</h5>
+                    <h5 style={{color:'blue'}}>{user.name}</h5>
                     <ul>
-                        <li className='basic-info'>Email : myEmail</li>
-                        <li className='basic-info'>Phone no : myPhoneNo</li>
+                        <li className='basic-info'>Email : {user.email}</li>
+                        <li className='basic-info'>Phone no : myphonenumber</li>
                         <li className='basic-info'>Age : myAge</li>
                     </ul>
                 </div>
