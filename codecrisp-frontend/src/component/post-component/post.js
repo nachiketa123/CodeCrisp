@@ -18,7 +18,7 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
 
     return (
         <div className='my-card container'
-            style={{ backgroundColor: "white" }}
+            style={{ backgroundColor: "white", width: "95%" }}
         >
             <div className='user-details post-common'
                 style={{ backgroundColor: "white" }}

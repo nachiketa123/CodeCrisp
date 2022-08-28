@@ -15,6 +15,8 @@ import { SET_USER } from './Action/Types';
 import JobDetails from './component/Jobs/JobDetails';
 import Discuss from './component/Discuss/Discuss';
 import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
+import ErrorComponent from './component/ErrorComponent/ErrorComponent';
+import Friends from './component/Friends/Friends';
 
 
 /* 
@@ -47,6 +49,8 @@ function App() {
             <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
             <Route path='/jobs/*' element={<PrivateRoutes component={JobDetails} />} />
             <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
+            <Route path='/friends' element={<PrivateRoutes component={Friends} />} />
+            <Route path='/page-not-found' element={<ErrorComponent />} />
 
           </Routes>
 
