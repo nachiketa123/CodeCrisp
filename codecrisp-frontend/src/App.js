@@ -44,12 +44,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/*' element={<HomePage />} />
-            <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
-            <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
-            <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
-            <Route path='/jobs/*' element={<PrivateRoutes component={JobDetails} />} />
-            <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
-            <Route path='/friends' element={<PrivateRoutes component={FriendNavigatorComponent} />} />
+            <Route path='/' element={<PrivateRoutes header={true} component={HomeUser} />} />
+            <Route path='/jobs' element={<PrivateRoutes header={true} component={Jobs} />} />
+            <Route path='/userProfile/*' element={<PrivateRoutes header={true} component={UserProfileComponent} />} />
+            <Route path='/jobs/*' element={<PrivateRoutes header={true} component={JobDetails} />} />
+            <Route path='/discuss' element={<PrivateRoutes header={true} component={Discuss} />} />
+            <Route path='/friends' element={<PrivateRoutes header={true} component={FriendNavigatorComponent} />} />
             <Route path='/page-not-found' element={<ErrorComponent/>} />
 
           </Routes>

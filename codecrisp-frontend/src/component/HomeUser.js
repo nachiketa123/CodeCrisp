@@ -17,9 +17,6 @@ function HomeUser(props) {
 
     return (
         <div className='app-container'>
-            <div className='header'>
-                  <Header />
-            </div>
             <div className='feed-body'>
                 <div className='chat-box'>
                     <ChatBox />
@@ -32,9 +29,6 @@ function HomeUser(props) {
                     <CommunityNotification />
                 </div>
             </div>
-
-            <SearchResultBox />
-
         </div>
     )
 }

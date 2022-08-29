@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { logOutUser } from '../Action/AuthAction';
 import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
+import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
 
 
@@ -77,7 +78,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                         <div className='navLinks'>
                             <ul className="navbar-nav">
                                 {(user.name) ? (<li className="nav-item">
-                                    <span className="nav-link" href="#">Hi! {user.name}<span className="sr-only">(current)</span></span>
+                                    <a className="nav-link" href="#">Hi! {user.name}<span className="sr-only">(current)</span></a>
                                 </li>) : ""
                                 }
                                 <li className="nav-item">
@@ -110,7 +111,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
                 </nav >
             </div>
-
+            <SearchResultBox />
         </div >
     )
 

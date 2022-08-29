@@ -38,7 +38,16 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, S
     //when state of profileImgFile changes, i.e. user tried to change the profile picture
     let ignore2 = false
     useEffect(()=>{
-        if(!ignore2){
+        // console.log('ignore2: ',ignore2)
+        
+        // console.log(!isEmpty(state.profileImgFile))
+
+        // if(typeof state.profileImgFile === "object"){
+        //     console.log('state.profileImgFile ',state.profileImgFile.name)
+        //     console.log('length: ',Object.keys(state.profileImgFile.name))
+        // }
+        if(!ignore2 && !isEmpty(state.profileImgFile.name)){
+            console.log('here me')
             try{
                 const reader = new FileReader()
                 reader.onloadend = ()=>{

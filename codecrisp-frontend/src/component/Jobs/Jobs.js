@@ -20,7 +20,7 @@ function Jobs({ jobReducer, getAllJobs }) {
 
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className='container'>
                 <div className='row'>
                     {jobReducer.jobsData.map((e) => (
