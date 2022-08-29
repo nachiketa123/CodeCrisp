@@ -31,7 +31,7 @@
     margin-left: 15px;
 }
 .navbar-nav{
-    /* background: transparent; */
+    background: transparent;
     /* background-color: black; */
     display: flex;
     justify-content: space-between;

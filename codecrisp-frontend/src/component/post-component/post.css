@@ -101,7 +101,7 @@
   }
 
   .post-actions .icon {
-    height: 20px;
+    height: 31px;
     width: 50%;
     background-color: white;
     stroke: black;
@@ -109,7 +109,7 @@
   }
 
   .post-actions .comment-img  {
-    height: 20px;
+    height: 31px;
     width: 50%;
     background-color: white;
     fill: black;
@@ -170,7 +170,21 @@ input.comment-box:focus {
 }
 
 
+/* Media queries */
+
+@media screen and (max-width: 991px) {
+  .post-actions .icon, .post-actions .comment-img {
+    height: 25px;
+  }
+
+}
+
 @media screen and (max-width: 576px) {
+
+  .post-actions .icon, .post-actions .comment-img {
+    height: 20px;
+  }
+
   .my-card {
     width: 90%;
   }

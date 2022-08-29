@@ -21,7 +21,7 @@ function Jobs({ jobReducer, getAllJobs }) {
     return (
         <div>
             {/* <Header /> */}
-            <div className='container'>
+            <div className='jobs-container-div'>
                 <div className='row'>
                     {jobReducer.jobsData.map((e) => (
                         <div key={e._id} className='col-sm-10 col-md-6 col-lg-4 mx-auto'>

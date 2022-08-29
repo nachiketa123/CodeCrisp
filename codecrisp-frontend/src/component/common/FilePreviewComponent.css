@@ -4,19 +4,20 @@
     padding: 5px;
     margin: 5px;
     flex-wrap: wrap;
+    background-color: white;
 }
 
 .preview-one {
     display: flex;
     align-items: center;
-    margin: 0 5px 0 5px;
-    background-color: rgb(24,26,32);;
+    margin: 0 5px 5px 5px;
+    background-color: transparent;
 }
 
 img.preview-img {
     height: 180px;
     width: 180px;
-    border: 1px solid white;;
+    /* border: 1px solid white; */
     border-radius: 2em;
-    padding: 2px;
+    /* padding: 2px; */
 }
