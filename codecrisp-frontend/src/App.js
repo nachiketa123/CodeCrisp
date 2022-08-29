@@ -43,7 +43,7 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path='*' element={<HomePage />} />
+            <Route path='/*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
             <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
             <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />

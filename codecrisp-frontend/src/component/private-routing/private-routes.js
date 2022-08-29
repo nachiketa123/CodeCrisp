@@ -15,7 +15,7 @@ const PrivateRoutes = ({ component: Component, auth: { isAuthenticated }, errorR
         
     }
     else{
-        return (<Navigate to="*" />)
+        return (<Navigate to="/*" />)
     }
 }
 
