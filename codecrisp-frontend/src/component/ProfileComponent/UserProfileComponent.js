@@ -6,10 +6,15 @@ import extractUserIdFromURL from '../../utility/UrlidExtract';
 import './UserProfileComponent.css'
 import { MdModeEditOutline } from 'react-icons/md';
 import { FaUserAlt,FaUpload } from 'react-icons/fa';
-import { changeMyProfilePicture, setProfilePictureLoadingOff } from '../../Action/ProfileAction';
+import { changeMyProfilePicture, setProfilePictureLoadingOff, getProfileForUser } from '../../Action/ProfileAction';
 import isEmpty from '../../utility/is-empty';
 
-const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, SendFriendRequest, changeMyProfilePicture, setProfilePictureLoadingOff } ) => {
+const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
+                                profileReducer:{ user_profile }, 
+                                SendFriendRequest, 
+                                changeMyProfilePicture, 
+                                setProfilePictureLoadingOff, 
+                                getProfileForUser } ) => {
 
     const [state, setState] = useState({
         profile_user_id:'',
@@ -145,23 +150,29 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, S
                             <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
                          </div>)
                         : (!isEmpty(user) && !isEmpty(user.avatar))   
-                            ? (<img className='user-profile-img' src={user.avatar} alt="User Profile Pic" />) 
+                            ? (<img className='user-profile-img' src={user_profile.avatar} alt="User Profile Pic" />) 
                             : (<FaUserAlt size="100" className='user-profile-img-default'/>)
                     }
                     
+                    {user.id === user_profile.user?
+                        (<React.Fragment>
+                            
+                            <label htmlFor='edit-img-input'>
+                            <MdModeEditOutline size="25" className='change-profile-picture-icon'  title='change profile picture'/>
+                            </label>
+                            <input name="inputFile" onChange={handleProfilePictureChange} type='file' id='edit-img-input'  value={state.inputFile} style={{display:'none'}}  />
+                        
+                        </React.Fragment>)
+                :''}
                     
-                    <label htmlFor='edit-img-input'>
-                        <MdModeEditOutline size="25" className='change-profile-picture-icon'  title='change profile picture'/>
-                    </label>
-                    <input name="inputFile" onChange={handleProfilePictureChange} type='file' id='edit-img-input'  value={state.inputFile} style={{display:'none'}}  />
                     
                 </div>
                 <div className='basic-info-div'>
-                    <h5 style={{color:'blue'}}>{user.name}</h5>
+                    <h5 style={{color:'blue'}}>{user_profile.name}</h5>
                     <ul>
-                        <li className='basic-info'>Email : {user.email}</li>
-                        <li className='basic-info'>Phone no : myphonenumber</li>
-                        <li className='basic-info'>Age : myAge</li>
+                        <li className='basic-info'>Email : {user_profile.email}</li>
+                        <li className='basic-info'>Phone no : {user_profile.phoneNo}</li>
+                        <li className='basic-info'>Age : {user_profile.age}</li>
                     </ul>
                 </div>
                 

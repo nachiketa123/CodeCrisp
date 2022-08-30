@@ -36,7 +36,7 @@ app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
-app.use('/api/user_profile', userProfileRoutes)
+app.use('/api/user-profile', userProfileRoutes)
 
 
 app.listen(5000, () => {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport')
 const UserProfile = require('../model/UserProfile')
+const User = require('../model/User')
 
 /*
     @route:     /api/user_profile/get_profile/:user_id
@@ -17,8 +18,18 @@ router.get('/get-profile/:user_id',passport.authenticate('jwt',{ session: false 
                 error.profileNotFound = 'User does not have a profile'
                 return res.status(404).json(error)
             }
-                
-            return res.status(200).json(profile)
+            User.findById(user_id)
+                .then(user=>{
+                    const newProfileWithAvatar = {
+                        ...profile._doc,
+                        name:user.name,
+                        phoneNo:user.phoneno,
+                        email:user.email,
+                        avatar:user.avatar
+                    }
+                    return res.status(200).json(newProfileWithAvatar)
+                })
+            
         }).catch(err=>{
             return res.json(err);
         })

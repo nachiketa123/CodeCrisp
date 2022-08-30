@@ -33,7 +33,7 @@ export const setProfilePictureLoadingOff =()=> (dispatch)=>{
 
 export const getProfileForUser = (user_id) => (dispatch) =>{
 
-    axios.get(`/api/user_profile/get-profile/${user_id}`)
+    axios.get(`/api/user-profile/get-profile/${user_id}`)
         .then(res=>{
             dispatch({
                 type: GET_USER_PROFILE,
