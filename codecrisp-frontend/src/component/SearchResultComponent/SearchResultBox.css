@@ -11,6 +11,8 @@ li.list-group-item{
 
 .search-user-name{
     margin-left: 15px;
+    vertical-align: top;
+    line-height: 40px;
 }
 
 .search-icon{

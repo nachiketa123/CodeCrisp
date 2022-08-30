@@ -10,6 +10,8 @@ const searchRoute = require("./routes/Search-route")
 const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
 const friendRoutes = require('./routes/Friend-route')
+const userProfileRoutes = require('./routes/profile-route')
+
 
 mongo.connect(dbURI).then(
     () => {
@@ -29,11 +31,12 @@ PassportConfig(passport);
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }))
 app.use(bodyParser.json({ limit: '100mb' })),
 
-    app.use('/api/user', userRoute)
+app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
+app.use('/api/user_profile', userProfileRoutes)
 
 
 app.listen(5000, () => {

@@ -26,6 +26,7 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, S
         extractUserIdFromURL()
         .then(res=>{
             let profile_user_id = res;
+            getProfileForUser(profile_user_id)
             setState({
                 ...state,
                 profile_user_id: profile_user_id
@@ -47,7 +48,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange }, S
         //     console.log('length: ',Object.keys(state.profileImgFile.name))
         // }
         if(!ignore2 && !isEmpty(state.profileImgFile.name)){
-            console.log('here me')
             try{
                 const reader = new FileReader()
                 reader.onloadend = ()=>{
@@ -174,11 +174,16 @@ UserProfileComponent.propTypes = {
     SendFriendRequest : PropTypes.func.isRequired, 
     auth: PropTypes.object.isRequired,
     changeMyProfilePicture: PropTypes.func.isRequired,
-    setProfilePictureLoadingOff: PropTypes.func.isRequired
+    setProfilePictureLoadingOff: PropTypes.func.isRequired,
+    getProfileForUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state)=> ({
-    auth: state.authRed
+    auth: state.authRed,
+    profileReducer: state.profileReducer,
 })
  
-export default connect(mapStateToProps, { SendFriendRequest,changeMyProfilePicture,setProfilePictureLoadingOff })(UserProfileComponent);
+export default connect(mapStateToProps, { SendFriendRequest,
+                                        changeMyProfilePicture,
+                                        setProfilePictureLoadingOff, 
+                                        getProfileForUser })(UserProfileComponent);

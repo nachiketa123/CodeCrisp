@@ -14,7 +14,7 @@ router.get('/', passport.authenticate('jwt',{session:false}), (req, res) => {
             const searchUserdata = [];
             user.map(e => {
 
-                const searchedUser = { name: e.name, _id: e._id };
+                const searchedUser = { name: e.name, _id: e._id, avatar:e.avatar };
                 searchUserdata.push(searchedUser)
             })
             return res.status(200).json(searchUserdata);

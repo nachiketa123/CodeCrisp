@@ -26,17 +26,18 @@ const getPostForUser = (user_id) =>{
 
 const updateAvatarInAllPost = (postArray,avatarURL) =>{
     return new Promise(async (resolve,reject)=>{
-        if( isEmpty(postArray) || isEmpty(avatarURL) ){
-            console.log('true url',avatarURL)
+        if( isEmpty(avatarURL) ){
             reject('Something went wrong while creating post array') 
             return;
         }
            
+        
         await postArray.map(async post=>{
             post.avatar = avatarURL;
             await post.save()
         })
         resolve(postArray);
+        
     })
 }
 
@@ -128,7 +129,10 @@ router.post('/update-profile-picture',passport.authenticate('jwt',{ session: fal
 
                                 try{
                                     let UserPostArray = await getPostForUser(user_id)
-                                    UserPostArray =  await updateAvatarInAllPost(UserPostArray,cloudinaryImg[0]);
+                                    if( !isEmpty(UserPostArray)){
+                                        UserPostArray =  await updateAvatarInAllPost(UserPostArray,cloudinaryImg[0]);
+                                    }
+                                    
                                     return res.status(200).json(user.avatar)
                                 }catch(err){
                                     return res.status(400).json(err)
