@@ -180,8 +180,14 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
 
     return ( 
         <div className='profile-component-container'>
-            { profile_page_loading  ? <div style={{display:'flex',justifyContent:'center'}}><FaUpload className='profile-page-loading-icon' color='white' size={250}> </FaUpload></div>
+            <div className="profile-summary-container">
+                { profile_page_loading  ? <div style={{display:'flex',justifyContent:'center'}}>
+                                            <FaUpload className='profile-page-loading-icon' color='white' size={250}> 
+                                            </FaUpload>
+                                        </div>
                                     :user_profile ?  renderProfile() :  renderNoProfileFound()}
+            </div>
+            
         </div>
         
      );

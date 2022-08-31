@@ -21,7 +21,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id',passport.authenticate('jwt', { session: false }), (req, res) => {
     const _id = req.params.id;
     const error = {}
     Job.findById(_id).then(
