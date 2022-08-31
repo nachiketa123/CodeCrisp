@@ -98,8 +98,6 @@ router.get('/getAllUserPosts/:user_id',passport.authenticate('jwt',{ session: fa
             const usersPost = await getPostForUser(user_id)
             finalPostArray.push(...usersPost)
             return res.status(200).json(finalPostArray)
-
-            
         })
     
 })
@@ -115,12 +113,14 @@ router.get('/getUserPostsByUserId/:user_id'
             ,async (req,res)=>{
 
             const user_id = req.params.user_id;
+            const error = {}
             //Find all the users post
             try{
                 const usersPost = await getPostForUser(user_id)
                 return res.status(200).json(usersPost)
             }catch(err){
-                return res.status(400).json(err)
+                error.dberror = 'DB error'
+                return res.status(403).json(dberror)
             }
     
 })

@@ -15,8 +15,8 @@ router.get('/get-profile/:user_id',passport.authenticate('jwt',{ session: false 
     UserProfile.findOne({user:user_id})
         .then(profile=>{
             if(!profile){
-                error.profileNotFound = 'User does not have a profile'
-                return res.status(404).json(error)
+                // error.profileNotFound = 'User does not have a profile'
+                return res.status(200).json();
             }
             User.findById(user_id)
                 .then(user=>{

@@ -10,11 +10,13 @@ import { changeMyProfilePicture, setProfilePictureLoadingOff, getProfileForUser 
 import isEmpty from '../../utility/is-empty';
 
 const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
-                                profileReducer:{ user_profile }, 
+                                profileReducer:{ user_profile, profile_page_loading }, 
                                 SendFriendRequest, 
                                 changeMyProfilePicture, 
                                 setProfilePictureLoadingOff, 
-                                getProfileForUser } ) => {
+                                getProfileForUser
+                                 } 
+                            ) => {
 
     const [state, setState] = useState({
         profile_user_id:'',
@@ -135,9 +137,51 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
         })
     }
 
-    return ( 
-        <div className='profile-component-container'>
-            <div className='profile-summary-container'>
+    const renderProfile = () =>{
+        return (<div className='profile-summary-container'>
+                    <div className="user-profile-div">
+
+                        {loadingForProfilePictureChange
+                        ?(<div><FaUpload className='profile-pic-change-loading-icon' color='white' size={50}> </FaUpload></div>)
+                        
+                        : state.profileImgUrl 
+                            ?(<div className='user-profile-img-preview-div'>
+                                <img className='user-profile-img' src={state.profileImgUrl} alt="User Profile preview" />
+                                <button onClick={handleSaveProfilePic} className='onpreview-save-btn btn btn-primary'>Save</button>
+                                <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
+                            </div>)
+                            : (!isEmpty(user_profile) && !isEmpty(user_profile.avatar))   
+                                ? (<img className='user-profile-img' src={user_profile.avatar} alt="User Profile Pic" />) 
+                                : (<FaUserAlt size="100" className='user-profile-img-default'/>)
+                        }
+                        
+                        {user.id === user_profile.user?
+                            (<React.Fragment>
+                                
+                                <label htmlFor='edit-img-input'>
+                                <MdModeEditOutline size="25" className='change-profile-picture-icon'  title='change profile picture'/>
+                                </label>
+                                <input name="inputFile" onChange={handleProfilePictureChange} type='file' id='edit-img-input'  value={state.inputFile} style={{display:'none'}}  />
+                            
+                            </React.Fragment>)
+                    :''}
+                        
+                        
+                    </div>
+                    <div className='basic-info-div'>
+                        <h5 style={{color:'blue'}}>{user_profile.name}</h5>
+                        <ul>
+                            <li className='basic-info'>Email : {user_profile.email}</li>
+                            <li className='basic-info'>Phone no : {user_profile.phoneNo}</li>
+                            <li className='basic-info'>Age : {user_profile.age}</li>
+                        </ul>
+                    </div>
+                    
+                </div>)
+    }
+
+    const renderNoProfileFound = () =>{
+        return (
                 <div className="user-profile-div">
 
                     {loadingForProfilePictureChange
@@ -148,9 +192,9 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                             <img className='user-profile-img' src={state.profileImgUrl} alt="User Profile preview" />
                             <button onClick={handleSaveProfilePic} className='onpreview-save-btn btn btn-primary'>Save</button>
                             <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
-                         </div>)
+                        </div>)
                         : (!isEmpty(user) && !isEmpty(user.avatar))   
-                            ? (<img className='user-profile-img' src={user_profile.avatar} alt="User Profile Pic" />) 
+                            ? (<img className='user-profile-img' src={user.avatar} alt="User Profile Pic" />) 
                             : (<FaUserAlt size="100" className='user-profile-img-default'/>)
                     }
                     
@@ -163,20 +207,35 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                             <input name="inputFile" onChange={handleProfilePictureChange} type='file' id='edit-img-input'  value={state.inputFile} style={{display:'none'}}  />
                         
                         </React.Fragment>)
-                :''}
-                    
-                    
-                </div>
-                <div className='basic-info-div'>
-                    <h5 style={{color:'blue'}}>{user_profile.name}</h5>
-                    <ul>
-                        <li className='basic-info'>Email : {user_profile.email}</li>
-                        <li className='basic-info'>Phone no : {user_profile.phoneNo}</li>
-                        <li className='basic-info'>Age : {user_profile.age}</li>
-                    </ul>
-                </div>
+                    :''}
+
+                    <div className='basic-info-div'>
+                        <h5 style={{color:'blue'}}>{user.name}</h5>
+                        <ul>
+                            <li className='basic-info'>Email : {user.email}</li>
+                            {/* <li className='basic-info'>Phone no : {user.phoneNo}</li>
+                            <li className='basic-info'>Age : {user.age}</li> */}
+                        </ul>
+                    </div>
+                    <div className="profile-not-found-div">
+                        <p style={{ fontSize: '20px',color: '#ff4747',fontWeight: '600'}} >
+                            You have not yet set your profile,<br/>
+                                <button style={{margin: '0 15px 0 0', borderRadius:'1em'}}
+                                    className="btn btn-primary"> Click me 
+                                </button>
+                            and tell others about yourself. Make your mark !! :{')'}
+                        </p>
+                    </div>
                 
-            </div>
+                
+                </div>
+        )
+    }
+
+    return ( 
+        <div className='profile-component-container'>
+            { profile_page_loading  ? <div style={{display:'flex',justifyContent:'center'}}><FaUpload className='profile-page-loading-icon' color='white' size={250}> </FaUpload></div>
+                                    :!user_profile ? renderNoProfileFound() : renderProfile()}
         </div>
         
      );
@@ -186,12 +245,14 @@ UserProfileComponent.propTypes = {
     auth: PropTypes.object.isRequired,
     changeMyProfilePicture: PropTypes.func.isRequired,
     setProfilePictureLoadingOff: PropTypes.func.isRequired,
-    getProfileForUser: PropTypes.func.isRequired
+    getProfileForUser: PropTypes.func.isRequired,
+    // errorReducer: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({
     auth: state.authRed,
     profileReducer: state.profileReducer,
+    // errorReducer: state.errorReducer,
 })
  
 export default connect(mapStateToProps, { SendFriendRequest,

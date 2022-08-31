@@ -47,7 +47,7 @@ const create_or_update_friend_list=(sender,reciever)=>{
 
 router.post('/sendFriendRequest',(req,res)=>{
     const {sender_user_id, recipient_user_id} = req.body;
-
+    const error = {}
     //TODO: Create a notification model+ add a friend request notification to recipient
     // res.json({sender_user_id,recipient_user_id})
 
@@ -61,10 +61,12 @@ router.post('/sendFriendRequest',(req,res)=>{
                 return res.status(200).json('Friend added')
             })
             .catch(err=>{
-                return res.status(403).json('DB error')
+                error.dberror = 'DB error'
+                return res.status(403).json(dberror)
             })
     }).catch(err=>{
-        return res.status(403).json('DB error')
+        error.dberror = 'DB error'
+        return res.status(403).json(dberror)
     })
     
 

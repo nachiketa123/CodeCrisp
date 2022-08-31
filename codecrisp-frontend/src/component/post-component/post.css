@@ -5,7 +5,7 @@
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1);
     transition: 0.3s;
-    width: 88%;
+    width: 62%;
     background-color: rgb(31,33,40);
 
     /* height: 400px; */
@@ -18,7 +18,10 @@
   .container {
     padding: 15px;
   }
-  
+
+.my-card.container:nth-child(1) {
+  margin-top: 50px;
+}
   .my-card:hover {
     border: 5px;
     box-shadow: -1px 0px 13px 1px white;
@@ -61,13 +64,13 @@
 
   .user-info .user-name {
     font-weight: bold; 
-    font-size: 15px;
+    font-size: 20px;
     margin: 0
   }
 
   .user-info .user-location {
     color: grey;
-    font-size: 12px;
+    font-size: 15px;
     margin: 0;
   }
 
@@ -90,9 +93,18 @@
     background:transparent;
   }
 
+  .main-post {
+    max-height: 365px;
+    /* max-width: 380px; */
+    display: flex;
+    justify-content: center;
+    background: transparent;
+  }
+
   .post-img {
     height: 100%;
     width: 100%;
+    max-width: 365px;
   }
 
   .post-actions {
@@ -101,7 +113,7 @@
   }
 
   .post-actions .icon {
-    height: 31px;
+    height: 24px;
     width: 50%;
     background-color: white;
     stroke: black;
@@ -109,7 +121,7 @@
   }
 
   .post-actions .comment-img  {
-    height: 31px;
+    height: 24px;
     width: 50%;
     background-color: white;
     fill: black;
