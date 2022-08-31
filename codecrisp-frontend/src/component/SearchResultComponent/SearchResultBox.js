@@ -2,11 +2,14 @@ import React from 'react'
 import { FaSearch, FaUserAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import isEmpty from '../../utility/is-empty';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 
 function SearchResultBox({ search: { user } }) {
-
+    const navigate = useNavigate();
+    const handleNavigateToUserProfile = (event,id) =>{
+        navigate(`/userProfile/${id}`)
+    }
     return (
         <div className='container search-container'>
 
@@ -21,7 +24,7 @@ function SearchResultBox({ search: { user } }) {
                                         src={e.avatar}
                                         alt="search_image" />
                                         :(<FaUserAlt size="30" className='image-search'/>)}
-                            <Link className='search-user-name' to={`/userProfile/${e._id}`}>{e.name}</Link>
+                            <a className='search-user-name' onClick={event=>handleNavigateToUserProfile(event,e._id)}>{e.name}</a>
                             <FaSearch color='grey' className="search-icon" title='search' />
                         </li>)) : ""
                         }
