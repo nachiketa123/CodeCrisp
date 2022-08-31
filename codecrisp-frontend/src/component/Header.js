@@ -39,6 +39,13 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
     }
 
+    const clearSearchBar = () =>{
+        setState({
+            ...state,
+            searchtext:''
+        })
+    }
+
     return (
         <div>
             <div className='container-fluid'>
@@ -111,7 +118,7 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
                 </nav >
             </div>
-            <SearchResultBox />
+            <SearchResultBox clearSearchBar={clearSearchBar}/>
         </div >
     )
 

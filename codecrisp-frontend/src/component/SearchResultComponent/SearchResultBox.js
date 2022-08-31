@@ -5,10 +5,11 @@ import isEmpty from '../../utility/is-empty';
 import { Link,useNavigate } from 'react-router-dom';
 
 
-function SearchResultBox({ search: { user } }) {
+function SearchResultBox({ search: { user },clearSearchBar }) {
     const navigate = useNavigate();
     const handleNavigateToUserProfile = (event,id) =>{
-        navigate(`/userProfile/${id}`)
+        clearSearchBar()
+        navigate(`/userProfile/${id}`) 
     }
     return (
         <div className='container search-container'>
