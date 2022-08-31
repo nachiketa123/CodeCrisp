@@ -15,7 +15,10 @@ const UserProfileSummaryComponent = (
         handleSaveProfilePic,
         handleCancelProfilePic,
         inputFile,
-        handleProfilePictureChange 
+        handleProfilePictureChange ,
+        isFriendWithUser,
+        handleAddFriend,
+        handleUnFriend
     }) => {
 
     // console.log(loadingForProfilePictureChange,profileImgUrl,user,isCurrentUser)
@@ -65,6 +68,20 @@ const UserProfileSummaryComponent = (
                                 </button>
                             and tell others about yourself. Make your mark !! :{')'}
                         </p>
+                    </div>
+                    :''}
+
+                    {!isCurrentUser?
+                    <div className="add-cancel-friend-btn-div">
+                        {
+                        !isFriendWithUser
+                            ?<button onClick={handleAddFriend} className="btn btn-primary">
+                                Add Friend
+                            </button>
+                            :<button onClick={handleUnFriend} className="btn btn-danger">
+                                Unfriend
+                            </button>
+                        }
                     </div>
                     :''}
                 

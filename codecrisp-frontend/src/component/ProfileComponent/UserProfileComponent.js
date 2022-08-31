@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SendFriendRequest } from '../../Action/FriendAction';
+import { SendFriendRequest, sendUnFriendRequest, checkIfFriendWithUser } from '../../Action/FriendAction';
 import extractUserIdFromURL from '../../utility/UrlidExtract';
 import './UserProfileComponent.css'
 import { MdModeEditOutline } from 'react-icons/md';
@@ -13,10 +13,13 @@ import UserProfileSummaryComponent from './UserProfileSummaryComponent';
 
 const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                                 profileReducer:{ user_profile, profile_page_loading }, 
+                                friendReducer: { isFriendWithUser },
                                 SendFriendRequest, 
                                 changeMyProfilePicture, 
                                 setProfilePictureLoadingOff, 
-                                getProfileForUser
+                                getProfileForUser,
+                                sendUnFriendRequest,
+                                checkIfFriendWithUser
                                  } 
                             ) => {
 
@@ -35,6 +38,11 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
         .then(res=>{
             let profile_user_id = res;
             // console.log('useEffect current url',profile_user_id)
+            const user_data = {
+                user_id: user.id,
+                friend_id: profile_user_id
+            }
+            checkIfFriendWithUser(user_data)
             getProfileForUser(profile_user_id)
             setState({
                 ...state,
@@ -103,18 +111,35 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
     }
 
     const handleAddFriend = async (e)=>{
-        if( state.add_friend_btn_state === true){
+        if( !isFriendWithUser ){
             const payload ={
                 sender_user_id: user.id,
                 recipient_user_id: await extractUserIdFromURL()
             }
             SendFriendRequest(payload);
+            const user_data = {
+                user_id: user.id,
+                friend_id: state.profile_user_id
+            }
         }
         else{
             //TODO: cancel friend request
         }
-        toggleAddFriendButtonState();
         
+    }
+
+    const handleUnFriend = async (e)=>{
+        if( isFriendWithUser ){
+            const payload = {
+                sender_user_id: user.id,
+                recipient_user_id: await extractUserIdFromURL()
+            }
+            sendUnFriendRequest(payload);
+            const user_data = {
+                user_id: user.id,
+                friend_id: state.profile_user_id
+            }
+        }
     }
 
     const handleSaveProfilePic = () =>{
@@ -154,6 +179,10 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                         handleCancelProfilePic = {state.profile_user_id === user.id ? handleCancelProfilePic : '' }
                         handleProfilePictureChange = {state.profile_user_id === user.id ? handleProfilePictureChange : '' }
                         isProfileSet={!isEmpty(user_profile)}
+                        add_friend_btn_state = {state.add_friend_btn_state}
+                        isFriendWithUser = {isFriendWithUser}
+                        handleAddFriend = {handleAddFriend}
+                        handleUnFriend = {handleUnFriend}
                     />
                 )
     }
@@ -173,6 +202,10 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                     handleCancelProfilePic = {state.profile_user_id === user.id ? handleCancelProfilePic : '' }
                     handleProfilePictureChange = {state.profile_user_id === user.id ? handleProfilePictureChange : '' }
                     isProfileSet = {!isEmpty(user_profile)}
+                    add_friend_btn_state = {state.add_friend_btn_state}
+                    isFriendWithUser = {isFriendWithUser}
+                    handleAddFriend = {handleAddFriend}
+                    handleUnFriend = {handleUnFriend}
                 />
                 
             )
@@ -198,16 +231,21 @@ UserProfileComponent.propTypes = {
     changeMyProfilePicture: PropTypes.func.isRequired,
     setProfilePictureLoadingOff: PropTypes.func.isRequired,
     getProfileForUser: PropTypes.func.isRequired,
+    sendUnFriendRequest: PropTypes.func.isRequired,
+    checkIfFriendWithUser: PropTypes.func.isRequired
     // errorReducer: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({
     auth: state.authRed,
     profileReducer: state.profileReducer,
+    friendReducer: state.friendReducer
     // errorReducer: state.errorReducer,
 })
  
 export default connect(mapStateToProps, { SendFriendRequest,
                                         changeMyProfilePicture,
                                         setProfilePictureLoadingOff, 
-                                        getProfileForUser })(UserProfileComponent);
+                                        getProfileForUser,
+                                        sendUnFriendRequest,
+                                        checkIfFriendWithUser })(UserProfileComponent);
