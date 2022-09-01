@@ -25,7 +25,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
 
     const [state, setState] = useState({
         profile_user_id:'',
-        add_friend_btn_state:true,
         profileImgFile:'',
         profileImgUrl:'',
     })
@@ -58,13 +57,13 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
     useEffect(()=>{
         // console.log('ignore2: ',ignore2)
         
-        // console.log(!isEmpty(state.profileImgFile))
+        // console.log(state.profileImgFile)
 
         // if(typeof state.profileImgFile === "object"){
         //     console.log('state.profileImgFile ',state.profileImgFile.name)
         //     console.log('length: ',Object.keys(state.profileImgFile.name))
         // }
-        if(!ignore2 && !isEmpty(state.profileImgFile.name)){
+        if(!ignore2){
             try{
                 const reader = new FileReader()
                 reader.onloadend = ()=>{
@@ -73,7 +72,17 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                         profileImgUrl: reader.result
                     })
                 }
-                reader.readAsDataURL(state.profileImgFile)
+
+                if(typeof state.profileImgFile === 'object'){
+                    reader.readAsDataURL(state.profileImgFile)
+                }
+                    
+                else{
+                    setState({
+                        ...state,
+                        profileImgUrl: ''
+                    })
+                }
             }catch(err){
                 console.log('error in img upload',err)
             }
@@ -95,13 +104,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
             ignore3 = true
         }
     },[user.avatar])
-    
-    const toggleAddFriendButtonState = ()=>{
-        setState({
-            ...state,
-            add_friend_btn_state: !state.add_friend_btn_state
-        })
-    }
 
     const handleProfilePictureChange = (e)=>{
         setState({
@@ -179,7 +181,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                         handleCancelProfilePic = {state.profile_user_id === user.id ? handleCancelProfilePic : '' }
                         handleProfilePictureChange = {state.profile_user_id === user.id ? handleProfilePictureChange : '' }
                         isProfileSet={!isEmpty(user_profile)}
-                        add_friend_btn_state = {state.add_friend_btn_state}
                         isFriendWithUser = {isFriendWithUser}
                         handleAddFriend = {handleAddFriend}
                         handleUnFriend = {handleUnFriend}
@@ -202,7 +203,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                     handleCancelProfilePic = {state.profile_user_id === user.id ? handleCancelProfilePic : '' }
                     handleProfilePictureChange = {state.profile_user_id === user.id ? handleProfilePictureChange : '' }
                     isProfileSet = {!isEmpty(user_profile)}
-                    add_friend_btn_state = {state.add_friend_btn_state}
                     isFriendWithUser = {isFriendWithUser}
                     handleAddFriend = {handleAddFriend}
                     handleUnFriend = {handleUnFriend}

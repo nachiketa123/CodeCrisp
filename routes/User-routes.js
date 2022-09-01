@@ -137,7 +137,6 @@ router.post('/update-profile-picture',passport.authenticate('jwt',{ session: fal
 
                                         //delete previous image from cloudinary
                                         let result = await deleteImagesFromCloudinary([previousAvatarURL])
-                                        console.log(result)
                                     }
                                     
                                     return res.status(200).json(user.avatar)
