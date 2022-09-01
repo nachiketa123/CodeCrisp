@@ -5,7 +5,7 @@ const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
 const User = require('../model/User')
-const cloudinaryUploader = require('../utility/cloudinaryUploader');
+const cloudinaryUploader = require('../utility/cloudinaryFileManager');
 
 const getPostForUser = (user_id) =>{
     return new Promise((resolve,reject)=>{

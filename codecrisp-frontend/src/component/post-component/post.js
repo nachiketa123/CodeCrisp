@@ -74,7 +74,7 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
                 <div className="comment-wrapper"
                     style={{ backgroundColor: "white" }}
                 >
-                    <img src="img/smile.PNG" className="icon" alt=""
+                    <img className="icon" alt=""
                         style={{ backgroundColor: "white", color: "black" }}
                     />
                     <input type="text" className="comment-box" placeholder="Add a comment"

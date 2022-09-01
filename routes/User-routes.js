@@ -7,7 +7,8 @@ const { secretKey } = require("../config/Key")
 // const cloudinary = require('../config/cloudinary')
 const passport = require("passport")
 const UserPost = require('../model/UserPost')
-const cloudinaryUploader = require('../utility/cloudinaryUploader')
+const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
+const deleteImagesFromCloudinary = require('../utility/cloudinaryFileManager').deleteImagesFromCloudinary;
 const isEmpty = require("../utility/is-empty")
 
 
@@ -122,6 +123,8 @@ router.post('/update-profile-picture',passport.authenticate('jwt',{ session: fal
                 cloudinaryUploader([base64ImgURI])
                     .then(cloudinaryImg=>{
 
+                        //save previous url so that we can delete it after new avatar is saved
+                        const previousAvatarURL = user.avatar
                         //change users avatar
                         user.avatar = cloudinaryImg[0];
                         user.save()
@@ -131,6 +134,10 @@ router.post('/update-profile-picture',passport.authenticate('jwt',{ session: fal
                                     let UserPostArray = await getPostForUser(user_id)
                                     if( !isEmpty(UserPostArray)){
                                         UserPostArray =  await updateAvatarInAllPost(UserPostArray,cloudinaryImg[0]);
+
+                                        //delete previous image from cloudinary
+                                        let result = await deleteImagesFromCloudinary([previousAvatarURL])
+                                        console.log(result)
                                     }
                                     
                                     return res.status(200).json(user.avatar)

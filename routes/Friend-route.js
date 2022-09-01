@@ -51,7 +51,7 @@ const deleteAndUpdateFriendList = (sender,reciever)=>{
         .then(data=>{
             const friend_list = data.friend_list.filter(friend=>friend.user.toString() !== reciever.toString());
             data.friend_list = friend_list;
-            console.log(typeof data, data.friend_list)
+            // console.log(typeof data, data.friend_list)
             data.save().then(updatedData=>{
                 resolve(updatedData)
             }).catch(err=>{
