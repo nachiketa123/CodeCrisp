@@ -46,18 +46,24 @@ const io = new Server(httpServer)
 const onlineUsers = [];
 
 io.on('connection',(socket)=>{
-    console.log(socket.id)
-    io.emit('server_conn','Welcome! You are connected to server')
+    // console.log('new socket_id: ',socket.id)
+    io.emit('server_conn','Welcome! You are now connected with the Server')
     socket.on('add_new_user',(user_id)=>{
         // console.log('adding new user',user_id)
-        SocketUtils.addNewUser(onlineUsers,user_id,socket.id)
-        console.log(onlineUsers)
+
+        if(user_id){
+            // console.log('before adding',onlineUsers)
+            SocketUtils.addNewUser(onlineUsers,user_id,socket.id) 
+        }
+            
+        // console.log('after adding',onlineUsers)
     })
     //  notification event handled in other file
      require('./socketEvents/notification-event-sckt')(socket,io,onlineUsers)
 
     socket.on('disconnect',()=>{
         SocketUtils.removeUser(onlineUsers,socket.id)
+        // console.log('user disconnected ',onlineUsers)
     })
 
    

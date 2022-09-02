@@ -1,8 +1,14 @@
 const addNewUser = (onlineUsers=[],user_id,socket_id) =>{
-    !onlineUsers.some(user=> user.user_id === user_id) && onlineUsers.push({
-        user_id,
-        socket_id
-    })
+    const index = onlineUsers.findIndex(user=> user.user_id === user_id)
+    if(index === -1){
+        onlineUsers.push({
+            user_id,
+            socket_id
+        })
+    }else{
+        onlineUsers[index].socket_id = socket_id;
+    }
+    
 }
 
 const removeUser = (onlineUsers=[],socket_id) =>{

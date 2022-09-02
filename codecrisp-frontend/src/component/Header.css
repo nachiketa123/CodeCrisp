@@ -240,9 +240,15 @@
         font-size: 16px;
     }
 
+  
+}
+
+@media screen and (max-width: 991px) {
+
     .bell-icon-container-div {
         position: relative;
         background: transparent;
+        cursor: pointer;
     }
 
     .notification-counter {
@@ -254,9 +260,9 @@
         color: white;
         font-size: 16px;
         right: -12px;
+        border: 2px solid white;
+        height: 35px;
     }
-
-  
 }
 
 @media screen and (max-width: 576px) {
@@ -300,6 +306,19 @@
     .bell-icon {
         width: 25px;
         height: 25px;
+    }
+
+    .notification-counter {
+        background: red;
+        border-radius: 19em;
+        padding: 2px;
+        position: absolute;
+        top: -10px;
+        color: white;
+        font-size: 12px;
+        right: -1px;
+        border: 1px solid white;
+        height: 2em;
     }
 
     .chat-icon {

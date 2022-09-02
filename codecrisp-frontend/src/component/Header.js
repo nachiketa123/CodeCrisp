@@ -22,14 +22,9 @@ function Header({
     const [state, setState] = useState({ searchtext: "" })
 
 
-    // useEffect(() => {
-    //     console.log(search.user)
-    // }, [search.user])
     useEffect(()=>{
-        console.log('In useEfffect')
         if( !isEmpty(socket)){
             socket.on('get_post_like_notification',(data)=>{
-                console.log('data', data)
                 getNotification(data)
             })
         }

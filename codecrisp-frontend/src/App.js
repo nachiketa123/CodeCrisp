@@ -43,16 +43,18 @@ function App() {
   let ignore = false;
   
   useEffect(()=>{
+
     if(!ignore){
-      const socket = io('')
-      console.log('init',socket)
-      myStore.dispatch({
-        type: SET_SOCKET,
-        payload: socket
-      })
-      socket.on('server_conn',(msg)=>{
-        console.log(msg)
-      })
+
+        const socket = io()
+        // console.log('init',socket.id)
+        myStore.dispatch({
+          type: SET_SOCKET,
+          payload: socket
+        })
+        socket.on('server_conn',(msg)=>{
+          console.log(msg)
+        })
 
     }
     
@@ -61,20 +63,6 @@ function App() {
     }
   },[])
 
-  let ignore2 = false
-  useEffect(()=>{
-    if(!ignore2){
-      const socket = myStore.getState().socketReducer.socket
-      console.log(socket)
-      socket.emit('add_new_user',myStore.getState().authRed.user.id)
-    }
-
-    return ()=>{
-      ignore2 = true
-    }
-    
-  },[ myStore.getState().authRed.user, 
-      myStore.getState().socketReducer.socket])
 
   return (
     <div className="App">
