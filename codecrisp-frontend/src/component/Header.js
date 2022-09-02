@@ -21,12 +21,16 @@ function Header({
 
     const [state, setState] = useState({ searchtext: "" })
 
-
+    let ignore = false;
     useEffect(()=>{
-        if( !isEmpty(socket)){
+        if( !isEmpty(socket) && !ignore){
             socket.on('get_post_like_notification',(data)=>{
                 getNotification(data)
             })
+        }
+
+        return ()=>{
+            ignore = true
         }
         
     },[socket])
