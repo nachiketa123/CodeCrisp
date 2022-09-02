@@ -6,6 +6,8 @@ import PostReducer from './PostReducer';
 import errorReducer from './ErrorReducer';
 import profileReducer from './ProfileReducer';
 import friendReducer from './FriendReducer';
+import socketReducer from './SocketReducer';
+import notificationReducer from './NotificationReducer';
 
 const rootReducer = combineReducers(
     { authRed: authReducer, 
@@ -14,7 +16,9 @@ const rootReducer = combineReducers(
         jobReducer,
         errorReducer: errorReducer,
         profileReducer: profileReducer,
-        friendReducer: friendReducer
+        friendReducer: friendReducer,
+        socketReducer: socketReducer,
+        notificationReducer: notificationReducer
         
      }
 )

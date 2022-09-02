@@ -11,12 +11,14 @@ import Jobs from './component/Jobs/Jobs.js';
 import Header from './component/Header';
 import setAuthHeader from './utility/set-auth-header';
 import jwtDecode from 'jwt-decode';
-import { SET_USER } from './Action/Types';
+import { SET_USER,SET_SOCKET } from './Action/Types';
 import JobDetails from './component/Jobs/JobDetails';
 import Discuss from './component/Discuss/Discuss';
 import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
 import ErrorComponent from './component/ErrorComponent/ErrorComponent';
 import FriendNavigatorComponent from './component/friend-component/FriendNavigatorComponent';
+import { io } from 'socket.io-client';
+import { useEffect } from 'react';
 
 
 /* 
@@ -35,7 +37,45 @@ if (token) {
   })
 }
 
+
+
 function App() {
+  let ignore = false;
+  
+  useEffect(()=>{
+    if(!ignore){
+      const socket = io('')
+      console.log('init',socket)
+      myStore.dispatch({
+        type: SET_SOCKET,
+        payload: socket
+      })
+      socket.on('server_conn',(msg)=>{
+        console.log(msg)
+      })
+
+    }
+    
+    return ()=>{
+      ignore = true;
+    }
+  },[])
+
+  let ignore2 = false
+  useEffect(()=>{
+    if(!ignore2){
+      const socket = myStore.getState().socketReducer.socket
+      console.log(socket)
+      socket.emit('add_new_user',myStore.getState().authRed.user.id)
+    }
+
+    return ()=>{
+      ignore2 = true
+    }
+    
+  },[ myStore.getState().authRed.user, 
+      myStore.getState().socketReducer.socket])
+
   return (
     <div className="App">
 

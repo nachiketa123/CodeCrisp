@@ -7,9 +7,17 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
+import { getNotification } from '../Action/PostAction';
+import PropTypes from 'prop-types';
 
-
-function Header({ logOutUser, auth: { user }, search, searchResult }) {
+function Header({ 
+    logOutUser, 
+    auth: { user }, 
+    search, 
+    searchResult, 
+    notif: {notification} ,
+    socketReducer: { socket },
+    getNotification}) {
 
     const [state, setState] = useState({ searchtext: "" })
 
@@ -17,7 +25,16 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
     // useEffect(() => {
     //     console.log(search.user)
     // }, [search.user])
-
+    useEffect(()=>{
+        console.log('In useEfffect')
+        if( !isEmpty(socket)){
+            socket.on('get_post_like_notification',(data)=>{
+                console.log('data', data)
+                getNotification(data)
+            })
+        }
+        
+    },[socket])
     useEffect(() => {
         const userFind = { searchText: state.searchtext }
         searchResult(userFind);
@@ -67,7 +84,11 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
                         </form>
                     </div>
 
-                    <FaRegBell color='white' className='bell-icon' title='notifications' />
+                    <div className='bell-icon-container-div'>
+                        <FaRegBell color='white' className='bell-icon' title='notifications' />
+                       {notification.length?<span className='notification-counter'>{notification.length}</span>:''}
+                    </div>
+
                     <FaRegComments color='white' className='chat-icon' title='chat' />
 
                     {/* Toggle Area */}
@@ -124,9 +145,21 @@ function Header({ logOutUser, auth: { user }, search, searchResult }) {
 
 }
 
+Header.propTypes = {
+    auth: PropTypes.object.isRequired,
+    search: PropTypes.object.isRequired,
+    notif: PropTypes.object.isRequired,
+    socketReducer: PropTypes.object.isRequired,
+    logOutUser: PropTypes.func.isRequired,
+    searchResult: PropTypes.func.isRequired,
+    getNotification: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
     auth: state.authRed,
-    search: state.searchRed
+    search: state.searchRed,
+    notif: state.notificationReducer,
+    socketReducer: state.socketReducer
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult, getNotification })(Header)

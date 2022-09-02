@@ -3,18 +3,28 @@ import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
+const PostComponent = ({ 
+    username, 
+    location, 
+    avatar, 
+    postText, 
+    imageURL,
+    id ,
+    handleDeletePost,
+    handleClickLike,
+}) => {
 
     const [state, setState] = useState({
         like: false
     })
 
-    const handleClickLike = (e) => {
-        setState({
-            ...state,
-            like: !state.like
-        })
-    }
+    // const handleClickLike = (e) => {
+    //     setState({
+    //         ...state,
+    //         like: !state.like
+    //     })
+    // }
+
 
     return (
         <div className='my-card container'
@@ -30,7 +40,7 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>
                     </div>
                 </div>
-                <BsThreeDotsVertical color='black' className='post-menu-img' title="post menu" />
+                <BsThreeDotsVertical onClick={event=>handleDeletePost(event,id)} color='black' className='post-menu-img' title="post menu" />
             </div>
             <div className='post-body post-common'
                 style={{ backgroundColor: "white" }}
@@ -44,9 +54,9 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
 
 
                     {
-                        state.like ? (<FaHeart onClick={handleClickLike} className='icon' style={{ color: 'red', stroke: 'red' }}
+                        state.like ? (<FaHeart onClick={evnt=>handleClickLike(id)} className='icon' style={{ color: 'red', stroke: 'red' }}
                             color="white" title="like" />)
-                            : (<FaHeart onClick={handleClickLike} className='icon' color="white" title="like" />)
+                            : (<FaHeart onClick={evnt=>handleClickLike(id)} className='icon' color="white" title="like" />)
                     }
 
                     <FaRegComment className='icon comment-img' color="white" title="comment" />
@@ -89,5 +99,12 @@ const PostComponent = ({ username, location, avatar, postText, imageURL }) => {
     );
 }
 
+// PostComponent.propTypes = {
+//     auth: PropTypes.func.isRequired
+// }
+
+// const mapStateToProps = (state)=> ({
+//     auth: state.authRed
+// })
 
 export default PostComponent;

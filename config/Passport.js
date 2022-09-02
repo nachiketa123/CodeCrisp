@@ -25,7 +25,7 @@ const passportConfig = (passport) => {
         ).catch(
             err => {
                 error.authErr = "Auth Error"
-                console.log(authErr);
+                console.log(error);
             }
         )
     }))

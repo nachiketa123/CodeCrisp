@@ -11,7 +11,9 @@ const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
 const friendRoutes = require('./routes/Friend-route')
 const userProfileRoutes = require('./routes/profile-route')
-
+const createServer  = require('http').createServer
+const Server = require('socket.io').Server
+const SocketUtils = require('./utility/socketUtility')
 
 mongo.connect(dbURI).then(
     () => {
@@ -38,7 +40,29 @@ app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
 app.use('/api/user-profile', userProfileRoutes)
 
+const httpServer = createServer(app);
+const io = new Server(httpServer)
 
-app.listen(5000, () => {
+const onlineUsers = [];
+
+io.on('connection',(socket)=>{
+    console.log(socket.id)
+    io.emit('server_conn','Welcome! You are connected to server')
+    socket.on('add_new_user',(user_id)=>{
+        // console.log('adding new user',user_id)
+        SocketUtils.addNewUser(onlineUsers,user_id,socket.id)
+        console.log(onlineUsers)
+    })
+    //  notification event handled in other file
+     require('./socketEvents/notification-event-sckt')(socket,io,onlineUsers)
+
+    socket.on('disconnect',()=>{
+        SocketUtils.removeUser(onlineUsers,socket.id)
+    })
+
+   
+})
+
+httpServer.listen(5000, () => {
     console.log("Server challu ho gya hai")
 });

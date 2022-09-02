@@ -1,4 +1,4 @@
-import { GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST } from "../Action/Types";
+import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST } from "../Action/Types";
 
 const initialState = {
     allUserPosts:[],
@@ -24,6 +24,13 @@ const PostReducer = (state = initialState,action) =>{
             return {
                 ...state,
                 loading:true
+            }
+
+        case DELETE_USER_POST:
+            console.log('In reducer',state.allUserPosts)
+            return {
+                ...state,
+                allUserPosts: state.allUserPosts.filter(post=> post._id !== action.payload)
             }
         default:
             return state;

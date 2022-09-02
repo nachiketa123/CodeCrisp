@@ -240,6 +240,22 @@
         font-size: 16px;
     }
 
+    .bell-icon-container-div {
+        position: relative;
+        background: transparent;
+    }
+
+    .notification-counter {
+        background: red;
+        border-radius: 19em;
+        padding: 4px;
+        position: absolute;
+        top: -16px;
+        color: white;
+        font-size: 16px;
+        right: -12px;
+    }
+
   
 }
 
