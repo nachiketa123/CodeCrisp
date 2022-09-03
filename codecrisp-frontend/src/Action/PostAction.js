@@ -47,10 +47,3 @@ export const deletePost = (id) => (dispatch)=>{
         payload: id
     })
 }
-
-export const getNotification = (data) => (dispatch)=>{
-    dispatch({
-        type:POST_LIKE_NOTIFICATION,
-        payload: data
-    })
-}

@@ -1,15 +1,22 @@
-import { POST_LIKE_NOTIFICATION } from "../Action/Types"
+import { POST_LIKE_NOTIFICATION,GET_NOTIFICATION_FROM_SOCKET, GET_ALL_NOTIFICATION_FROM_DB} from "../Action/Types"
 
 const initialState = {
     notification :[]     
 }
-
+let newNotification = [];
 const notificationReducer = ( state = initialState, action) =>{
     switch(action.type){
-        case POST_LIKE_NOTIFICATION:
+        case GET_NOTIFICATION_FROM_SOCKET:
+            newNotification = [...state.notification,...action.payload?.notification].filter(obj=> !obj?.seen)
             return {
                 ...state,
-                notification: [...state.notification,action.payload]
+                notification: newNotification
+            }
+        case GET_ALL_NOTIFICATION_FROM_DB:
+            newNotification = action.payload.notification.filter(obj=> !obj?.seen)
+            return {
+                ...state,
+                notification: newNotification
             }
         default:
             return state

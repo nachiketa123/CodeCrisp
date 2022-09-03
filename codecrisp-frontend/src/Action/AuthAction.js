@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER, GET_ALL_JOB } from './Types';
+import { GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER, GET_ALL_JOB, REMOVE_ALL_EVENTS_FROM_SOCKET } from './Types';
 
 
 /*
@@ -46,6 +46,12 @@ export const signIn = (userData) => (dispatch) => {
 */
 export const logOutUser = () => (dispatch) => {
     // console.log('logout')
+
+    //handled in socket reducer
+    dispatch({
+        type: REMOVE_ALL_EVENTS_FROM_SOCKET,
+        payload:true
+    })
     dispatch({
         type: LOGOUT_USER,
         payload: {}

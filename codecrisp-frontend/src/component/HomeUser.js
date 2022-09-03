@@ -11,7 +11,12 @@ import { useEffect, useState } from 'react';
 import SearchResultBox from './SearchResultComponent/SearchResultBox'
 import './SearchResultComponent/SearchResultBox.css'
 import isEmpty from '../utility/is-empty';
+
 function HomeUser({ auth: { user }, socketReducer: {socket}}) {
+
+    
+
+
     const [state, setState] = useState({
         user: {}
     })

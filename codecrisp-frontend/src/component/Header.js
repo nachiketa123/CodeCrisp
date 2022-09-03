@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
-import { getNotification } from '../Action/PostAction';
+import { getNotificationFromDB, getNotificationFromSocket } from '../Action/NotificationAction';
 import PropTypes from 'prop-types';
 
 function Header({ 
@@ -17,15 +17,21 @@ function Header({
     searchResult, 
     notif: {notification} ,
     socketReducer: { socket },
-    getNotification}) {
+    getNotificationFromSocket,
+    getNotificationFromDB}) {
 
     const [state, setState] = useState({ searchtext: "" })
 
     let ignore = false;
+    
+    useEffect(()=>{
+        getNotificationFromDB(user.id)
+    },[])
+
     useEffect(()=>{
         if( !isEmpty(socket) && !ignore){
             socket.on('get_post_like_notification',(data)=>{
-                getNotification(data)
+                getNotificationFromSocket(data)
             })
         }
 
@@ -151,7 +157,8 @@ Header.propTypes = {
     socketReducer: PropTypes.object.isRequired,
     logOutUser: PropTypes.func.isRequired,
     searchResult: PropTypes.func.isRequired,
-    getNotification: PropTypes.func.isRequired
+    getNotificationFromSocket: PropTypes.func.isRequired,
+    getNotificationFromDB: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -161,4 +168,4 @@ const mapStateToProps = (state) => ({
     socketReducer: state.socketReducer
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult, getNotification })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB })(Header)

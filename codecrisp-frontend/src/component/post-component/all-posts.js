@@ -34,11 +34,15 @@ const AllPosts = ({
     }
     const handleClickLike = async (id) => {
         const post_data = await getPostData(id);
+        // console.log('handleClickLike',post_data)
         if( !isEmpty(post_data) ){
+            // console.log('looks like post_data is not empty')
             const event_data = {
                 ...post_data,
-                type:'like',
-                user_who_liked:user.id
+                type:'post_like',
+                user_who_liked:user.id,
+                name:user.name,
+                avatar:user.avatar?user.avatar:''
             }
             socket.emit('post_like',event_data)
         }

@@ -11,6 +11,7 @@ const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
 const friendRoutes = require('./routes/Friend-route')
 const userProfileRoutes = require('./routes/profile-route')
+const notificationRoutes = require('./routes/Notification-route')
 const createServer  = require('http').createServer
 const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
@@ -39,6 +40,7 @@ app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
 app.use('/api/user-profile', userProfileRoutes)
+app.use('/api/notification',notificationRoutes)
 
 const httpServer = createServer(app);
 const io = new Server(httpServer)
