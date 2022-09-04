@@ -283,8 +283,8 @@
         width: 5px;
     }
     .notification-list-div::-webkit-scrollbar-track {
-        background: rgb(255, 227, 143);
-        border-radius: 10px;
+        background: white;
+        border-radius: 1em;
     }
 
     .notification-list-div::-webkit-scrollbar-thumb {
