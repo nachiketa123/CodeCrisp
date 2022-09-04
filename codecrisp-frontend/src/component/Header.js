@@ -9,6 +9,7 @@ import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
 import { getNotificationFromDB, getNotificationFromSocket } from '../Action/NotificationAction';
 import PropTypes from 'prop-types';
+import ListGroupComponent from './common/ListGroupComponent';
 
 function Header({ 
     logOutUser, 
@@ -20,7 +21,7 @@ function Header({
     getNotificationFromSocket,
     getNotificationFromDB}) {
 
-    const [state, setState] = useState({ searchtext: "" })
+    const [state, setState] = useState({ searchtext: "", showNotification: false })
 
     let ignore = false;
     
@@ -67,6 +68,12 @@ function Header({
             searchtext:''
         })
     }
+    const handleToggleNotification = ()=>{
+        setState({
+            ...state,
+            showNotification: !state.showNotification
+        })
+    }
 
     return (
         <div>
@@ -89,7 +96,7 @@ function Header({
                         </form>
                     </div>
 
-                    <div className='bell-icon-container-div'>
+                    <div onClick={handleToggleNotification} className='bell-icon-container-div'>
                         <FaRegBell color='white' className='bell-icon' title='notifications' />
                        {notification.length?<span className='notification-counter'>{notification.length}</span>:''}
                     </div>
@@ -145,6 +152,11 @@ function Header({
                 </nav >
             </div>
             <SearchResultBox clearSearchBar={clearSearchBar}/>
+            {state.showNotification
+                ?(<div className='notification-list-div'>
+                    <ListGroupComponent items={notification}/>
+                </div>)
+                :''}
         </div >
     )
 
@@ -165,7 +177,7 @@ const mapStateToProps = (state) => ({
     auth: state.authRed,
     search: state.searchRed,
     notif: state.notificationReducer,
-    socketReducer: state.socketReducer
+    socketReducer: state.socketReducer,
 })
 
 export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB })(Header)

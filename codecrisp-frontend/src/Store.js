@@ -12,7 +12,7 @@ const initial = {};
 const myStore = createStore(rootReducer
     , initial
     , compose(applyMiddleware(thunk)
-        ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     ))
 
 let currentState = myStore.getState();

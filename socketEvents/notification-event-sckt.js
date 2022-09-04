@@ -39,12 +39,14 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
             notification:[{
                 type: 'post_like',
                 action_item_id: data._id,
+                action_item_img: data.imageUrls,
                 source: {
                     user:data.user_who_liked,
                     name: data.name,
                     avatar: data.avatar
                 },
-                seen: false
+                seen: false,
+                date: Date.now()
             }]
         }
         const reciever = SocketUtils.getUser(onlineUsers, data.user)
@@ -56,7 +58,7 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
         //else create new notification object
         addOrUpdateNotification(newData)
             .then(data=>{
-                console.log('Notification saved')
+                // console.log('Notification saved')
             }).catch(err=>{
                 console.log(err)
             })            

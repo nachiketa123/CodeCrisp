@@ -100,11 +100,12 @@
     cursor: pointer;
 }
 
-.bell-icon {
+.bell-icon,.notification-counter {
     display: none;
     cursor: pointer;
    
 }
+
 .chat-icon {
     display: none;
     margin-left: 4px;
@@ -122,6 +123,8 @@
     outline: none;
     padding: 0.25rem 0.35rem;
 }
+
+
 
 @media screen and (max-width: 1200px) {
     .nav-left{
@@ -150,7 +153,7 @@
     .nav-right{
         flex: 0 0 50%;
     }
-
+    
 }
 
 @media screen and (max-width: 991px) {
@@ -202,6 +205,9 @@
         background: transparent;
 
     }
+    .notification-counter {
+        display: inline;
+    }
 
     .chat-icon {
         display: block;
@@ -240,11 +246,6 @@
         font-size: 16px;
     }
 
-  
-}
-
-@media screen and (max-width: 991px) {
-
     .bell-icon-container-div {
         position: relative;
         background: transparent;
@@ -263,6 +264,36 @@
         border: 2px solid white;
         height: 35px;
     }
+
+    .notification-list-div {
+        position: fixed;
+        right: 18px;
+        top: 67px;
+        width: 46%;
+        z-index: 1;
+        background-color: lightslategrey;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 1em;
+        max-height: 254px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .notification-list-div::-webkit-scrollbar {
+        width: 5px;
+    }
+    .notification-list-div::-webkit-scrollbar-track {
+        background: rgb(255, 227, 143);
+        border-radius: 10px;
+    }
+
+    .notification-list-div::-webkit-scrollbar-thumb {
+        background: black;
+        border-radius: 10px;
+    }
+
+
+  
 }
 
 @media screen and (max-width: 576px) {
@@ -334,6 +365,10 @@
     .hamburger-icon {
         width: 25px;
         height: 25px;
+    }
+
+    .notification-list-div {
+        width: 65%;
     }
 
 }

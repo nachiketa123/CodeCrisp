@@ -15,6 +15,11 @@ const UserNotification = new Schema({
             action_item_id:{
                 type: String,
             },
+            action_item_img:[
+                {
+                    type:String
+                }
+            ],
             source:{
                 isSystem:{
                     type: Boolean,

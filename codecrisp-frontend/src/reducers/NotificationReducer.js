@@ -7,7 +7,7 @@ let newNotification = [];
 const notificationReducer = ( state = initialState, action) =>{
     switch(action.type){
         case GET_NOTIFICATION_FROM_SOCKET:
-            newNotification = [...state.notification,...action.payload?.notification].filter(obj=> !obj?.seen)
+            newNotification = [...action.payload?.notification,...state.notification].filter(obj=> !obj?.seen)
             return {
                 ...state,
                 notification: newNotification
