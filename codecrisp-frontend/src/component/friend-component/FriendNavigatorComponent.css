@@ -39,6 +39,7 @@ h2.navigator-heading {
 
 .selector-div-right-part {
     background-color: transparent;
+    margin-top: 3px;
 }
 
 .selector-div:hover {
@@ -66,3 +67,8 @@ h2.navigator-heading {
     background: transparent;
 }
 
+.active {
+    color: blue;
+    font-weight: 400;
+    cursor: pointer;
+}

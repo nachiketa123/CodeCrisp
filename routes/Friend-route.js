@@ -2,6 +2,8 @@ const express = require('express');
 const passport = require('passport');
 const FriendCollection = require('../model/Friend')
 const router = express.Router();
+const isEmpty = require('../utility/is-empty')
+const User = require('../model/User')
 
 const create_or_update_friend_list=(sender,reciever)=>{
     return new Promise((resolve,reject)=>{
@@ -64,7 +66,35 @@ const deleteAndUpdateFriendList = (sender,reciever)=>{
     
 }
 
-
+const getFriendDetails = (friend)=>{
+    return new Promise((resolve,reject)=>{
+        const user_id = friend.user;
+        User.findById(user_id)
+            .then(user=>{
+                if(user){
+                    const userDetails = {
+                        id: user._id,
+                        avatar: user.avatar,
+                        name: user.name,
+                        email: user.email,
+                        isCloseFriend: friend.isCloseFriend,
+                        friendship_start_date: friend.friendship_start_date
+                    }
+                    resolve(userDetails)
+                }
+                else{
+                    reject('User Not Found with id: '+user_id)
+                }
+            }).catch(err=>{
+                reject(err)
+            })
+    })
+}
+/*
+    @route:     /api/friend/sendFriendRequest
+    @desc:      To send Friend Request to a particular user
+    @access:    Private
+*/
 router.post('/sendFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const {sender_user_id, recipient_user_id} = req.body;
     const error = {}
@@ -92,7 +122,11 @@ router.post('/sendFriendRequest',passport.authenticate('jwt',{session: false}),(
 
 })
 
-
+/*
+    @route:     /api/friend/sendUnFriendRequest
+    @desc:      To send UnFriend Request to a particular user
+    @access:    Private
+*/
 router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false}),async (req,res)=>{
     const { sender_user_id, recipient_user_id} = req.body;
     const error = {};
@@ -108,7 +142,12 @@ router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false})
 
 })
 
-router.get('/check-if-friend-with-user',(req,res)=>{
+/*
+    @route:     /api/friend/check-if-friend-with-user
+    @desc:      To check if current user is friend with another user
+    @access:    Private
+*/
+router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const { user_id,friend_id } = req.query;
     const error = {}
     FriendCollection.findOne({ user: user_id})
@@ -121,4 +160,38 @@ router.get('/check-if-friend-with-user',(req,res)=>{
         })
 })
 
+/*
+    @route:     /api/friend/get-friend-list/:user_id
+    @desc:      To fetch all the friend of current user from the system
+    @access:    Private
+*/
+router.get('/get-friend-list/:user_id',passport.authenticate('jwt',{session: false}),(req,res)=>{
+    const { user_id } = req.params;
+    const error = {}
+    FriendCollection.findOne({user: user_id})
+        .then(async document=>{
+            
+            if( isEmpty(document)){
+                return res.status(200).json([])
+            }
+            else{
+                const friend_list = document.friend_list;
+                const friendDetails = []
+                for(let i=0; i<friend_list.length; ++i){
+                    try{
+                        const userDetails = await getFriendDetails(friend_list[i])
+                        friendDetails.push(userDetails)
+                    }catch(err){
+                        error.dberror = 'DB Error '+err
+                        return res.status(403).json(error)
+                    }
+                    
+                }
+                return res.status(200).json(friendDetails)
+            }
+        }).catch(err=>{
+            error.dberror = 'DB Error '+err
+            return res.status(403).json(error)
+        })
+})
 module.exports = router

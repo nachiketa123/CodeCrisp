@@ -3,6 +3,12 @@ const User = require("../model/User")
 const router = express.Router()
 const passport = require('passport')
 
+/*
+    @route:     /api/searchUser/
+    @desc:      To search users in the system using their name regex
+    @access:    Private
+*/
+
 router.get('/', passport.authenticate('jwt',{session:false}), (req, res) => {
 
     const { searchText } = req.query;

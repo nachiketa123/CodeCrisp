@@ -9,9 +9,10 @@ function FriendComponent() {
     const location = useLocation();
     const navigate = useNavigate();
     useEffect(()=>{
-        console.log(location.pathname.toString()+'/see-all-friends')
-        navigate(location.pathname.toString()+'/see-all-friends')
-    },[])
+        const pathname = location.pathname.toString()
+        if(pathname === '/friends')
+            navigate(pathname+'/see-all-friends')
+    },[location])
 
     return (
         <div className="friend-container-div">

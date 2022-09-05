@@ -1,7 +1,10 @@
-const { GET_FLG_IF_FRIEND_WITH_USER } = require("../Action/Types")
+import isEmpty from "../utility/is-empty"
+
+const { GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST } = require("../Action/Types")
 
 const initialState = {
-    isFriendWithUser: false
+    isFriendWithUser: false,
+    friend_list:[]
 }
 
 const friendReducer = (state = initialState, action) =>{
@@ -9,7 +12,12 @@ const friendReducer = (state = initialState, action) =>{
         case GET_FLG_IF_FRIEND_WITH_USER:
             return{
                 ...state,
-                isFriendWithUser: action.payload
+                isFriendWithUser: isEmpty(action.payload)?[]:action.payload
+            }
+        case GET_FRIEND_LIST:
+            return {
+                ...state,
+                friend_list:action.payload
             }
         default:
             return state
