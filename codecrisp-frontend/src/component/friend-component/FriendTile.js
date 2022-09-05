@@ -4,7 +4,7 @@ function FriendTile() {
     return (
         <div>
             <div class="card"
-                style={{ background: "white", width: "15rem" }}
+                style={{ background: "white" }}
             >
                 <img class="card-img-top" src={require('../../assets/images/ayush.jpg')} alt="Card image cap" />
                 <div class="card-body p-0"

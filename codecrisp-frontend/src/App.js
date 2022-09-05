@@ -15,8 +15,7 @@ import JobDetails from './component/Jobs/JobDetails';
 import Discuss from './component/Discuss/Discuss';
 import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
 import ErrorComponent from './component/ErrorComponent/ErrorComponent';
-import Friends from './component/Friends/Friends';
-import FriendNavigatorComponent from './component/friend-component/FriendNavigatorComponent';
+import FriendComponent from './component/friend-component/FriendComponent';
 
 
 
@@ -53,7 +52,7 @@ function App() {
             <Route path='/userProfile/*' element={<PrivateRoutes header={true} component={UserProfileComponent} />} />
             <Route path='/jobs/*' element={<PrivateRoutes header={true} component={JobDetails} />} />
             <Route path='/discuss' element={<PrivateRoutes header={true} component={Discuss} />} />
-            <Route path='/friends' element={<PrivateRoutes header={true} component={FriendNavigatorComponent} />} />
+            <Route path='/friends/*' element={<PrivateRoutes header={true} component={FriendComponent} />} />
             <Route path='/page-not-found' element={<ErrorComponent/>} />
 
           </Routes >

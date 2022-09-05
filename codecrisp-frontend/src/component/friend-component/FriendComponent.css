@@ -1,0 +1,9 @@
+.friend-container-div {
+    display: flex;
+    flex-direction: row;
+}
+.friend-navigator-div {
+    flex: 1 0 34%;
+    max-width: 360px;
+    min-width: 315px;
+}
