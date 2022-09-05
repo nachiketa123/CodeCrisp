@@ -15,7 +15,8 @@ const PostComponent = ({
 }) => {
 
     const [state, setState] = useState({
-        like: false
+        like: false,
+
     })
 
     // const handleClickLike = (e) => {
@@ -28,13 +29,13 @@ const PostComponent = ({
 
     return (
         <div className='my-card container'
-            style={{ backgroundColor: "white" }}
+            style={{ backgroundColor: "white", width: "95%" }}
         >
             <div className='user-details post-common'
                 style={{ backgroundColor: "white" }}
             >
                 <div className='user-dp-info'>
-                    <img className='dp-img' src={avatar?avatar:require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
+                    <img className='dp-img' src={avatar ? avatar : require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
                         <p className='user-name'>{username ? username : 'Here goes user name'}</p>
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>
@@ -63,8 +64,11 @@ const PostComponent = ({
                     <FaShare className='icon share-img' color="white" title="share" />
                 </div>
                 <div className='who-liked-post'
-                    style={{ backgroundColor: "white" }}
+                    style={{ backgroundColor: "white", justifyContent: "space-between" }}
                 >
+                    <p
+                        style={{ fontWeight: "bolder" }}
+                    >121 likes</p>
                     <p style={{ color: 'black', fontWeight: 'bold', fontSize: '14px', margin: '0', background: 'transparent', margin: '2px 10px 8px 0' }}> someone liked your post</p>
                 </div>
             </div>

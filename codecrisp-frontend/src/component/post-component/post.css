@@ -9,7 +9,7 @@
     background-color: rgb(31,33,40);
 
     /* height: 400px; */
-    border-radius: 1.5em;
+    /* border-radius: 1.5em; */
     border-color: rgb(45, 164, 9);
     justify-content: space-between;
     margin: 15px auto;
@@ -17,6 +17,7 @@
 }
   .container {
     padding: 15px;
+    border-radius: 0px;
   }
 
 .my-card.container:nth-child(1) {
@@ -29,7 +30,7 @@
   
   .post-common {
     
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: 1px rgb(255, 255, 255);
   }
   .user-details {

@@ -10,7 +10,7 @@
 
 .card-body-discuss{
     display: flex;
-    background-image: linear-gradient(to right,orange,white,green); 
+  background-color: white;
     justify-content: center;
     align-items: center;
     border-radius: 0.5em;

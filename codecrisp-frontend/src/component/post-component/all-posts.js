@@ -69,6 +69,7 @@ const AllPosts = ({
                         imageURL={post.imageUrls ? post.imageUrls[0] : undefined} 
                         handleDeletePost = {handleDeletePost}
                         handleClickLike = {handleClickLike}/>
+
                     ))
 
                     : ''}

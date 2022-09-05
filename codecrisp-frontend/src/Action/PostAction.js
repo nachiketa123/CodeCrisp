@@ -1,42 +1,44 @@
 import axios from "axios"
-import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN,GET_ALL_USER_POST, DELETE_USER_POST, POST_LIKE_NOTIFICATION } from "./Types"
+import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN,GET_ALL_USER_POST, DELETE_USER_POST, POST_LIKE_NOTIFICATION, LIKE_POST } from "./Types"
 
-export const addPost = (postData) => (dispatch) =>{
+
+
+export const addPost = (postData) => (dispatch) => {
     dispatch({
         type: SET_LOADING_ONN,
-        payload:{}
+        payload: {}
     })
-    axios.post('/api/post/addPost',postData)
-        .then(res=>{
+    axios.post('/api/post/addPost', postData)
+        .then(res => {
             dispatch({
-                type:USER_ADDED_NEW_POST,
+                type: USER_ADDED_NEW_POST,
                 payload: res.data
             })
         })
-        .catch(err=>{
+        .catch(err => {
             dispatch({
-                type:GET_ERROR,
-                payload:err.response.data
+                type: GET_ERROR,
+                payload: err.response.data
             })
         })
 }
 
-export const getAllUserPosts = (user_id) => (dispatch)=>{
+export const getAllUserPosts = (user_id) => (dispatch) => {
     dispatch({
         type: SET_LOADING_ONN,
-        payload:{}
+        payload: {}
     })
     axios.get(`/api/post/getAllUserPosts/${user_id}`)
-        .then(res=>{
+        .then(res => {
             dispatch({
                 type: GET_ALL_USER_POST,
                 payload: res.data
             })
         })
-        .catch(err=>{
+        .catch(err => {
             dispatch({
-                type:GET_ERROR,
-                payload:err.response.data
+                type: GET_ERROR,
+                payload: err.response.data
             })
         })
 }
@@ -46,4 +48,15 @@ export const deletePost = (id) => (dispatch)=>{
         type: DELETE_USER_POST,
         payload: id
     })
+}
+export const likeUpdate = (userData) => (dispatch) => {
+
+    axios.post('/api/post/postlike', userData).then(
+        res => {
+            dispatch({ type: LIKE_POST, payload: res.data })
+        }
+
+    )
+
+
 }
