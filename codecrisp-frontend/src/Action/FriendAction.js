@@ -6,7 +6,7 @@ export const SendFriendRequest = (user_data) => (dispatch) =>{
 
     axios.post('/api/friend/sendFriendRequest',user_data)
         .then(res=>{
-            console.log('request sent ',res)
+            // console.log('request sent ',res)
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
                 payload: true
@@ -20,7 +20,7 @@ export const SendFriendRequest = (user_data) => (dispatch) =>{
 export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
     axios.post('/api/friend/sendUnFriendRequest',user_data)
         .then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
                 payload: false
