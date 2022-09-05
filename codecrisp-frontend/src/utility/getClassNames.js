@@ -7,7 +7,6 @@ eitherOr: if true only returns either dc or cc depending on condition
 
 const getClassNames = (cls={dc:'',cc:''},condition=false,eitherOr=false) =>{
 
-    console.log(cls.dc, cls.cc, condition, eitherOr)
     
     //if either or is true
     if(eitherOr && condition)

@@ -18,7 +18,6 @@ const FriendNavigatorComponent = () => {
 
     useEffect(()=>{
         let path = location.pathname.toString().split('/').pop()
-        console.log(path)
         setActive(path)
     },[location])
 

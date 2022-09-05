@@ -11,7 +11,7 @@ function FriendComponent() {
     useEffect(()=>{
         const pathname = location.pathname.toString()
         if(pathname === '/friends')
-            navigate(pathname+'/see-all-friends')
+            navigate(pathname+'/see-all-friends',{replace:true})
     },[location])
 
     return (
