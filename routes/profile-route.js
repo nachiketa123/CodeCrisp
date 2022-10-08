@@ -9,28 +9,28 @@ const User = require('../model/User')
     @desc:      To get the profile of a specific user
     @access:    Private
 */
-router.get('/get-profile/:user_id',passport.authenticate('jwt',{ session: false }),(req,res)=>{
+router.get('/get-profile/:user_id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const user_id = req.params.user_id;
     const error = {}
-    UserProfile.findOne({user:user_id})
-        .then(profile=>{
-            if(!profile){
+    UserProfile.findOne({ user: user_id })
+        .then(profile => {
+            if (!profile) {
                 // error.profileNotFound = 'User does not have a profile'
                 return res.status(200).json();
             }
             User.findById(user_id)
-                .then(user=>{
+                .then(user => {
                     const newProfileWithAvatar = {
                         ...profile._doc,
-                        name:user.name,
-                        phoneNo:user.phoneno,
-                        email:user.email,
-                        avatar:user.avatar
+                        name: user.name,
+                        phoneNo: user.phoneno,
+                        email: user.email,
+                        avatar: user.avatar
                     }
                     return res.status(200).json(newProfileWithAvatar)
                 })
-            
-        }).catch(err=>{
+
+        }).catch(err => {
             return res.json(err);
         })
 })
@@ -41,20 +41,20 @@ router.get('/get-profile/:user_id',passport.authenticate('jwt',{ session: false 
     @access:    Private
 */
 
-router.post('/set-profile',passport.authenticate('jwt',{ session: false }),(req,res)=>{
+router.post('/set-profile', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { user, company, website, location, current_job_title, skills } = req.body;
 
     const newUserProfile = new UserProfile({
-        user, 
-        company, 
-        website, 
-        location, 
-        current_job_title, 
+        user,
+        company,
+        website,
+        location,
+        current_job_title,
         skills
     })
-    newUserProfile.save().then(profile=>{
+    newUserProfile.save().then(profile => {
         return res.status(200).json(profile)
-    }).catch(err=>{
+    }).catch(err => {
         return res.status(400).json(err)
     })
 })

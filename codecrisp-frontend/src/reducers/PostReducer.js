@@ -33,10 +33,10 @@ const PostReducer = (state = initialState, action) => {
             }
 
         case DELETE_USER_POST:
-            console.log('In reducer',state.allUserPosts)
+            console.log('In reducer', state.allUserPosts)
             return {
                 ...state,
-                allUserPosts: state.allUserPosts.filter(post=> post._id !== action.payload)
+                allUserPosts: state.allUserPosts.filter(post => post._id !== action.payload)
             }
         default:
             return state;

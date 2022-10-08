@@ -30,12 +30,12 @@ myStore.subscribe(() => {
 
     //check if the token is expired if yes then logout
     let token = currentState.authRed.token;
-    if(token){
+    if (token) {
         let user = jwt_decode(token);
-        if(user.exp*1000 < new Date().getTime()){
+        if (user.exp * 1000 < new Date().getTime()) {
             myStore.dispatch({
                 type: LOGOUT_USER,
-                payload:{}
+                payload: {}
             })
         }
     }

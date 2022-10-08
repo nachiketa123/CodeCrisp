@@ -9,9 +9,9 @@ const PostComponent = ({
     avatar, 
     postText, 
     imageURL,
-    id ,
+    id,
     handleDeletePost,
-    handleClickLike,
+    handleClickLike
 }) => {
 
     const [state, setState] = useState({
@@ -40,7 +40,7 @@ const PostComponent = ({
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>
                     </div>
                 </div>
-                <BsThreeDotsVertical onClick={event=>handleDeletePost(event,id)} color='black' className='post-menu-img' title="post menu" />
+                <BsThreeDotsVertical onClick={event => handleDeletePost(event, id)} color='black' className='post-menu-img' title="post menu" />
             </div>
             <div className='post-body post-common'
                 style={{ backgroundColor: "white" }}
@@ -54,7 +54,7 @@ const PostComponent = ({
 
 
                     {
-                        state.like ? (<FaHeart onClick={evnt=>handleClickLike(id)} className='icon' style={{ color: 'red', stroke: 'red' }}
+                        state.like ? (<FaHeart onClick={evnt => handleClickLike(id)} className='icon' style={{ color: 'red', stroke: 'red' }}
                             color="white" title="like" />)
                             : (<FaHeart onClick={evnt=>handleClickLike(id)} className='icon' color="white" title="like" />)
                     }

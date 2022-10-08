@@ -1,4 +1,4 @@
-import React,{ useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -12,12 +12,12 @@ import { io } from 'socket.io-client';
 const socket = io()
 
 
-const PrivateRoutes = ({ header, component: Component, auth: { isAuthenticated }, errorReducer: {error} }) => {
+const PrivateRoutes = ({ header, component: Component, auth: { isAuthenticated }, errorReducer: { error } }) => {
     let ignore = false;
-  
-    useEffect(()=>{
 
-        if(!ignore){
+    useEffect(() => {
+
+        if (!ignore) {
 
             // socket.on('connect',()=>{
             myStore.dispatch({
@@ -26,39 +26,39 @@ const PrivateRoutes = ({ header, component: Component, auth: { isAuthenticated }
             })
             // })
             // console.log('init',socket.id)
-            
-            socket.on('server_conn',(msg)=>{
-            console.log(msg)
+
+            socket.on('server_conn', (msg) => {
+                console.log(msg)
             })
 
         }
-        
-        return ()=>{
-        ignore = true;
-        socket.off('connect');
-        socket.off('disconnect');
-        socket.off('pong');
+
+        return () => {
+            ignore = true;
+            socket.off('connect');
+            socket.off('disconnect');
+            socket.off('pong');
         }
-    },[])
+    }, [])
 
 
-    if(isAuthenticated){
-        if( !isEmpty(error) && !isEmpty(error.pageNotFound) ){
-            return (<Navigate to="/page-not-found"/>)
+    if (isAuthenticated) {
+        if (!isEmpty(error) && !isEmpty(error.pageNotFound)) {
+            return (<Navigate to="/page-not-found" />)
         }
-        else{
+        else {
             return (
                 <React.Fragment>
-                    {header?(<div className='header'>
-                                <Header />
-                        </div>):''} 
-                    <Component/>
+                    {header ? (<div className='header'>
+                        <Header />
+                    </div>) : ''}
+                    <Component />
                 </React.Fragment>
-      )
+            )
         }
-        
+
     }
-    else{
+    else {
         return (<Navigate to="/*" />)
     }
 }
@@ -67,8 +67,8 @@ PrivateRoutes.propTypes = {
     auth: PropTypes.object.isRequired,
     errorReducer: PropTypes.object.isRequired
 }
- 
-const mapStateToProps = (state) =>({
+
+const mapStateToProps = (state) => ({
     auth: state.authRed,
     errorReducer: state.errorReducer
 })

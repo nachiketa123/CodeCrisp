@@ -12,7 +12,7 @@ const postRoutes = require('./routes/Post-route')
 const friendRoutes = require('./routes/Friend-route')
 const userProfileRoutes = require('./routes/profile-route')
 const notificationRoutes = require('./routes/Notification-route')
-const createServer  = require('http').createServer
+const createServer = require('http').createServer
 const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
 
@@ -34,41 +34,41 @@ PassportConfig(passport);
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }))
 app.use(bodyParser.json({ limit: '100mb' })),
 
-app.use('/api/user', userRoute)
+    app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
 app.use('/api/user-profile', userProfileRoutes)
-app.use('/api/notification',notificationRoutes)
+app.use('/api/notification', notificationRoutes)
 
 const httpServer = createServer(app);
 const io = new Server(httpServer)
 
 const onlineUsers = [];
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
     // console.log('new socket_id: ',socket.id)
-    io.emit('server_conn','Welcome! You are now connected with the Server')
-    socket.on('add_new_user',(user_id)=>{
+    io.emit('server_conn', 'Welcome! You are now connected with the Server')
+    socket.on('add_new_user', (user_id) => {
         // console.log('adding new user',user_id)
 
-        if(user_id){
+        if (user_id) {
             // console.log('before adding',onlineUsers)
-            SocketUtils.addNewUser(onlineUsers,user_id,socket.id) 
+            SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
         }
-            
+
         // console.log('after adding',onlineUsers)
     })
     //  notification event handled in other file
-     require('./socketEvents/notification-event-sckt')(socket,io,onlineUsers)
+    require('./socketEvents/notification-event-sckt')(socket, io, onlineUsers)
 
-    socket.on('disconnect',()=>{
-        SocketUtils.removeUser(onlineUsers,socket.id)
+    socket.on('disconnect', () => {
+        SocketUtils.removeUser(onlineUsers, socket.id)
         // console.log('user disconnected ',onlineUsers)
     })
 
-   
+
 })
 
 httpServer.listen(5000, () => {

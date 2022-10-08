@@ -21,7 +21,8 @@ const jobSchema = new schema({
     }
     , startdate: {
         type: Date,
-        required: true
+        default: Date.now
+
     }, enddate: {
         type: Date,
         required: true
