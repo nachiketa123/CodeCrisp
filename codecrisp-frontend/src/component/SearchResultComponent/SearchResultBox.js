@@ -1,12 +1,16 @@
 import React from 'react'
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaUserAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import isEmpty from '../../utility/is-empty';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 
-function SearchResultBox({ search: { user } }) {
-
+function SearchResultBox({ search: { user },clearSearchBar }) {
+    const navigate = useNavigate();
+    const handleNavigateToUserProfile = (event,id) =>{
+        clearSearchBar()
+        navigate(`/userProfile/${id}`) 
+    }
     return (
         <div className='container search-container'>
 
@@ -15,12 +19,13 @@ function SearchResultBox({ search: { user } }) {
 
 
                     <ul className="list-group list-group-flush">
-                        { (!isEmpty(user)) ? user.map(e => (<li key={e._id} className="list-group-item"><img
-
-                            className='image-search'
-                            src={require('../../assets/images/luv_profile.jpg')}
-                            alt="search_image" />
-                            <Link className='search-user-name' to={`/userProfile/${e._id}`}>{e.name}</Link>
+                        { (!isEmpty(user)) ? user.map(e => (<li key={e._id} className="list-group-item">
+                            
+                            {e.avatar   ? <img className='image-search'
+                                        src={e.avatar}
+                                        alt="search_image" />
+                                        :(<FaUserAlt size="30" className='image-search'/>)}
+                            <a className='search-user-name' onClick={event=>handleNavigateToUserProfile(event,e._id)}>{e.name}</a>
                             <FaSearch color='grey' className="search-icon" title='search' />
                         </li>)) : ""
                         }

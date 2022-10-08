@@ -1,5 +1,7 @@
 import axios from "axios"
-import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, LIKE_POST } from "./Types"
+
+import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, DELETE_USER_POST, POST_LIKE_NOTIFICATION } from "./Types"
+
 
 
 
@@ -43,6 +45,7 @@ export const getAllUserPosts = (user_id) => (dispatch) => {
         })
 }
 
+
 export const likeUpdate = (userData) => (dispatch) => {
 
     axios.post('/api/post/postlike', userData).then(
@@ -54,3 +57,11 @@ export const likeUpdate = (userData) => (dispatch) => {
 
 
 }
+
+export const deletePost = (id) => (dispatch) => {
+    dispatch({
+        type: DELETE_USER_POST,
+        payload: id
+    })
+}
+

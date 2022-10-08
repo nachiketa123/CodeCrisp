@@ -1,5 +1,7 @@
 import axios from "axios"
-import { GET_ERROR, SET_USER_PROFILE_PICTURE,SET_USER_PROFILE_PICTURE_LOADING_ONN,SET_USER_PROFILE_PICTURE_LOADING_OFF } from "./Types"
+import { GET_ERROR, SET_USER_PROFILE_PICTURE,SET_USER_PROFILE_PICTURE_LOADING_ONN,SET_USER_PROFILE_PICTURE_LOADING_OFF,
+    GET_USER_PROFILE, 
+    SET_PROFILE_PAGE_LOADING_ONN} from "./Types"
 
 export const changeMyProfilePicture = (user_data) => (dispatch) =>{
     dispatch({
@@ -28,4 +30,25 @@ export const setProfilePictureLoadingOff =()=> (dispatch)=>{
         type: SET_USER_PROFILE_PICTURE_LOADING_OFF,
         payload:{}
     })
+}
+
+export const getProfileForUser = (user_id) => (dispatch) =>{
+    dispatch({
+        type: SET_PROFILE_PAGE_LOADING_ONN,
+        payload: {}
+    })
+    axios.get(`/api/user-profile/get-profile/${user_id}`)
+        .then(res=>{
+            dispatch({
+                type: GET_USER_PROFILE,
+                payload: res.data 
+            })
+        })
+        .catch(err=>{
+            dispatch({
+                type: GET_ERROR,
+                payload: err.response.data
+            })
+        })
+    
 }

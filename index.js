@@ -10,6 +10,11 @@ const searchRoute = require("./routes/Search-route")
 const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
 const friendRoutes = require('./routes/Friend-route')
+const userProfileRoutes = require('./routes/profile-route')
+const notificationRoutes = require('./routes/Notification-route')
+const createServer = require('http').createServer
+const Server = require('socket.io').Server
+const SocketUtils = require('./utility/socketUtility')
 
 mongo.connect(dbURI).then(
     () => {
@@ -34,8 +39,38 @@ app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
+app.use('/api/user-profile', userProfileRoutes)
+app.use('/api/notification', notificationRoutes)
+
+const httpServer = createServer(app);
+const io = new Server(httpServer)
+
+const onlineUsers = [];
+
+io.on('connection', (socket) => {
+    // console.log('new socket_id: ',socket.id)
+    io.emit('server_conn', 'Welcome! You are now connected with the Server')
+    socket.on('add_new_user', (user_id) => {
+        // console.log('adding new user',user_id)
+
+        if (user_id) {
+            // console.log('before adding',onlineUsers)
+            SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
+        }
+
+        // console.log('after adding',onlineUsers)
+    })
+    //  notification event handled in other file
+    require('./socketEvents/notification-event-sckt')(socket, io, onlineUsers)
+
+    socket.on('disconnect', () => {
+        SocketUtils.removeUser(onlineUsers, socket.id)
+        // console.log('user disconnected ',onlineUsers)
+    })
 
 
-app.listen(5000, () => {
+})
+
+httpServer.listen(5000, () => {
     console.log("Server challu ho gya hai")
 });

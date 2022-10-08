@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeUser from './component/HomeUser';
 import PrivateRoutes from './component/private-routing/private-routes';
 import Jobs from './component/Jobs/Jobs.js';
-import Header from './component/Header';
 import setAuthHeader from './utility/set-auth-header';
 import jwtDecode from 'jwt-decode';
 import { SET_USER } from './Action/Types';
@@ -18,6 +17,7 @@ import UserProfileComponent from './component/ProfileComponent/UserProfileCompon
 import ErrorComponent from './component/ErrorComponent/ErrorComponent';
 import Friends from './component/Friends/Friends';
 import FriendNavigatorComponent from './component/friend-component/FriendNavigatorComponent';
+import AddJob from './component/Jobs/AddJob';
 
 
 
@@ -37,7 +37,10 @@ if (token) {
   })
 }
 
+
 function App() {
+
+
   return (
     <div className="App">
 
@@ -45,14 +48,15 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path='*' element={<HomePage />} />
-            <Route path='/' element={<PrivateRoutes component={HomeUser} />} />
-            <Route path='/jobs' element={<PrivateRoutes component={Jobs} />} />
-            <Route path='/userProfile/*' element={<PrivateRoutes component={UserProfileComponent} />} />
-            <Route path='/jobs/*' element={<PrivateRoutes component={JobDetails} />} />
-            <Route path='/discuss' element={<PrivateRoutes component={Discuss} />} />
 
-            <Route path='/friends' element={<PrivateRoutes component={Friends} />} />
+            <Route path='/*' element={<HomePage />} />
+            <Route path='/' element={<PrivateRoutes header={true} component={HomeUser} />} />
+            <Route path='/jobs' element={<PrivateRoutes header={true} component={Jobs} />} />
+            <Route path='/userProfile/*' element={<PrivateRoutes header={true} component={UserProfileComponent} />} />
+            <Route path='/jobs/*' element={<PrivateRoutes header={true} component={JobDetails} />} />
+            <Route path='/discuss' element={<PrivateRoutes header={true} component={Discuss} />} />
+            <Route path='/friends' element={<PrivateRoutes header={true} component={FriendNavigatorComponent} />} />
+            <Route path='/jobs/add-job' element={<PrivateRoutes header={true} component={AddJob} />} />
             <Route path='/page-not-found' element={<ErrorComponent />} />
 
             {/* <Route path='/friends' element={<PrivateRoutes component={FriendNavigatorComponent} />} /> */}

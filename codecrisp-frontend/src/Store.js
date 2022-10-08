@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers/RootReducer';
 import jwt_decode from 'jwt-decode';
-import { SET_USER } from './Action/Types';
+import { LOGOUT_USER, SET_USER } from './Action/Types';
 import setAuthHeader from './utility/set-auth-header';
 
 const initial = {};
@@ -12,7 +12,11 @@ const initial = {};
 const myStore = createStore(rootReducer
     , initial
     , compose(applyMiddleware(thunk)
+
         , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+
+        // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
     ))
 
@@ -28,6 +32,17 @@ myStore.subscribe(() => {
     let prevState = currentState;
     currentState = myStore.getState();
 
+    //check if the token is expired if yes then logout
+    let token = currentState.authRed.token;
+    if (token) {
+        let user = jwt_decode(token);
+        if (user.exp * 1000 < new Date().getTime()) {
+            myStore.dispatch({
+                type: LOGOUT_USER,
+                payload: {}
+            })
+        }
+    }
     //only check when token is changed 
     if (prevState.authRed.token !== currentState.authRed.token) {
 

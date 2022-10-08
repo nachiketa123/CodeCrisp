@@ -7,36 +7,38 @@ const { secretKey } = require("../config/Key")
 // const cloudinary = require('../config/cloudinary')
 const passport = require("passport")
 const UserPost = require('../model/UserPost')
-const cloudinaryUploader = require('../utility/cloudinaryUploader')
+const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
+const deleteImagesFromCloudinary = require('../utility/cloudinaryFileManager').deleteImagesFromCloudinary;
 const isEmpty = require("../utility/is-empty")
 
 
-const getPostForUser = (user_id) =>{
-    return new Promise((resolve,reject)=>{
-        UserPost.find({user:user_id})
-        .then(allPosts=>{
-            resolve(allPosts) 
-        })
-        .catch(err=>{
-            reject(err) 
-        })
+const getPostForUser = (user_id) => {
+    return new Promise((resolve, reject) => {
+        UserPost.find({ user: user_id })
+            .then(allPosts => {
+                resolve(allPosts)
+            })
+            .catch(err => {
+                reject(err)
+            })
     })
-    
+
 }
 
-const updateAvatarInAllPost = (postArray,avatarURL) =>{
-    return new Promise(async (resolve,reject)=>{
-        if( isEmpty(postArray) || isEmpty(avatarURL) ){
-            console.log('true url',avatarURL)
-            reject('Something went wrong while creating post array') 
+const updateAvatarInAllPost = (postArray, avatarURL) => {
+    return new Promise(async (resolve, reject) => {
+        if (isEmpty(avatarURL)) {
+            reject('Something went wrong while creating post array')
             return;
         }
-           
-        await postArray.map(async post=>{
+
+
+        await postArray.map(async post => {
             post.avatar = avatarURL;
             await post.save()
         })
         resolve(postArray);
+
     })
 }
 
@@ -111,39 +113,47 @@ router.post('/login', (req, res) => {
     @access:    Private
 */
 
-router.post('/update-profile-picture',passport.authenticate('jwt',{ session: false }),(req,res)=>{
-    const { user_id,base64ImgURI } = req.body;
-    const error ={}
+router.post('/update-profile-picture', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { user_id, base64ImgURI } = req.body;
+    const error = {}
     User.findById(user_id)
-        .then( async user=>{
-            if(user){ 
+        .then(async user => {
+            if (user) {
 
                 cloudinaryUploader([base64ImgURI])
-                    .then(cloudinaryImg=>{
+                    .then(cloudinaryImg => {
 
+                        //save previous url so that we can delete it after new avatar is saved
+                        const previousAvatarURL = user.avatar
                         //change users avatar
                         user.avatar = cloudinaryImg[0];
                         user.save()
-                            .then(async user=>{
+                            .then(async user => {
 
-                                try{
+                                try {
                                     let UserPostArray = await getPostForUser(user_id)
-                                    UserPostArray =  await updateAvatarInAllPost(UserPostArray,cloudinaryImg[0]);
+                                    if (!isEmpty(UserPostArray)) {
+                                        UserPostArray = await updateAvatarInAllPost(UserPostArray, cloudinaryImg[0]);
+
+                                        //delete previous image from cloudinary
+                                        let result = await deleteImagesFromCloudinary([previousAvatarURL])
+                                    }
+
                                     return res.status(200).json(user.avatar)
-                                }catch(err){
+                                } catch (err) {
                                     return res.status(400).json(err)
                                 }
-                                
+
                             })
                     })
             }
-            else{
+            else {
                 //return 404
                 error.pageNotFound = 'User not found'
                 return res.status(404).json(error)
             }
-        } ).catch(err=>{
-            error.pageNotFound = 'User not found '+err
+        }).catch(err => {
+            error.pageNotFound = 'User not found ' + err
             return res.status(404).json(error)
         })
 

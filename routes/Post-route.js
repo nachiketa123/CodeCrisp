@@ -6,7 +6,7 @@ const router = express.Router();
 const FriendCollection = require('../model/Friend')
 
 const User = require('../model/User')
-const cloudinaryUploader = require('../utility/cloudinaryUploader');
+const cloudinaryUploader = require('../utility/cloudinaryFileManager');
 
 const getPostForUser = (user_id) => {
     return new Promise((resolve, reject) => {
@@ -103,7 +103,6 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
             finalPostArray.push(...usersPost)
             return res.status(200).json(finalPostArray)
 
-
         })
 
 })
@@ -117,6 +116,7 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
 router.get('/getUserPostsByUserId/:user_id'
     , passport.authenticate('jwt', { session: false })
     , async (req, res) => {
+
 
         const user_id = req.params.user_id;
         //Find all the users post
@@ -149,6 +149,8 @@ router.post('/postlike', (req, res) => {
     ).catch(err => {
         res.json(err);
     })
+
+
 })
 
 module.exports = router;

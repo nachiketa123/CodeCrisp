@@ -1,21 +1,21 @@
-const mongoose = require('mongoose') ;
-const Schema  = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const FriendCollection = new Schema({
-    user:{
+    user: {
         type: Schema.Types.ObjectId,
-        ref:'user_data'
+        ref: 'user_data'
     },
-    friend_list:[{
-        user:{
+    friend_list: [{
+        user: {
             type: Schema.Types.ObjectId,
-            ref:'user_data'
+            ref: 'user_data'
         },
-        isCloseFriend:{
+        isCloseFriend: {
             type: Boolean,
             default: false
         },
-        friendship_start_date:{
+        friendship_start_date: {
             type: Date,
             default: Date.now
         }
@@ -23,4 +23,4 @@ const FriendCollection = new Schema({
 
 })
 
-module.exports = mongoose.model('friends_data',FriendCollection);
+module.exports = mongoose.model('friends_data', FriendCollection);

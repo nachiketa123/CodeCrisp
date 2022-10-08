@@ -10,16 +10,25 @@ import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
 import SearchResultBox from './SearchResultComponent/SearchResultBox'
 import './SearchResultComponent/SearchResultBox.css'
-function HomeUser(props) {
+import isEmpty from '../utility/is-empty';
+
+function HomeUser({ auth: { user }, socketReducer: {socket}}) {
+
+    
+
+
     const [state, setState] = useState({
         user: {}
     })
 
+
+    useEffect(()=>{
+        if( !isEmpty(socket.emit) )
+            socket.emit('add_new_user',user.id)
+    },[user,socket])
+
     return (
         <div className='app-container'>
-            <div className='header'>
-                  <Header />
-            </div>
             <div className='feed-body'>
                 <div className='chat-box'>
                     <ChatBox />
@@ -32,15 +41,13 @@ function HomeUser(props) {
                     <CommunityNotification />
                 </div>
             </div>
-
-            <SearchResultBox />
-
         </div>
     )
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.authRed
+    auth: state.authRed,
+    socketReducer: state.socketReducer
 })
 
 export default connect(mapStateToProps)(HomeUser)

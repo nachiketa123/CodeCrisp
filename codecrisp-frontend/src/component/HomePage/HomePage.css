@@ -54,7 +54,7 @@
 }
 
 .navbar-nav a:hover{
-    border-bottom: 2px solid white;
+    /* border-bottom: 2px solid white; */
     background-color: white;
     color: black;
     border-radius: 0.5em;

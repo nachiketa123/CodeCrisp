@@ -13,6 +13,7 @@ option.secretOrKey = secretKey;
 
 const passportConfig = (passport) => {
     passport.use(new Strategy(option, (jwtPayload, done) => {
+        const error = {}
         User.findById(jwtPayload.id).then(
             user => {
                 if (user) {
@@ -23,7 +24,8 @@ const passportConfig = (passport) => {
 
         ).catch(
             err => {
-                console.log("Auth Error passport.js");
+                error.authErr = "Auth Error"
+                console.log(error);
             }
         )
     }))

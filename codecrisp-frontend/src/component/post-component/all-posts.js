@@ -6,9 +6,14 @@ import isEmpty from '../../utility/is-empty';
 import { compareDateDesc } from '../../utility/custom-sort';
 import { FaUpload } from 'react-icons/fa';
 import './all-posts.css';
-import { getAllUserPosts } from '../../Action/PostAction';
+import { getAllUserPosts, deletePost } from '../../Action/PostAction';
 
-const AllPosts = ({ postReducer: { allUserPosts, loading }, auth: { user }, getAllUserPosts }) => {
+const AllPosts = ({
+    postReducer: { allUserPosts, loading },
+    auth: { user },
+    getAllUserPosts,
+    deletePost,
+    socketReducer: { socket } }) => {
 
     let ignore = false
     //when component renders load all the users post
@@ -20,14 +25,51 @@ const AllPosts = ({ postReducer: { allUserPosts, loading }, auth: { user }, getA
             ignore = true
         }
     }, [])
+
+    const getPostData = (id) => {
+        return new Promise((resolve) => {
+            resolve(allUserPosts.find(post => post._id === id))
+            return;
+        })
+    }
+    const handleClickLike = async (id) => {
+        const post_data = await getPostData(id);
+        // console.log('handleClickLike',post_data)
+        if (!isEmpty(post_data)) {
+            // console.log('looks like post_data is not empty')
+            const event_data = {
+                ...post_data,
+                type: 'post_like',
+                user_who_liked: user.id,
+                name: user.name,
+                avatar: user.avatar ? user.avatar : ''
+            }
+            socket.emit('post_like', event_data)
+        }
+
+    }
+
+    const handleDeletePost = (event, id) => {
+        console.log('deleting ', id)
+        deletePost(id)
+
+    }
     return (
         (loading ? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={200}> </FaUpload></div> : (
 
             <div className='all-posts'>
                 {!isEmpty(allUserPosts) ?
                     allUserPosts.sort(compareDateDesc).map(post => (
-                        <PostComponent key={post._id} username={post.name} location={post.location} avatar={post.avatar}
-                            postid={post._id} postText={post.postText} imageURL={post.imageUrls ? post.imageUrls[0] : undefined} />
+
+                        <PostComponent key={post._id}
+                            id={post._id}
+                            username={post.name}
+                            location={post.location}
+                            avatar={post.avatar}
+                            postText={post.postText}
+                            imageURL={post.imageUrls ? post.imageUrls[0] : undefined}
+                            handleDeletePost={handleDeletePost}
+                            handleClickLike={handleClickLike} />
 
                     ))
 
@@ -43,13 +85,15 @@ const AllPosts = ({ postReducer: { allUserPosts, loading }, auth: { user }, getA
 AllPosts.propTypes = {
     postReducer: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
-    getAllUserPosts: PropTypes.func.isRequired
+    getAllUserPosts: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired
 
 }
 
 const mapStateToProps = (state) => ({
     postReducer: state.postReducer,
-    auth: state.authRed
+    auth: state.authRed,
+    socketReducer: state.socketReducer
 })
 
-export default connect(mapStateToProps, { getAllUserPosts })(AllPosts);
+export default connect(mapStateToProps, { getAllUserPosts, deletePost })(AllPosts);

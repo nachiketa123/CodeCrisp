@@ -20,3 +20,12 @@
 .search-input-message{
     background-color: rgb(245,245,245);
 }
+
+
+
+/* Media queries */
+@media screen and (max-width: 991px) {
+    .container-chatBox{
+        margin-top: 30px;
+    }
+}
