@@ -16,7 +16,8 @@ import Discuss from './component/Discuss/Discuss';
 import UserProfileComponent from './component/ProfileComponent/UserProfileComponent';
 import ErrorComponent from './component/ErrorComponent/ErrorComponent';
 import FriendComponent from './component/friend-component/FriendComponent';
-
+import SettingsComponent from './component/setting-component/SettingsComponent';
+import ChangePasswordComponent from './component/setting-component/ChangePassword';
 
 
 /* 
@@ -53,6 +54,8 @@ function App() {
             <Route path='/jobs/*' element={<PrivateRoutes header={true} component={JobDetails} />} />
             <Route path='/discuss' element={<PrivateRoutes header={true} component={Discuss} />} />
             <Route path='/friends/*' element={<PrivateRoutes header={true} component={FriendComponent} />} />
+            <Route path='/settings' element={<PrivateRoutes header={true} component={SettingsComponent} />} />
+            <Route path='/settings/change-password' element={<PrivateRoutes header={true} component={ChangePasswordComponent} />} />
             <Route path='/page-not-found' element={<ErrorComponent/>} />
 
           </Routes >

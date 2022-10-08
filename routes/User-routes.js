@@ -159,5 +159,35 @@ router.post('/update-profile-picture', passport.authenticate('jwt', { session: f
 
 })
 
+/*
+    @route:     /api/user/change-password
+    @desc:      To change user current password
+    @access:    Private
+*/
+router.post('/change-password', passport.authenticate('jwt', { session: false }) ,(req,res)=>{
+    const { oldPassword, newPassword, user_id } = req.body;
+    const error = {}
+    User.findById(user_id)
+        .then(user=>{
+            bcrypt.compare(oldPassword, user.password).then((isMatched) => {
+                if (!isMatched) {
+                    error.invalidPassword = 'old password is not valid'
+                    res.status(403).json(error);
+                }
+                else{
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newPassword, salt, (err, hash) => {
+                            user.password = hash
+                            user.save()
+                                .then(user=>{
+                                    return res.status(200).json('Password changed')
+                                })
+                        })
+                    })
+                }
+
+        })
+    })
+})
 
 module.exports = router
