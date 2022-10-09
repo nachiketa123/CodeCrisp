@@ -233,3 +233,37 @@ input.comment-box:focus {
     display: none;
   }
 }
+
+.comment-box{
+  background: transparent;
+}
+.comment-box-tile{
+  height: 50px;
+  width: 100%;
+  background-color: rgb(231, 231, 237);
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.avatar-comment{
+  height: 40px;
+  width: 40px;
+  border-radius: 2em;
+  margin-left: 5px;
+}
+
+.comment-box-tile-details{
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.comment-text{
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+  font-weight: 700;
+}

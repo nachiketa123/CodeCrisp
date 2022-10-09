@@ -116,17 +116,70 @@ router.get('/getUserPostsByUserId/:user_id'
     , passport.authenticate('jwt', { session: false })
     , async (req, res) => {
 
-            const user_id = req.params.user_id;
-            const error = {}
-            //Find all the users post
-            try{
-                const usersPost = await getPostForUser(user_id)
-                return res.status(200).json(usersPost)
-            }catch(err){
-                error.dberror = 'DB error'
-                return res.status(403).json(dberror)
-            }
-    
+        const user_id = req.params.user_id;
+        const error = {}
+        //Find all the users post
+        try {
+            const usersPost = await getPostForUser(user_id)
+            return res.status(200).json(usersPost)
+        } catch (err) {
+            error.dberror = 'DB error'
+            return res.status(403).json(dberror)
+        }
+
+    })
+
+
+/*
+    @route:     /api/post/get-comment
+    @desc:      To get all the comment of that post
+    @access:    Private
+*/
+router.get('/get-comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+    const post_id = req.params.post_id;
+
+    UserPost.findById(post_id).then(
+        post => {
+            return res.status(200).json(post.comments);
+        }
+    ).catch(
+        err => {
+            return res.status(400).json(err);
+        }
+    )
+
 })
+
+
+/*
+    @route:     /api/post/add-comment
+    @desc:      To post the comment in a post  
+    @access:    Private
+*/
+router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+
+    const { user, name, text, avatar } = req.body;
+
+    const post_id = req.params.post_id;
+
+    UserPost.findById(post_id).then(
+
+        post => {
+            post.comments.push({ user, name, text, avatar });
+            post.save().then(
+                p => {
+                    return res.status(200).json({ success: true });
+                }
+            )
+        }
+
+    )
+})
+
+
+
+
 
 module.exports = router;

@@ -11,36 +11,36 @@ import { getNotificationFromDB, getNotificationFromSocket } from '../Action/Noti
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 
-function Header({ 
-    logOutUser, 
-    auth: { user }, 
-    search, 
-    searchResult, 
-    notif: {notification} ,
+function Header({
+    logOutUser,
+    auth: { user },
+    search,
+    searchResult,
+    notif: { notification },
     socketReducer: { socket },
     getNotificationFromSocket,
-    getNotificationFromDB}) {
+    getNotificationFromDB }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
     let ignore = false;
-    
-    useEffect(()=>{
-        getNotificationFromDB(user.id)
-    },[])
 
-    useEffect(()=>{
-        if( !isEmpty(socket) && !ignore){
-            socket.on('get_post_like_notification',(data)=>{
+    useEffect(() => {
+        getNotificationFromDB(user.id)
+    }, [])
+
+    useEffect(() => {
+        if (!isEmpty(socket) && !ignore) {
+            socket.on('get_post_like_notification', (data) => {
                 getNotificationFromSocket(data)
             })
         }
 
-        return ()=>{
+        return () => {
             ignore = true
         }
-        
-    },[socket])
+
+    }, [socket])
     useEffect(() => {
         const userFind = { searchText: state.searchtext }
         searchResult(userFind);
@@ -62,13 +62,13 @@ function Header({
 
     }
 
-    const clearSearchBar = () =>{
+    const clearSearchBar = () => {
         setState({
             ...state,
-            searchtext:''
+            searchtext: ''
         })
     }
-    const handleToggleNotification = ()=>{
+    const handleToggleNotification = () => {
         setState({
             ...state,
             showNotification: !state.showNotification
@@ -98,7 +98,7 @@ function Header({
 
                     <div onClick={handleToggleNotification} className='bell-icon-container-div'>
                         <FaRegBell color='white' className='bell-icon' title='notifications' />
-                       {notification.length?<span className='notification-counter'>{notification.length}</span>:''}
+                        {notification.length ? <span className='notification-counter'>{notification.length}</span> : ''}
                     </div>
 
                     <FaRegComments color='white' className='chat-icon' title='chat' />
@@ -151,12 +151,12 @@ function Header({
 
                 </nav >
             </div>
-            <SearchResultBox clearSearchBar={clearSearchBar}/>
+            <SearchResultBox clearSearchBar={clearSearchBar} />
             {state.showNotification
-                ?(<div className='notification-list-div'>
-                    <ListGroupComponent items={notification}/>
+                ? (<div className='notification-list-div'>
+                    <ListGroupComponent items={notification} />
                 </div>)
-                :''}
+                : ''}
         </div >
     )
 

@@ -2,28 +2,37 @@ import React, { useState } from 'react';
 import './post.css';
 import { FaHeart, FaRegComment, FaShare } from 'react-icons/fa';
 import { BsThreeDotsVertical } from "react-icons/bs";
-
-const PostComponent = ({ 
-    username, 
-    location, 
-    avatar, 
-    postText, 
+import { timeSince } from '../../utility/dateFormat'
+const PostComponent = ({
+    username,
+    location,
+    avatar,
+    postText,
     imageURL,
     id,
     handleDeletePost,
-    handleClickLike
+    handleClickLike,
+    handlePostComment,
+    comments
 }) => {
 
     const [state, setState] = useState({
-        like: false
+        like: false,
+        comment: "",
+        n: 2
     })
 
-    // const handleClickLike = (e) => {
-    //     setState({
-    //         ...state,
-    //         like: !state.like
-    //     })
-    // }
+
+    const onComment = (e) => {
+        setState({ ...state, [e.target.name]: e.target.value })
+    }
+
+    const seeMore = (e) => {
+        setState({ ...state, n: comments.length })
+    }
+
+
+
 
 
     return (
@@ -34,7 +43,7 @@ const PostComponent = ({
                 style={{ backgroundColor: "white" }}
             >
                 <div className='user-dp-info'>
-                    <img className='dp-img' src={avatar?avatar:require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
+                    <img className='dp-img' src={avatar ? avatar : require('../../assets/images/nach_profile.jpg')} alt="Profile Picture" />
                     <div className='user-info'>
                         <p className='user-name'>{username ? username : 'Here goes user name'}</p>
                         <p className='user-location'>{location ? location : 'Here goes user location'}</p>
@@ -56,7 +65,7 @@ const PostComponent = ({
                     {
                         state.like ? (<FaHeart onClick={evnt => handleClickLike(id)} className='icon' style={{ color: 'red', stroke: 'red' }}
                             color="white" title="like" />)
-                            : (<FaHeart onClick={evnt=>handleClickLike(id)} className='icon' color="white" title="like" />)
+                            : (<FaHeart onClick={evnt => handleClickLike(id)} className='icon' color="white" title="like" />)
                     }
 
                     <FaRegComment className='icon comment-img' color="white" title="comment" />
@@ -77,34 +86,66 @@ const PostComponent = ({
                     {postText ? postText : 'This is my caption for the post'}
                 </p>
             </div>
+
+            {/* map */}
+
+            {comments.slice(0, state.n).map(e => (
+                <div className='comment-box'>
+                    <div className='comment-box-tile'>
+                        <img className='avatar-comment'
+                            src={e.avatar}
+                        />
+                        <div className='comment-box-tile-details'>
+                            <p className='comment-text'>{e.name}{"            "}</p>
+                            <p className='comment-text'>{e.text}</p>
+                        </div>
+                    </div>
+                </div>))}
+
+
+
             <div className='post-comments post-common'
                 style={{ backgroundColor: "white" }}
             >
-                <button style={{ color: 'black', fontSize: '14px', margin: '0', background: "transparent" }} className="secondary">see all comments (11)</button>
+
+                {/* Comment Section */}
+                <button style={{ color: 'black', fontSize: '14px', margin: '0', background: "transparent" }} className="secondary"
+                    onClick={seeMore}
+                >see all comments ({comments.length})</button>
+
                 <div className="comment-wrapper"
                     style={{ backgroundColor: "white" }}
                 >
-                    <img className="icon" alt=""
+
+
+                    {/* <img className="icon" alt="" src=''
                         style={{ backgroundColor: "white", color: "black" }}
-                    />
+                    /> */}
+
+
+
                     <input type="text" className="comment-box" placeholder="Add a comment"
+                        value={state.comment} name='comment' onChange={onComment}
+
                         style={{ backgroundColor: "rgb(245,245,245)", height: "30px" }}
                     />
+
                     <button className="comment-btn"
                         style={{ backgroundColor: "blue", borderRadius: "0.5em", height: "30px" }}
+                        onClick={e => handlePostComment(id, state.comment)}
                     >post</button>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
     );
 }
 
-// PostComponent.propTypes = {
-//     auth: PropTypes.func.isRequired
-// }
 
-// const mapStateToProps = (state)=> ({
-//     auth: state.authRed
-// })
 
 export default PostComponent;
