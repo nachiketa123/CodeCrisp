@@ -6,7 +6,7 @@ const router = express.Router();
 const FriendCollection = require('../model/Friend')
 
 const User = require('../model/User')
-const cloudinaryUploader = require('../utility/cloudinaryFileManager');
+const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
 
 const getPostForUser = (user_id) => {
     return new Promise((resolve, reject) => {
@@ -97,8 +97,13 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
     //Find all the friends
     FriendCollection.findOne({ user: user_id })
         .then(async data => {
-            const friendList = data.friend_list;
-            const finalPostArray = await createPostArray(friendList)
+            let friendList =[];
+            let finalPostArray = [];
+            if(data){
+                friendList = [...data.friend_list];
+                finalPostArray = await createPostArray(friendList)
+            }
+            
             const usersPost = await getPostForUser(user_id)
             finalPostArray.push(...usersPost)
             return res.status(200).json(finalPostArray)
