@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { signIn, signUp } from '../../Action/AuthAction'
 
 import { useNavigate } from 'react-router-dom'
+import InputTextFieldComponent from '../common/InputTextFieldComponent'
 
 
 function Login(props) {
@@ -57,8 +58,15 @@ function Login(props) {
                                 <label htmlFor="exampleInputEmail1"
                                     style={{ backgroundColor: "white", color: "black" }}
                                 >Email address</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-                                    name="email" value={state.email} onChange={onChangeLogin}
+                                <InputTextFieldComponent
+                                    type="email" 
+                                    className="form-control" 
+                                    id="exampleInputEmail1" 
+                                    areaDescribedBy="emailHelp" 
+                                    placeholder="Enter email"
+                                    name="email" 
+                                    value={state.email} 
+                                    onChange={onChangeLogin}
                                 />
                                 <small id="emailHelp" className="form-text text-muted"
                                     style={{ backgroundColor: "white" }}
@@ -71,8 +79,15 @@ function Login(props) {
                                 <label htmlFor="exampleInputPassword1"
                                     style={{ backgroundColor: "white", color: "black" }}
                                 >Password</label>
-                                <input type="password" className="form-control" id="exampleInputPassword1"
-                                    name="password" value={state.password} onChange={onChangeLogin} placeholder="Password" />
+                                <InputTextFieldComponent
+                                    type="password" 
+                                    className="form-control" 
+                                    id="exampleInputPassword1"
+                                    name="password" 
+                                    value={state.password} 
+                                    onChange={onChangeLogin} 
+                                    placeholder="Password"
+                                />
                             </div>
 
                             <button type="submit" className="btn btn-primary"

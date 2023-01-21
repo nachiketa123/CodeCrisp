@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../Action/AuthAction'
+import InputTextFieldComponent from '../common/InputTextFieldComponent'
+import isEmpty from '../../utility/is-empty'
 
 function Signup(props) {
 
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [state, setState] = useState({
         name: "",
@@ -37,19 +39,12 @@ function Signup(props) {
         }
 
         props.signUp(newUser);
-        setState({
-            name: "",
-            email: "",
-            phoneNo: "",
-            age: "",
-            password: ""
-
-        },
-        )
-
+        if(isEmpty(props.errorRed?.error)){
+            navigate('/login')
+        }
 
     }
-
+    const error = props.errorRed?.error
     return (
         <div className='container'>
             <div className='back-down row justify-content-md-center'>
@@ -60,37 +55,76 @@ function Signup(props) {
                         <form>
 
                             <div className="form-group">
-                                <label htmlFor="exampleInputEmail1">Name</label>
-                                <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name"
-                                    name="name" value={state.name} onChange={handleOnchange}
+                                <label htmlFor="name">Name</label>
+                                <InputTextFieldComponent
+                                    type="text" 
+                                    className="form-control" 
+                                    id="name" 
+                                    areaDescribedBy="emailHelp" 
+                                    placeholder="Enter Name"
+                                    name="name" 
+                                    value={state.name} 
+                                    onChange={handleOnchange}
+                                    error={error.name}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Email</label>
-                                <input type="email" className="form-control" id="exampleInputPassword1" placeholder="email"
-                                    name="email" value={state.email} onChange={handleOnchange}
+                                <label htmlFor="email">Email</label>
+                                <InputTextFieldComponent
+                                    type="email" 
+                                    className="form-control" 
+                                    id="email" 
+                                    placeholder="email"
+                                    name="email" 
+                                    value={state.email} 
+                                    onChange={handleOnchange}
+                                    error={error.email}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">phone no</label>
-                                <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Phone Number"
-                                    name="phoneNo" value={state.phoneNo} onChange={handleOnchange}
+                                <label htmlFor="phoneno">phone no</label>
+                                <InputTextFieldComponent
+                                    type="text" 
+                                    className="form-control" 
+                                    id="phoneno" 
+                                    placeholder="Phone Number"
+                                    name="phoneNo" 
+                                    value={state.phoneNo} 
+                                    onChange={handleOnchange}
+                                    error={error.phoneno}
                                 />
+                
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Age</label>
-                                <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Age"
-                                    name="age" value={state.age} onChange={handleOnchange}
+                                <label htmlFor="age">Age</label>
+                                <InputTextFieldComponent
+                                     type="text" 
+                                     className="form-control" 
+                                     id="age" 
+                                     placeholder="Age"
+                                     name="age" 
+                                     value={state.age} 
+                                     onChange={handleOnchange}
+                                     error={error.age}
                                 />
+                            
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Password</label>
-                                <input type="passwords" className="form-control" id="exampleInputPassword1" placeholder="password"
-                                    name="password" value={state.password} onChange={handleOnchange}
+                                <label htmlFor="password">Password</label>
+                                <InputTextFieldComponent
+                                    type="password" 
+                                    className="form-control" 
+                                    id="password" 
+                                    placeholder="password"
+                                    name="password" 
+                                    value={state.password} 
+                                    onChange={handleOnchange}
+                                    infotext="Password must contain atleast one character from all the below 1. small letter, 2. capital letter, 3. 0-9 digit and an special character from (!,@,#,$,%,^,&)"
+                                    error={error.password}
                                 />
                             </div>
 
@@ -109,7 +143,8 @@ function Signup(props) {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.authRed
+    auth: state.authRed,
+    errorRed: state.errorReducer
 })
 export default connect(mapStateToProps, { signUp })(Signup)
 

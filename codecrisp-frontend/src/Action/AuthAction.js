@@ -11,7 +11,7 @@ import {
 export const signUp = (userData) => (dispatch) => {
     axios.post('/api/user/signup', userData).then(
         res => {
-            dispatch({ type: GET_ERROR, payload: {} })
+            dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
         }
     ).catch(
         err => {

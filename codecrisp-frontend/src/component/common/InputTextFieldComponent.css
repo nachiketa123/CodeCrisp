@@ -1,0 +1,36 @@
+.input-text-field-component-container{
+    position: relative;
+}
+.input-text-field-info-icon-container{
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+    background-color: transparent;
+}
+
+span.input-text-field-info-icon {
+    display: inline-block;
+    position: relative;
+    color: black;
+    background: transparent;
+}
+
+div.input-text-field-info-icon-msg {
+    visibility: hidden;
+    width: 320px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: -8em;
+    margin-left: -60px;
+    font-size: smaller;
+}
+
+span.input-text-field-info-icon:hover + div.input-text-field-info-icon-msg{
+    visibility: visible;
+}

@@ -9,7 +9,7 @@ const errorReducer = (state = initialState, action) => {
         case GET_ERROR:
             return {
                 ...state,
-                error: { ...state.error, ...action.payload }
+                error: { ...action.payload }
             }
         default:
             return state
