@@ -5,7 +5,8 @@ const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
 
-const User = require('../model/User')
+const User = require('../model/User');
+const { default: mongoose } = require('mongoose');
 const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
 
 const getPostForUser = (user_id) => {
@@ -111,6 +112,78 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
 
 })
 
+/*
+    @route:     /api/post/getAllUserPosts1/:user_id
+    @desc:      To get all the post of the user and also all the posts of all the user's friends
+    @access:    Private
+*/
+router.get('/getAllUserPosts1/:user_id', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+    const user_id = req.params.user_id;
+
+    let {page} = req.query;
+    if(isEmpty(page) || page===0){
+        page=0 //initial page
+    }
+    //limit is number of posts per page
+    let limit = 2;
+
+    UserPost.aggregate([
+        {
+            $lookup:{
+                from:"friends_datas",
+                pipeline:[
+                    {
+                        $match:{
+                            "user":mongoose.Types.ObjectId(user_id)
+                        }
+                    }
+                ],
+                as:"all_friends"
+            }
+        }
+        ,{
+            $unwind:"$all_friends"
+        }
+        ,{
+            $project:{
+                user:1,
+                name:1,
+                postText:1,
+                avatar:1,
+                likes:1,
+                Comments:1,
+                date:1,
+                imageUrls:1,
+                friend_list:"$all_friends.friend_list"
+            }
+        }
+        ,{
+            $match:{
+                $expr:{
+                    $or:[
+                        {$eq:["$user",mongoose.Types.ObjectId(user_id)]},
+                        {$in:["$user","$friend_list.user"]}
+                    ]
+                }
+            }
+        }
+        ,{
+            $sort:{date:-1}
+        },{
+            $skip: page*limit
+        }
+        ,{
+            $limit: limit
+        }
+        
+        
+       
+    ]).then(data=>{
+        res.json(data)
+    })
+
+
+})
 
 /*
     @route:     /api/post/getAllUserPosts/:user_id

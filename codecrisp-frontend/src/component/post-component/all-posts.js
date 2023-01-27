@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostComponent from './post';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,22 +9,58 @@ import './all-posts.css';
 import { getAllUserPosts, deletePost } from '../../Action/PostAction';
 
 const AllPosts = ({
-    postReducer: { allUserPosts, loading },
+    postReducer: { allUserPosts, loading, morePostAvailable },
     auth: { user },
     getAllUserPosts,
     deletePost,
     socketReducer: { socket } }) => {
 
+    //to load data when user hits bottom of the page
+    const [state,setState] = useState({
+        page:0, //initial page is 0
+    });
+
+    const [scrollPosition, setScrollPosition] = useState(Number(sessionStorage.getItem('post_page_scroll')));
+
+    let scrollEvent = null;
+
     let ignore = false
     //when component renders load all the users post
     useEffect(() => {
-        if (!ignore)
-            getAllUserPosts(user.id)
+        if (scrollPosition > 0) {
+            window.scrollTo(0,scrollPosition)
+          }
 
+        if (!ignore){
+            getAllUserPosts({user_id:user.id,page:state.page})
+        }
+
+        // Add the scroll event listener
+        if(!scrollEvent){
+           scrollEvent = window.addEventListener('scroll', handleScroll);
+        }
+            
         return () => {
             ignore = true
+            window.removeEventListener('scroll', scrollEvent);
+            scrollEvent = null
         }
-    }, [])
+    }, [state.page])
+
+    const handleScroll = () => {
+        // console.log('window.innerHeight',window.innerHeight);
+        // console.log('+ document.documentElement.scrollTop',document.documentElement.scrollTop);
+        // console.log('document.documentElement.scrollHeight',document.documentElement.scrollHeight);
+
+        // console.log('window.scrollY',window.scrollY)
+        if (Math.trunc(window.innerHeight + document.documentElement.scrollTop) === document.documentElement.scrollHeight) {
+            sessionStorage.setItem('post_page_scroll', window.scrollY);
+            setScrollPosition(window.scrollY)
+            if(morePostAvailable){
+                setState({page:state.page+1});
+            }
+        }
+      };
 
     const getPostData = (id) => {
         return new Promise((resolve) => {
@@ -55,8 +91,7 @@ const AllPosts = ({
 
     }
     return (
-        (loading ? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={200}> </FaUpload></div> : (
-
+            <React.Fragment>
             <div className='all-posts'>
                 {!isEmpty(allUserPosts) ?
                     allUserPosts.sort(compareDateDesc).map(post => (
@@ -74,11 +109,10 @@ const AllPosts = ({
 
                     : ''}
             </div>
-        ))
+            {(loading ? <div className='loading-icon'><FaUpload className='upload-icon-img' color='white' size={100}> </FaUpload></div> : '')}
+            </React.Fragment>
+        )
 
-
-
-    );
 }
 
 AllPosts.propTypes = {

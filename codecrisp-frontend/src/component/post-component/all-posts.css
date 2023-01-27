@@ -1,18 +1,23 @@
 .all-posts {
+    position: relative;
     display: flex;
     flex-direction: column;
     /* background-color: ; */
 }
 
 .loading-icon {
+    position: sticky;
     display: flex;
     justify-content: center;
-    margin: 25px
+    margin: 25%;
+    bottom: 0;
+    background: transparent;
 }
 
 .upload-icon-img{
+    background: transparent;
     animation-name: loading_change_color;
-    animation-duration: 3s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
 }
 

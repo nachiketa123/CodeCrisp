@@ -23,12 +23,12 @@ export const addPost = (postData) => (dispatch) => {
         })
 }
 
-export const getAllUserPosts = (user_id) => (dispatch) => {
+export const getAllUserPosts = (loadData) => (dispatch) => {
     dispatch({
         type: SET_LOADING_ONN,
         payload: {}
     })
-    axios.get(`/api/post/getAllUserPosts/${user_id}`)
+    axios.get(`/api/post/getAllUserPosts1/${loadData.user_id}`,{params:{page:loadData.page}})
         .then(res => {
             dispatch({
                 type: GET_ALL_USER_POST,

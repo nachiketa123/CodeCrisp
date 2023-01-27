@@ -1,9 +1,12 @@
 import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, LIKE_POST } from "../Action/Types";
+import isEmpty from "../utility/is-empty";
 
 const initialState = {
     allUserPosts: [],
     newPost: {},
-    loading: false
+    loading: false,
+    morePostAvailable:true
+    // scrollPosition:0
 }
 
 const PostReducer = (state = initialState, action) => {
@@ -18,7 +21,8 @@ const PostReducer = (state = initialState, action) => {
         case GET_ALL_USER_POST:
             return {
                 ...state,
-                allUserPosts: action.payload,
+                morePostAvailable: !isEmpty(action.payload),
+                allUserPosts: [...state.allUserPosts,...action.payload],
                 loading: false
             }
         case SET_LOADING_ONN:
