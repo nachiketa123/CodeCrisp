@@ -7,7 +7,7 @@
     top: 0;
     z-index: 100;
     width: 100%;
-    background-color: black;
+    background-color: #7615CF;
 }
 .login-box-outer{
     margin-top: 50px;
@@ -35,7 +35,14 @@
    
 }
 
-
+.login-box .btn.btn-primary {
+    background-color: #7615CF;
+    border-color: #7615CF;
+}
+.login-box .btn.btn-primary:hover {
+    background-color: #E3CBF9;
+    color: black;
+}
 
 .footer{
     width: 100%;
@@ -90,6 +97,14 @@
 
 .background-homePage{
  position: relative;
+}
 
-    
+.background-homepage .navbar .btn.btn-primary{
+    background-color: #7615CF;
+    border-color: #E3CBF9;
+}
+.background-homepage .navbar .btn.btn-primary:hover{
+    background-color: #E3CBF9;
+    color: black;
+
 }

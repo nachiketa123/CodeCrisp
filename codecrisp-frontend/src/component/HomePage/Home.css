@@ -10,9 +10,15 @@
 
 .homePage-left{
     flex-basis: 45%;
+    padding: 5%;
+    color:white;
 }
 .homePage-right{
     flex-basis: 55%;
+}
+
+.homePage-left h1{
+    text-align: center;
 }
 
 @media screen and (max-width: 576px) {
@@ -24,9 +30,25 @@
         flex-basis: 100%;
         margin: 0 auto;
     }
+    .homePage-left h1{
+        font-size: 2rem;
+    }
     .homePage-right{
         flex-basis: 100%;
+        min-width: 90%;
     }
     
+  }
+
+  @media screen and (max-width: 390px) {  
+    .background-homePage{
+        padding-top: 22%;
+    }
+    .homePage-left{
+        margin: 0 auto;
+    }
+    .homePage-left h1{
+        font-size: 1.6rem;
+    }
     
   }

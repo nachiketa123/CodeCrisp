@@ -13,7 +13,7 @@
 
 .nav-link{
     color:white;
-    background-color: black;
+    background-color: #7615CF;;
     
 }
 
@@ -30,6 +30,12 @@
     font-size: 30px;
     margin-left: 15px;
 }
+
+.navbar-brand:hover{
+    color: #D6FD59;
+    font-weight: 600;
+}
+
 .navbar-nav{
     background: transparent;
     /* background-color: black; */
@@ -124,6 +130,24 @@
     padding: 0.25rem 0.35rem;
 }
 
+.nav-item.logout {
+    background-color: #7615CF;
+}
+
+.nav-item.logout .btn.btn-primary{
+    background-color: #7615CF;
+    border-color: #7615CF;
+}
+
+.nav-item.logout .btn.btn-primary:hover {
+    background-color: #F4073A;
+    color: white;
+    border-radius: 0.5em;
+}
+
+.navbar-nav .nav-item{
+    background-color: #7615CF;
+}
 
 
 @media screen and (max-width: 1200px) {
@@ -240,7 +264,7 @@
     }
     .nav-link {
         font-size: 16px;
-        background-color: black;
+        background-color: #3C68E0;
     }
     .nav-item .btn {
         font-size: 16px;
@@ -327,7 +351,7 @@
 
     .nav-link {
         font-size: 12px;
-        background-color:transparent;
+        background-color:#3C68E0;;
     }
     .nav-item .btn {
         font-size: 12px;

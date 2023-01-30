@@ -9,7 +9,7 @@ function Home() {
                 <h1
                 >Developer's Social Media !!</h1>
             </div>
-            <div className='homePage-left'>
+            <div className='homePage-right'>
                 <Login />
             </div>
 

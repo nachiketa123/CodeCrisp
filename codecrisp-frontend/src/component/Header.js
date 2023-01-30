@@ -142,7 +142,7 @@ function Header({
                                     <Link className="nav-link" to="/settings">Settings</Link>
                                 </li>
 
-                                <li className="nav-item">
+                                <li className="nav-item logout">
                                     <button onClick={logMeOut} type="button" className="btn btn-primary">Logout</button>
                                 </li>
                             </ul>
