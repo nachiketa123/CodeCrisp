@@ -5,7 +5,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-top: 5%;
 }
 
 .homePage-left{
@@ -24,7 +23,6 @@
 @media screen and (max-width: 576px) {
     .background-homePage{
         flex-direction: column;
-        padding-top: 15%;
     }
     .homePage-left{
         flex-basis: 100%;
@@ -41,9 +39,6 @@
   }
 
   @media screen and (max-width: 390px) {  
-    .background-homePage{
-        padding-top: 22%;
-    }
     .homePage-left{
         margin: 0 auto;
     }

@@ -10,7 +10,7 @@
     background-color: #7615CF;
 }
 .login-box-outer{
-    margin-top: 50px;
+    /* margin-top: 50px; */
     display: flex;
     flex-direction: column;
     color: white;
@@ -95,8 +95,9 @@
  color: white;
 }
 
-.background-homePage{
+.background-homepage{
  position: relative;
+ margin-top: 100px;
 }
 
 .background-homepage .navbar .btn.btn-primary{

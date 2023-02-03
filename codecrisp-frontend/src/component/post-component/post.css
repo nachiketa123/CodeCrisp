@@ -5,7 +5,9 @@
     flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1);
     transition: 0.3s;
-    width: 62%;
+    width: 90%;
+    min-width: 325px;
+    max-width: 420px;
     background-color: rgb(31,33,40);
 
     /* height: 400px; */
@@ -223,13 +225,5 @@ input.comment-box:focus {
 
   .user-location {
     font-size: 9px;
-  }
-
-  .chat-box {
-    display: none;
-  }
-
-  .notification-panel {
-    display: none;
   }
 }

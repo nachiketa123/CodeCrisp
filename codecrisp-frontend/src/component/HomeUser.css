@@ -18,10 +18,12 @@
 }
 
 .chat-box {
-
-    flex-basis: 50%;
-    flex-grow: 1;
+    /* flex-basis: 30%;
+    flex-grow: 1; */
+    min-width: max-content;
+    max-width: 350px;
     justify-content: center;
+    padding: 50px 5px 0 50px;
 }
 
 .all-posts {
@@ -34,9 +36,19 @@
     justify-content: center;
     flex-basis: 50%;
     flex-grow: 1;
+    padding: 50px 50px 0 5px;
 }
 @media screen and (max-width: 991px) {
     .notification-panel {
        display: none;
     }
+    .chat-box {
+        padding-left: 17px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .chat-box {
+        display: none;
+      }
 }

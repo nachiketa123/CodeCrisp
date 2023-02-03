@@ -118,7 +118,7 @@ function Header({
                         <div className='navLinks'>
                             <ul className="navbar-nav">
                                 {(user.name) ? (<li className="nav-item">
-                                    <a className="nav-link" href="#">Hi! {user.name}<span className="sr-only">(current)</span></a>
+                                    <a className="nav-link" href="#">Hi! {String(user.name).charAt(0).toUpperCase()+String(user.name).slice(1)}<span className="sr-only">(current)</span></a>
                                 </li>) : ""
                                 }
                                 <li className="nav-item">

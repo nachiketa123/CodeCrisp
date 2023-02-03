@@ -7,14 +7,19 @@
     height: 70px;
     background: transparent;
     cursor: pointer;
+    border-radius: 0.5em;
 }
-
+.chat-tile-outer:hover,.chat-tile-outer:hover .chat-tile-left{
+    background-color: #E3CBF9;
+}
 .chat-tile-left{
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20%;
+    /* width: 20%; */
+    margin: 0 !important;
+    padding: 5px;
     
 }
 
@@ -44,14 +49,14 @@ background: transparent;
 }
 
 .chat-tile-thumbnail{
-    height: 55px;
-    width: 55px;
+    height: 48px;
+    width: 48px;
     border-radius: 2em;
 }
 
 .chat-tile-username{
     color: black!important;
-    font-size: medium;
+    font-size: 14px;
     font-family: 'Roboto', sans-serif;
     font-weight: bolder;
 }
@@ -59,6 +64,8 @@ background: transparent;
 .chat-tile-lm{
     color: black;
     font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    margin: 0 !important;
 }
 
 .chat-tile-body{
