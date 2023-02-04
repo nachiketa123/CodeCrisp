@@ -10,7 +10,7 @@ const UserPost = new Schema({
         type: String,
         required: true
     },
-    postText: {
+    postText: { 
         type: String
     },
     avatar: {

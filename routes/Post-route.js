@@ -117,7 +117,7 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
     @desc:      To get all the post of the user and also all the posts of all the user's friends
     @access:    Private
 */
-router.get('/getAllUserPosts1/:user_id', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const user_id = req.params.user_id;
 
     let {page} = req.query;
@@ -194,17 +194,101 @@ router.get('/getUserPostsByUserId/:user_id'
     , passport.authenticate('jwt', { session: false })
     , async (req, res) => {
 
-            const user_id = req.params.user_id;
-            const error = {}
-            //Find all the users post
-            try{
-                const usersPost = await getPostForUser(user_id)
-                return res.status(200).json(usersPost)
-            }catch(err){
-                error.dberror = 'DB error'
-                return res.status(403).json(dberror)
-            }
-    
+        const user_id = req.params.user_id;
+        const error = {}
+        //Find all the users post
+        try {
+            const usersPost = await getPostForUser(user_id)
+            return res.status(200).json(usersPost)
+        } catch (err) {
+            error.dberror = 'DB error'
+            return res.status(403).json(dberror)
+        }
+
+    })
+
+
+/*
+    @route:     /api/post/get-comment
+    @desc:      To get all the comment of that post
+    @access:    Private
+*/
+router.get('/get-comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+    const post_id = req.params.post_id;
+
+    UserPost.findById(post_id).then(
+        post => {
+            return res.status(200).json(post.comments);
+        }
+    ).catch(
+        err => {
+            return res.status(400).json(err);
+        }
+    )
+
 })
+
+
+/*
+    @route:     /api/post/add-comment
+    @desc:      To post the comment in a post  
+    @access:    Private
+*/
+router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+
+    const { user, name, text, avatar } = req.body;
+
+    const post_id = req.params.post_id;
+
+    UserPost.findById(post_id).then(
+
+        post => {
+            post.comments.push({ user, name, text, avatar });
+            post.save().then(
+                p => {
+                    return res.status(200).json({ success: true });
+                }
+            )
+        }
+
+    )
+})
+
+/*
+    @route:     /api/post/likePost
+    @desc:      To like the post  
+    @access:    Private
+*/
+
+ 
+router.post('/likePost', passport.authenticate('jwt', { session: false }) , (req,res) =>{
+       
+       const {user_id , post_id} = req.body;
+       UserPost.findById(post_id).then(
+          post =>{
+          
+             if(post.likes.filter(e =>  (String(e.user) === user_id)).length != 0){
+                console.log("already liked")
+                post.likes = post.likes.filter(e =>  (String(e.user) !== user_id));
+             
+             }
+             else{              
+                 post.likes.push({user:user_id});
+                 
+                
+             }
+             
+             post.save().then(
+                p => {
+                    return res.status(200).json({ success: true });
+                }
+             )
+          }
+       )
+       
+} )
+
 
 module.exports = router;

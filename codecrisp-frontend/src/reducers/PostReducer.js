@@ -1,4 +1,4 @@
-import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, LIKE_POST } from "../Action/Types";
+import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, LIKE_POST, ADD_COMMENT } from "../Action/Types";
 import isEmpty from "../utility/is-empty";
 
 const initialState = {
@@ -41,6 +41,15 @@ const PostReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allUserPosts: state.allUserPosts.filter(post => post._id !== action.payload)
+            }
+
+        case ADD_COMMENT:
+
+            const index = state.allUserPosts.findIndex(post => post._id === action.payload.id);
+            state.allUserPosts[index].comments.push(action.payload.data);
+            return {
+                ...state
+
             }
         default:
             return state;
