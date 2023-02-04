@@ -3,7 +3,7 @@
 .my-card {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1);
+    /* box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 1); */
     transition: 0.3s;
     width: 90%;
     min-width: 325px;
@@ -26,7 +26,7 @@
 }
   .my-card:hover {
     border: 5px;
-    box-shadow: -1px 0px 13px 1px white;
+ 
   }
   
   .post-common {
@@ -205,8 +205,8 @@ input.comment-box:focus {
     width: 90%;
   }
   .dp-img {
-    width: 17%;
-    height: 45px;
+    width: 45px;
+    height: 50px;
     margin: 8px;
   }
   .post-menu-img {

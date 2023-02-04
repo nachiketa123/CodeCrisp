@@ -14,12 +14,16 @@ const PostComponent = ({
   handleClickLike,
   handlePostComment,
   comments,
+  likeState
 }) => {
   const [state, setState] = useState({
-    like: false,
+    like: likeState,
     comment: "",
     n: 2,
   });
+  
+  console.log(comments);
+
 
   const onLike = (e)   =>{
     setState({...state , like : !state.like });
@@ -105,7 +109,7 @@ const PostComponent = ({
           <FaShare className="icon share-img" color="white" title="share" />
         </div>
         <div className="who-liked-post" style={{ backgroundColor: "white" }}>
-          <p
+          {/* <p
             style={{
               color: "black",
               fontWeight: "bold",
@@ -117,7 +121,7 @@ const PostComponent = ({
           >
             {" "}
             someone liked your post
-          </p>
+          </p> */}
         </div>
       </div>
       <div className="username-caption" style={{ backgroundColor: "white" }}>
@@ -166,6 +170,10 @@ const PostComponent = ({
             fontSize: "14px",
             margin: "0",
             background: "transparent",
+            border:"1px solid #889397",
+            padding:"5px",
+            borderRadius:"0.5em",
+            cursor:"pointer"
           }}
           className="secondary"
           onClick={seeMore}
@@ -185,7 +193,7 @@ const PostComponent = ({
             value={state.comment}
             name="comment"
             onChange={onComment}
-            style={{ backgroundColor: "rgb(245,245,245)", height: "30px" }}
+            style={{ backgroundColor: "rgb(245,245,245)", height: "40px" , width:"280px" }}
           />
 
           <button
@@ -194,12 +202,21 @@ const PostComponent = ({
               backgroundColor: "blue",
               borderRadius: "0.5em",
               height: "30px",
+              height:"38px"
             }}
             onClick={(e) => handlePostComment(id, state.comment)}
           >
             post
           </button>
         </div>
+        
+        {comments?.map(e =>(
+          
+            <h6> s</h6>
+        
+        ))}
+        
+       
       </div>
     </div>
   );
