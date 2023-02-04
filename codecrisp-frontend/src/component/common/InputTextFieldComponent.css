@@ -1,5 +1,6 @@
 .input-text-field-component-container{
     position: relative;
+    background: white;
 }
 .input-text-field-info-icon-container{
     position: absolute;

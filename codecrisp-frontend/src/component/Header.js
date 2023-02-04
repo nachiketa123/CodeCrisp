@@ -66,7 +66,7 @@ function Header({
         setState({
             ...state,
             searchtext:''
-        })
+        }) 
     }
     const handleToggleNotification = ()=>{
         setState({

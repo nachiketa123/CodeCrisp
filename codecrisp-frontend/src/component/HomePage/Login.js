@@ -46,27 +46,29 @@ function Login(props) {
 
                     <h1>LOGIN</h1>
                     <div className='login-box'
-                        style={{ backgroundColor: "white" }}
+                        style={{ backgroundColor: "white"}}
                     >
                         <form
-                            style={{ backgroundColor: "transparent" }}
+                            style={{ background: "transparent" }}
                         >
 
                             <div className="form-group"
-                                style={{ backgroundColor: "white", color: "black" }}
+                                style={{ backgroundColor: "white", color: "black"  }}
                             >
                                 <label htmlFor="exampleInputEmail1"
                                     style={{ backgroundColor: "white", color: "black" }}
                                 >Email address</label>
                                 <InputTextFieldComponent
                                     type="email" 
-                                    className="form-control" 
+                                    className="inputLogin form-control" 
                                     id="exampleInputEmail1" 
                                     areaDescribedBy="emailHelp" 
                                     placeholder="Enter email"
                                     name="email" 
                                     value={state.email} 
                                     onChange={onChangeLogin}
+                                    
+                                   
                                 />
                                 <small id="emailHelp" className="form-text text-muted"
                                     style={{ backgroundColor: "white" }}
@@ -92,6 +94,8 @@ function Login(props) {
 
                             <button type="submit" className="btn btn-primary"
                                 onClick={onSubmits}
+                                
+            
                             >Login</button>
 
                         </form>
