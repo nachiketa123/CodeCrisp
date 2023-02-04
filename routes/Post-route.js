@@ -86,7 +86,7 @@ router.post('/addPost', passport.authenticate('jwt', { session: false }), async 
 })
 
 
-
+/* Below route is deprecated as we are going to use infinite scrolling now, it is replaced by /api/post/getAllUserPosts1/:user_id API */
 /*
     @route:     /api/post/getAllUserPosts/:user_id
     @desc:      To get all the post of the user and also all the posts of all the user's friends
@@ -165,6 +165,21 @@ router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session:
                         {$in:["$user","$friend_list.user"]}
                     ]
                 }
+            }
+        }
+        ,{
+            $project:{
+                user:1,
+                name:1,
+                postText:1,
+                avatar:1,
+                likes:1,
+                Comments:1,
+                date:1,
+                imageUrls:1,
+                friend_list:"$all_friends.friend_list",
+                isLikedByUser: { $in:[mongoose.Types.ObjectId(user_id),"$likes.user"]},
+                page: {$convert: { input:page, to: "int"}}// Current page number, this will help in checking if we need to load the page or not in front-end
             }
         }
         ,{
@@ -258,7 +273,7 @@ router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: fal
 
 /*
     @route:     /api/post/likePost
-    @desc:      To like the post  
+    @desc:      When user like/unlike the post this API get a hit, and user get added/removed in/from the post.like array on the basis of action(like/unlike respectively) 
     @access:    Private
 */
 
@@ -268,9 +283,7 @@ router.post('/likePost', passport.authenticate('jwt', { session: false }) , (req
        const {user_id , post_id} = req.body;
        UserPost.findById(post_id).then(
           post =>{
-          
              if(post.likes.filter(e =>  (String(e.user) === user_id)).length != 0){
-                console.log("already liked")
                 post.likes = post.likes.filter(e =>  (String(e.user) !== user_id));
              
              }

@@ -14,9 +14,10 @@ const PostComponent = ({
   handleClickLike,
   handlePostComment,
   comments,
+  isLikedByUser,
 }) => {
   const [state, setState] = useState({
-    like: false,
+    like: isLikedByUser,
     comment: "",
     n: 2,
   });

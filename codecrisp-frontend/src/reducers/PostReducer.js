@@ -5,8 +5,8 @@ const initialState = {
     allUserPosts: [],
     newPost: {},
     loading: false,
-    morePostAvailable:true
-    // scrollPosition:0
+    morePostAvailable:true,
+    page:0
 }
 
 const PostReducer = (state = initialState, action) => {
@@ -21,9 +21,10 @@ const PostReducer = (state = initialState, action) => {
         case GET_ALL_USER_POST:
             return {
                 ...state,
-                morePostAvailable: !isEmpty(action.payload),
-                allUserPosts: [...state.allUserPosts,...action.payload],
-                loading: false
+                morePostAvailable: !isEmpty(action.payload.data),
+                allUserPosts: [...state.allUserPosts,...action.payload.data],
+                loading: false,
+                page: !isEmpty(action.payload.data)? action.payload.page: state.page
             }
         case SET_LOADING_ONN:
             return {

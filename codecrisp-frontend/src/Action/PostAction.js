@@ -32,7 +32,7 @@ export const getAllUserPosts = (loadData) => (dispatch) => {
         .then(res => {
             dispatch({
                 type: GET_ALL_USER_POST,
-                payload: res.data
+                payload: {data:res.data,page:loadData.page}
             })
         })
         .catch(err => {

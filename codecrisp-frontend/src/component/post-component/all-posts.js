@@ -14,7 +14,7 @@ import {
 } from "../../Action/PostAction";
 
 const AllPosts = ({
-  postReducer: { allUserPosts, loading, morePostAvailable },
+  postReducer: { allUserPosts, loading, morePostAvailable, page },
   auth: { user },
   getAllUserPosts,
   deletePost,
@@ -24,7 +24,7 @@ const AllPosts = ({
 }) => {
   //to load data when user hits bottom of the page
   const [state, setState] = useState({
-    page: 0, //initial page is 0
+    page: page, //initial page is 0
   });
 
   const [scrollPosition, setScrollPosition] = useState(
@@ -34,13 +34,13 @@ const AllPosts = ({
   let scrollEvent = null;
 
   let ignore = false;
-  //when component renders load all the users post
+  //when component renders load all the users post on particular page number(intial page 0)
   useEffect(() => {
     if (scrollPosition > 0) {
       window.scrollTo(0, scrollPosition);
     }
 
-    if (!ignore) {
+    if (!ignore && (isEmpty(allUserPosts) || allUserPosts[allUserPosts.length-1].page !== state.page)) {
       getAllUserPosts({ user_id: user.id, page: state.page });
     }
 
@@ -51,6 +51,7 @@ const AllPosts = ({
 
     return () => {
       ignore = true;
+      // Remove the scroll event listener
       window.removeEventListener("scroll", scrollEvent);
       scrollEvent = null;
     };
@@ -140,6 +141,7 @@ const AllPosts = ({
                   handleClickLike={handleClickLike}
                   handlePostComment={handlePostComment}
                   comments={post.comments}
+                  isLikedByUser={post.isLikedByUser}
                 />
               ))
           : ""}
