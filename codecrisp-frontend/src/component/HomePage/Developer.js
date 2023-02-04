@@ -8,10 +8,14 @@ function Developer() {
 
                 <div className='col col-sm-12 col-md-4 col-lg-3 p-0 m-3 developerTile'>
 
-                    <div className="card">
+                    <div className="card"
+               
+                    >
                         <img src={require('../../assets/images/ayush.jpg')}
                             className="card-img-top" alt="..." />
-                        <div className="card-body">
+                        <div className="card-body"
+                             style={{backgroundColor:"white"}}
+                        >
                             <h5 className="card-title">Ayush Kumar</h5>
                             <p className="card-text">
                                 Full Stack Developer |  Worked on both Frontend & Backend
@@ -26,7 +30,9 @@ function Developer() {
                     <div className="card">
                         <img src={require('../../assets/images/nach_profile.jpg')}
                             className="card-img-top" alt="..." />
-                        <div className="card-body">
+                        <div className="card-body"
+                         style={{backgroundColor:"white"}}
+                        >
                             <h5 className="card-title">Nachiketa Rajput</h5>
                             <p className="card-text">
                                 Full Stack Developer |  Worked on both Frontend & Backend
@@ -41,7 +47,9 @@ function Developer() {
                     <div className="card">
                         <img src={require('../../assets/images/luv_profile.jpg')}
                             className="card-img-top" alt="..." />
-                        <div className="card-body">
+                        <div className="card-body"
+                         style={{backgroundColor:"white"}}
+                        >
                             <h5 className="card-title">Luv Saini</h5>
                             <p className="card-text">
                                 Database || Mongo || SQL Developer

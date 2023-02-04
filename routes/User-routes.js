@@ -10,6 +10,7 @@ const UserPost = require('../model/UserPost')
 const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
 const deleteImagesFromCloudinary = require('../utility/cloudinaryFileManager').deleteImagesFromCloudinary;
 const isEmpty = require("../utility/is-empty")
+const registerInputValidation = require("../validation/register-validation");
 
 
 const getPostForUser = (user_id) => {
@@ -52,13 +53,19 @@ const updateAvatarInAllPost = (postArray, avatarURL) => {
 router.post('/signup',
     (req, res) => {
         const { name, email, phoneno, age, password } = req.body //Destructoring..
-        const newUser = User({ name, email, phoneno, age, password })
+        const user_obj =  { name, email, phoneno, age, password }
+
+        //Validation
+        const {errors, isValid} = registerInputValidation(user_obj)
+        if(!isValid) return res.status(200).json(errors) 
+
+        const newUser = User(user_obj)
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
                 newUser.password = hash
                 newUser.save().then(
                     user => {
-                        res.status(200).json(user)
+                        res.status(200).json({success:true})
                     }
                 ).catch(
                     err => {

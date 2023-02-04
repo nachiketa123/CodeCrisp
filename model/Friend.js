@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const FriendCollection = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'user_data'
+        ref: 'user_datas'
     },
     friend_list: [{
         user: {
             type: Schema.Types.ObjectId,
-            ref: 'user_data'
+            ref: 'user_datas'
         },
         isCloseFriend: {
             type: Boolean,

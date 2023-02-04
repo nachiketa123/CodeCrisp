@@ -1,6 +1,5 @@
 .background-homePage{
 
-    height: 60vh;
     width:100%;
     display: flex;
     flex-direction: row;
@@ -9,8 +8,44 @@
 }
 
 .homePage-left{
-    width: 40%;
+    flex-basis: 45%;
+    padding: 5%;
+    color:white;
 }
 .homePage-right{
-    width: 100%;
+    flex-basis: 55%;
 }
+
+.homePage-left h1{
+    text-align: center;
+}
+
+@media screen and (max-width: 576px) {
+    .background-homePage{
+        flex-direction: column;
+    }
+    .homePage-left{
+        flex-basis: 100%;
+        margin: 0 auto;
+    }
+    .homePage-left h1{
+        font-size: 2rem;
+    }
+    .homePage-right{
+        flex-basis: 100%;
+        min-width: 90%;
+    }
+    
+  }
+
+  @media screen and (max-width: 390px) {  
+    .homePage-left{
+        margin: 0 auto;
+    }
+    .homePage-left h1{
+        font-size: 1.6rem;
+    }
+    
+  }
+  
+  

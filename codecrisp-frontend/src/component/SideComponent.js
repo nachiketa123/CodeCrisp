@@ -2,25 +2,21 @@ import React from 'react';
 import './SideComponent.css'
 const CommunityNotification = () => {
     return (
-        <div >
-            <div className='flex-item'
-                style={{ marginTop: "50px" }}>
+            <div className='community-notification-container flex-item'>
                 <div className='title'> CommunityNotification </div>
-                <div className='CommunityNotification' >
-
+                <div className='notif-category CommunityNotification' >
                     APP UNDER DEVELOPMENT
-
                 </div>
                 <div className='title'> Tech News</div>
-                <div className='TechNews' >
+                <div className='notif-category TechNews' >
                     APP UNDER DEVELOPMENT
                 </div>
                 <div className='title'> Quotes</div>
-                <div className='Quotes' >
+                <div className='notif-category Quotes' >
                     APP UNDER DEVELOPMENT
                 </div>
             </div>
-        </div>);
+        );
 }
 
 export default CommunityNotification;

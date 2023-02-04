@@ -1,3 +1,4 @@
+
 .container-fluid{
     padding: 0;;
 }
@@ -9,11 +10,11 @@
     justify-content: space-between;
    
 }
-
+ 
 
 .nav-link{
     color:white;
-    background-color: black;
+    background-color: #7615CF;;
     
 }
 
@@ -30,6 +31,12 @@
     font-size: 30px;
     margin-left: 15px;
 }
+
+.navbar-brand:hover{
+    color: #D6FD59;
+    font-weight: 600;
+}
+
 .navbar-nav{
     background: transparent;
     /* background-color: black; */
@@ -57,7 +64,7 @@
 }
 
 .search {
-    flex: 0 0 40%;
+    flex: 0 0 36%;
     background-color: transparent;
 }
 
@@ -72,7 +79,7 @@
 
 .searchBar{
     display: flex;
-    width: 93%;
+    /* width: 93%; */
     height: 85%;
     background: white;
     border: 1px solid black;
@@ -121,10 +128,42 @@
 
 .navbar-toggler:focus {
     outline: none;
-    padding: 0.25rem 0.35rem;
+    padding: 0.25rem 0.75rem;
 }
 
+.nav-item.logout {
+    background-color: #7615CF;
+}
 
+.nav-item.logout .btn.btn-primary{
+    background-color: #7615CF;
+    border-color: #7615CF;
+}
+
+.nav-item.logout .btn.btn-primary:hover {
+    background-color: #F4073A;
+    color: white;
+    border-radius: 0.5em;
+}
+
+.navbar-nav .nav-item{
+    background-color: #7615CF;
+}
+.navbar-nav .nav-item:nth-child(1) .nav-link{
+    /* color: #C0F807;
+    cursor:default; */
+    /* background-color: gainsboro;
+    color: blue; */
+    background-color: #CC98FC;
+    color: white;
+    cursor: default;
+    font-size: 15px;
+    font-family: cursive;
+    border-radius: 0.5em;
+}
+/* .navbar-nav .nav-item:nth-child(1) .nav-link:hover{
+    
+} */
 
 @media screen and (max-width: 1200px) {
     .nav-left{
@@ -133,17 +172,18 @@
         align-items: center;
     }
     .logo-image{ 
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         
     }
 
     .navbar-brand {
         margin-left: 4px;
+        font-size: 26px;
     }
 
     .search {
-        flex: 0 0 35%;
+        flex: 0 0 30%;
     }
 
     .searchBar-input {
@@ -153,10 +193,16 @@
     .nav-right{
         flex: 0 0 50%;
     }
-    
-}
 
-@media screen and (max-width: 991px) {
+    .nav-link {
+        font-size: 14px;
+    }
+    .nav-item.logout .btn.btn-primary{
+        font-size: 15px;
+    }
+}
+/* work the same as max-width: 992px */
+@media screen and (width <= 992px) {
     .nav-left{
         /* flex-direction: column; */
         flex:0 0 5%;
@@ -180,7 +226,6 @@
         background: transparent;
     }
     .nav-item:hover{
-       background-color: white;
        border-radius: 0.5em;
        padding: 2px 0px 2px 0px;
     }
@@ -225,6 +270,8 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: center;
+        height: 32px;
         /* justify-content: end; */
     }
     .collapsing .navbar-nav{
@@ -237,10 +284,11 @@
 
     .nav-item {
         margin-left: 5px;
+        height: min-content;
     }
     .nav-link {
         font-size: 16px;
-        background-color: black;
+        background-color: #3C68E0;
     }
     .nav-item .btn {
         font-size: 16px;
@@ -292,8 +340,64 @@
         border-radius: 10px;
     }
 
-
+    .navbar-nav{
+        background-color: #7615CF;
+    }
+    .navbar-nav .nav-link {
+        background-color: #7615CF;
+        padding: 0.1rem;
+    }
+    .nav-item.logout .btn.btn-primary {
+        padding: 0.1rem;
+    }
   
+}
+
+@media screen and (width: 992px){
+    .navbar-expand-lg .navbar-collapse {
+        display: none !important;
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: flex;
+    }
+    .navbar-expand-lg .navbar-collapse.show {
+        display: -webkit-box!important;
+        display: -ms-flexbox!important;
+        display: block!important;
+        -ms-flex-preferred-size: auto;
+        flex-basis: auto;
+    }
+    .collapse.show{
+        display: block !important;
+        width: 100%;
+    }
+    .navbar {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+    .nav-right {
+        flex: 0 0 100%;
+    }
+    .navbar-nav{
+        background-color: #7615CF;
+    }
+    .navbar-nav .nav-link {
+        background-color: #7615CF;
+    }
+    .nav-item.logout .btn.btn-primary:hover {
+        padding: 0;
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -327,7 +431,7 @@
 
     .nav-link {
         font-size: 12px;
-        background-color:transparent;
+        background-color:#3C68E0;;
     }
     .nav-item .btn {
         font-size: 12px;
