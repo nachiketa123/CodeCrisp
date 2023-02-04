@@ -117,7 +117,7 @@ router.get('/getAllUserPosts/:user_id', passport.authenticate('jwt', { session: 
     @desc:      To get all the post of the user and also all the posts of all the user's friends
     @access:    Private
 */
-router.get('/getAllUserPosts1/:user_id', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const user_id = req.params.user_id;
 
     let {page} = req.query;
@@ -256,8 +256,39 @@ router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: fal
     )
 })
 
+/*
+    @route:     /api/post/likePost
+    @desc:      To like the post  
+    @access:    Private
+*/
 
-
+ 
+router.post('/likePost', passport.authenticate('jwt', { session: false }) , (req,res) =>{
+       
+       const {user_id , post_id} = req.body;
+       UserPost.findById(post_id).then(
+          post =>{
+          
+             if(post.likes.filter(e =>  (String(e.user) === user_id)).length != 0){
+                console.log("already liked")
+                post.likes = post.likes.filter(e =>  (String(e.user) !== user_id));
+             
+             }
+             else{              
+                 post.likes.push({user:user_id});
+                 
+                
+             }
+             
+             post.save().then(
+                p => {
+                    return res.status(200).json({ success: true });
+                }
+             )
+          }
+       )
+       
+} )
 
 
 module.exports = router;
