@@ -227,9 +227,13 @@ input.comment-box:focus {
     font-size: 9px;
   }
 }
-.comment-box{
+.user-comment-box{
   background: white;
-  margin: 5px;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  font-size: 14px;
+  margin: 3px 0;
  
 }
 

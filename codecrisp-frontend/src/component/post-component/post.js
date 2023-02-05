@@ -3,6 +3,8 @@ import "./post.css";
 import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { timeSince } from "../../utility/dateFormat";
+import {compareDateDesc} from '../../utility/custom-sort';
+
 const PostComponent = ({
   username,
   location,
@@ -21,8 +23,6 @@ const PostComponent = ({
     comment: "",
     n: 2,
   });
-  
-  console.log(comments);
   
   const commentReset = (e) =>{
      setState({...state , comment:""});
@@ -147,8 +147,8 @@ const PostComponent = ({
 
       {/* map */}
 
-      {comments?.slice(0, state.n).map((e) => (
-        <div className="comment-box">
+      {comments?.sort(compareDateDesc).slice(0, state.n).map((e) => (
+        <div className="user-comment-box">
           <div className="comment-box-tile">
             
             

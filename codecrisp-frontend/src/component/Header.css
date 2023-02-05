@@ -1,6 +1,6 @@
 
 .user-homepage-header .container-fluid{
-    padding: 0;;
+    padding: 0;
 }
 
 .user-homepage-header .navbar-home{
@@ -9,13 +9,14 @@
     display: flex;
     justify-content: space-between;
     background-color: #7615CF;
+    z-index: 1;
    
 }
  
 
 .nav-link{
     color:white;
-    background-color: #7615CF;;
+    background-color: #7615CF;
     
 }
 

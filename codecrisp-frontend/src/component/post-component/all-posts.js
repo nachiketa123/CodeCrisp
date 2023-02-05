@@ -120,7 +120,6 @@ const AllPosts = ({
         avatar: user.avatar,
       },
     };
-    console.log("post Comment ", commentData);
     addComment(commentData);
   };
 
