@@ -227,3 +227,57 @@ input.comment-box:focus {
     font-size: 9px;
   }
 }
+.comment-box{
+  background: white;
+  margin: 5px;
+ 
+}
+
+.comment-box-tile{
+
+   display: flex;
+   flex-direction: row;
+   background: #F5F5F5;
+   border:"1px solid black";
+   height: 60px;
+   border-radius: 0.5em;
+   
+}
+.comment-box-tile-details{
+ background: #F5F5F5;
+ margin-left: 15px;
+ display: flex;
+ flex-direction: column;
+
+ 
+
+}
+
+
+.avatar-comment{
+  height: 50px;
+  width: 50px;
+  border-radius: 2em;
+}
+
+.avatar-comment-div{
+ 
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ background-color: #F5F5F5;
+ border-radius: 0.5em;
+ padding-left: 5px;
+}
+
+.comment-text{
+  padding: 0;
+  margin: 0;
+}
+
+
+.comment-text-user{
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+}

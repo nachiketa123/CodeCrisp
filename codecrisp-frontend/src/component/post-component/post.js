@@ -23,7 +23,10 @@ const PostComponent = ({
   });
   
   console.log(comments);
-
+  
+  const commentReset = (e) =>{
+     setState({...state , comment:""});
+  }
 
   const onLike = (e)   =>{
     setState({...state , like : !state.like });
@@ -147,14 +150,31 @@ const PostComponent = ({
       {comments?.slice(0, state.n).map((e) => (
         <div className="comment-box">
           <div className="comment-box-tile">
+            
+            
+            
+            <div 
+            className="avatar-comment-div"
+            >
             <img className="avatar-comment" src={e.avatar} />
+            </div>
+            
+            
             <div className="comment-box-tile-details">
-              <p className="comment-text">
+            
+              <p className="comment-text-user">
                 {e.name}
                 {"            "}
               </p>
+              
+              
+              
               <p className="comment-text">{e.text}</p>
+            
             </div>
+            
+            
+            
           </div>
         </div>
       ))}
@@ -164,7 +184,7 @@ const PostComponent = ({
         style={{ backgroundColor: "white" }}
       >
         {/* Comment Section */}
-        <button
+       { comments.length > state.n ? <button
           style={{
             color: "black",
             fontSize: "14px",
@@ -178,9 +198,9 @@ const PostComponent = ({
           className="secondary"
           onClick={seeMore}
         >
-          see all comments ({comments?.length})
-        </button>
-
+          see all comments ({comments?.length-state.n})
+        </button> : <></>
+}
         <div className="comment-wrapper" style={{ backgroundColor: "white" }}>
           {/* <img className="icon" alt="" src=''
                         style={{ backgroundColor: "white", color: "black" }}
@@ -204,17 +224,13 @@ const PostComponent = ({
               height: "30px",
               height:"38px"
             }}
-            onClick={(e) => handlePostComment(id, state.comment)}
+            onClick={(e) => {handlePostComment(id, state.comment);commentReset()}}
           >
             post
           </button>
         </div>
         
-        {comments?.map(e =>(
-          
-            <h6> s</h6>
-        
-        ))}
+       
         
        
       </div>
