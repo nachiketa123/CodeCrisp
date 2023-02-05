@@ -108,10 +108,77 @@
     cursor: pointer;
 }
 
-.bell-icon,.notification-counter {
+/* .bell-icon {
     display: none;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
    
+}
+.notification-counter {
+    display: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+   
+}
+/* bell-icon inside nav-item should be visible */
+
+
+.bell-icon-container-div {
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+}
+
+.bell-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: transparent;
+
+}
+
+.notification-counter {
+    background: red;
+    border-radius: 2em;
+    padding: 4px;
+    position: absolute;
+    top: -18px;
+    color: white;
+    font-size: 16px;
+    right: -10px;
+    border: 2px solid white;
+    height: 30px;
+}
+
+.notification-list-div {
+    position: fixed;
+    right: 319px;
+    top: 67px;
+    width: 46%;
+    max-width: 370px;
+    z-index: 1;
+    background-color: lightslategrey;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 1em;
+    max-height: 254px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.notification-list-div::-webkit-scrollbar {
+    width: 5px;
+}
+.notification-list-div::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 1em;
+}
+
+.notification-list-div::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
 }
 
 .chat-icon {
@@ -149,6 +216,8 @@
 
 .navbar-nav .nav-item{
     background-color: #7615CF;
+    display: flex;
+    align-items: center;
 }
 .navbar-nav .nav-item:nth-child(1) .nav-link{
     /* color: #C0F807;
@@ -295,7 +364,7 @@
         font-size: 16px;
     }
 
-    .bell-icon-container-div {
+     .bell-icon-container-div {
         position: relative;
         background: transparent;
         cursor: pointer;
@@ -339,7 +408,7 @@
     .notification-list-div::-webkit-scrollbar-thumb {
         background: black;
         border-radius: 10px;
-    }
+    } 
 
     .navbar-nav{
         background-color: #7615CF;

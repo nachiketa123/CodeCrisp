@@ -121,9 +121,12 @@ function Header({
                                     <a className="nav-link" href="#">Hi! {String(user.name).charAt(0).toUpperCase()+String(user.name).slice(1)}<span className="sr-only">(current)</span></a>
                                 </li>) : ""
                                 }
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Feeds<span className="sr-only">(current)</span></a>
-                                </li>
+                                {/* <li className="nav-item">
+                                    <div onClick={handleToggleNotification} className='bell-icon-container-div'>
+                                        <FaRegBell color='white' className='bell-icon' title='notifications' />
+                                        {notification.length ? <span className='notification-counter'>{notification.length}</span> : ''}
+                                    </div>
+                                </li> */}
 
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/jobs">Jobs</Link>

@@ -150,31 +150,17 @@ const PostComponent = ({
       {comments?.sort(compareDateDesc).slice(0, state.n).map((e) => (
         <div className="user-comment-box">
           <div className="comment-box-tile">
-            
-            
-            
-            <div 
-            className="avatar-comment-div"
-            >
-            <img className="avatar-comment" src={e.avatar} />
+            <div className="avatar-comment-div">
+              <img className="avatar-comment" src={e.avatar} />
             </div>
-            
-            
             <div className="comment-box-tile-details">
-            
               <p className="comment-text-user">
                 {e.name}
                 {"            "}
               </p>
-              
-              
-              
               <p className="comment-text">{e.text}</p>
-            
             </div>
-            
-            
-            
+            <div className='time-since'>{timeSince(e.date)}</div>
           </div>
         </div>
       ))}
