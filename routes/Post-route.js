@@ -151,7 +151,7 @@ router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session:
                 postText:1,
                 avatar:1,
                 likes:1,
-                Comments:1,
+                comments:1,
                 date:1,
                 imageUrls:1,
                 friend_list:"$all_friends.friend_list"
@@ -174,7 +174,7 @@ router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session:
                 postText:1,
                 avatar:1,
                 likes:1,
-                Comments:1,
+                comments:1,
                 date:1,
                 imageUrls:1,
                 friend_list:"$all_friends.friend_list",
