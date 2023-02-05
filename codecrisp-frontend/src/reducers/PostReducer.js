@@ -47,7 +47,9 @@ const PostReducer = (state = initialState, action) => {
         case ADD_COMMENT:
 
             const index = state.allUserPosts.findIndex(post => post._id === action.payload.id);
+          
             state.allUserPosts[index].comments.push(action.payload.data);
+            console.log(index);
             return {
                 ...state
 

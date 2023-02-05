@@ -26,7 +26,9 @@ const AllPosts = ({
   const [state, setState] = useState({
     page: page, //initial page is 0
   });
-
+ 
+  
+  
   const [scrollPosition, setScrollPosition] = useState(
     Number(sessionStorage.getItem("post_page_scroll"))
   );
@@ -111,7 +113,7 @@ const AllPosts = ({
   const handlePostComment = (id, comment) => {
     const commentData = {
       id,
-      data: {
+      data: { 
         user: user.id,
         name: user.name,
         text: comment,
@@ -129,6 +131,10 @@ const AllPosts = ({
           ? allUserPosts
               .sort(compareDateDesc)
               .map((post) => (
+              
+          
+                  
+          
                 <PostComponent
                   key={post._id}
                   id={post._id}
@@ -143,6 +149,9 @@ const AllPosts = ({
                   comments={post.comments}
                   isLikedByUser={post.isLikedByUser}
                 />
+                
+                
+              
               ))
           : ""}
       </div>
