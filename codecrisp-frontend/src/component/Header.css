@@ -1,13 +1,14 @@
 
-.container-fluid{
+.user-homepage-header .container-fluid{
     padding: 0;;
 }
 
-.navbar-home{
+.user-homepage-header .navbar-home{
     font-family: 'Assistant', sans-serif;
     background-color: black;
     display: flex;
     justify-content: space-between;
+    background-color: #7615CF;
    
 }
  
@@ -27,8 +28,8 @@
 
 .navbar-brand{
     color: white;
-    font-weight: bolder;
-    font-size: 30px;
+    font-weight: 500;
+    font-size: 25px;
     margin-left: 15px;
 }
 
@@ -47,8 +48,8 @@
    align-items: center;
    display: inline-block;
      /* vertical-align: top; */
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-right: 20px;
     /* margin-top: 15px;   */
     transform: scale(2.3);
@@ -80,10 +81,9 @@
 .searchBar{
     display: flex;
     /* width: 93%; */
-    height: 85%;
     background: white;
     border: 1px solid black;
-    padding: 4px 12px;
+    padding: 3px 12px;
     border-radius: 2em;
     justify-content: space-between;
 }

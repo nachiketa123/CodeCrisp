@@ -19,10 +19,10 @@ function HeaderHome() {
           <FaBars color="white" className="hamburger-icon"></FaBars>
         </button>
 
-        <Link to="/" className="navbar-brand" style={{ fontSize: "30px" }}>
+        <Link to="/" className="navbar-brand">
           CodeCrisp
         </Link>
-        <div
+        <div className="login-signup-btn-container"
           style={{
             background: "transparent",
           }}
@@ -40,14 +40,13 @@ function HeaderHome() {
           </Link>
         </div>
         <div
-          className="collapse navbar-collapse
-                "
+          className="collapse navbar-collapse"
           id="navbarNavAltMarkup"
           style={{ background: "transparent" }}
         >
           <div className="navbar-nav">
             <a className="nav-item nav-link nav-options" href="#">
-              About Us<span className="sr-only">(current)</span>
+              About&nbsp;Us<span className="sr-only">(current)</span>
             </a>
             <a className="nav-item nav-link" href="#">
               Features
@@ -56,7 +55,7 @@ function HeaderHome() {
               Developer
             </Link>
             <a className="nav-item nav-link" href="#">
-              ContactUs
+              Contact&nbsp;Us
             </a>
           </div>
         </div>

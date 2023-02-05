@@ -25,7 +25,7 @@ li.list-group-item{
     background: transparent;
     position: fixed;
     margin-left: 25%;
-    margin-top: 50px !important; 
+    top: 50px;
 }
 
 .search-box{

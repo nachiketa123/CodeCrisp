@@ -76,7 +76,7 @@ function Header({
     }
 
     return (
-        <div>
+        <div className='user-homepage-header'>
             <div className='container-fluid'>
                 <nav className="navbar navbar-home navbar-expand-lg">
                     {/* Left Portion of Navbar */}
