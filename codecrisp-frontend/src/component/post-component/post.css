@@ -247,6 +247,21 @@ input.comment-box:focus {
   font-weight: bold;
 }
 
+.see-more-btn{
+  color: black;
+  font-size: 14px;
+  margin: 0;
+  background: transparent;
+  border: 1px solid #889397;
+  padding: 5px;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.see-more-btn:hover{
+  background-color: #E3CBF9;
+}
+
 
 /* Media queries */
 

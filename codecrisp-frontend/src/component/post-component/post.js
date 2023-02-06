@@ -171,17 +171,7 @@ const PostComponent = ({
       >
         {/* Comment Section */}
        { comments.length > state.n ? <button
-          style={{
-            color: "black",
-            fontSize: "14px",
-            margin: "0",
-            background: "transparent",
-            border:"1px solid #889397",
-            padding:"5px",
-            borderRadius:"0.5em",
-            cursor:"pointer"
-          }}
-          className="secondary"
+          className="see-more-btn"
           onClick={seeMore}
         >
           see all comments ({comments?.length-state.n})
