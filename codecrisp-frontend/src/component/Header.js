@@ -10,6 +10,7 @@ import isEmpty from '../utility/is-empty';
 import { getNotificationFromDB, getNotificationFromSocket } from '../Action/NotificationAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
+import NOTIFICATION from '../Notification_Config/notification-config';
 
 function Header({
     logOutUser,
@@ -31,7 +32,12 @@ function Header({
 
     useEffect(() => {
         if (!isEmpty(socket) && !ignore) {
-            socket.on('get_post_like_notification', (data) => {
+            //user post like notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_LIKE_NOTIFICATION, (data) => {
+                getNotificationFromSocket(data)
+            })
+            //user post comment notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,(data)=>{
                 getNotificationFromSocket(data)
             })
         }

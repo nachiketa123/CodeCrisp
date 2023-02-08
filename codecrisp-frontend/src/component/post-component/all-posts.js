@@ -6,6 +6,7 @@ import isEmpty from "../../utility/is-empty";
 import { compareDateDesc } from "../../utility/custom-sort";
 import { FaUpload } from "react-icons/fa";
 import "./all-posts.css";
+import NOTIFICATION from "../../Notification_Config/notification-config";
 import {
   getAllUserPosts,
   deletePost,
@@ -91,13 +92,13 @@ const AllPosts = ({
 
       const event_data = {
         ...post_data,
-        type: "post_like",
-        user_who_liked: user.id,
+        type: NOTIFICATION.EVENT_EMIT.POST_LIKE,
+        user_who_did: user.id,
         name: user.name,
         avatar: user.avatar ? user.avatar : "",
       };
 
-      socket.emit("post_like", event_data);
+      socket.emit(NOTIFICATION.EVENT_EMIT.POST_LIKE, event_data);
 
       // Like Function --> DB
 
@@ -110,7 +111,9 @@ const AllPosts = ({
     deletePost(id);
   };
 
-  const handlePostComment = (id, comment) => {
+  const handlePostComment = async (id, comment) => {
+
+    // For Saving to DB
     const commentData = {
       id,
       data: { 
@@ -121,6 +124,21 @@ const AllPosts = ({
       },
     };
     addComment(commentData);
+
+     // For notification
+     const post_data = await getPostData(id);
+     const event_data = {
+      user:post_data.user,
+      avatar:post_data.avatar?post_data.avatar:"",
+      _id:post_data._id,
+      imageUrls: post_data.imageUrls,
+      type: NOTIFICATION.EVENT_EMIT.POST_COMMENT,
+      user_who_did: user.id,
+      name: user.name,
+      avatar: user.avatar ? user.avatar : "",
+     }
+
+     socket.emit(NOTIFICATION.EVENT_EMIT.POST_COMMENT,event_data);
   };
 
   return (
