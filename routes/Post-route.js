@@ -178,7 +178,7 @@ router.get('/getAllUserPosts1/:user_id', passport.authenticate('jwt', { session:
                 date:1,
                 imageUrls:1,
                 friend_list:"$all_friends.friend_list",
-                isLikedByUser: { $in:[mongoose.Types.ObjectId(user_id),"$likes.user"]},
+                isLikedByUser: { $in:[mongoose.Types.ObjectId(user_id),{$ifNull:["$likes.user",[]]}]},
                 page: {$convert: { input:page, to: "int"}}// Current page number, this will help in checking if we need to load the page or not in front-end
             }
         }
