@@ -36,7 +36,7 @@ const PostComponent = ({
   };
 
   const seeMore = (e) => {
-    setState({ ...state, n: comments.length });
+    setState({ ...state, n: comments?.length });
   };
 
   return (
@@ -170,7 +170,7 @@ const PostComponent = ({
         style={{ backgroundColor: "white" }}
       >
         {/* Comment Section */}
-       { comments.length > state.n ? <button
+       { comments?.length > state.n ? <button
           className="see-more-btn"
           onClick={seeMore}
         >

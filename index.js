@@ -46,35 +46,38 @@ const httpServer = createServer(app);
 const io = new Server(httpServer)
 
 const onlineUsers = [];
-
-io.on('connection', (socket) => {
-    // console.log('new socket_id: ',socket.id)
-    io.emit('server_conn', 'Welcome! You are now connected with the Server')
-    try{
-        socket.on('add_new_user', (user_id) => {
-            // console.log('adding new user',user_id)
-    
-            if (user_id) {
-                // console.log('before adding',onlineUsers)
-                SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
-            }
-    
-            // console.log('after adding',onlineUsers)
+try{
+    io.on('connection', (socket) => {
+        // console.log('new socket_id: ',socket.id)
+        io.emit('server_conn', 'Welcome! You are now connected with the Server')
+        try{
+            socket.on('add_new_user', (user_id) => {
+                // console.log('adding new user',user_id)
+        
+                if (user_id) {
+                    // console.log('before adding',onlineUsers)
+                    SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
+                }
+        
+                // console.log('after adding',onlineUsers)
+            })
+        }catch(err){
+            console.error('Error occurred while adding new user:',err)
+        }
+        
+        //  notification event handled in other file
+        require('./socketEvents/notification-event-sckt')(socket, io, onlineUsers)
+        
+        socket.on('disconnect', () => {
+            SocketUtils.removeUser(onlineUsers, socket.id)
+            // console.log('user disconnected ',onlineUsers)
         })
-    }catch(err){
-        console.error('Error occurred while adding new user:',err)
-    }
-    
-    //  notification event handled in other file
-    require('./socketEvents/notification-event-sckt')(socket, io, onlineUsers)
-    
-    socket.on('disconnect', () => {
-        SocketUtils.removeUser(onlineUsers, socket.id)
-        // console.log('user disconnected ',onlineUsers)
+
+
     })
-
-
-})
+}catch(err){
+    console.log('error in index.js due to socket', err)
+}
 
 httpServer.listen(8070, () => {
     console.log("Server challu ho gya hai")

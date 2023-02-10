@@ -6,7 +6,9 @@ const NOTIFICATION = {
 
     EVENT_ON:{
         GET_POST_LIKE_NOTIFICATION:'get_post_like_notification',
+        GET_POST_UNLIKE_NOTIFICATION:'get_post_unlike_notification',
         GET_POST_COMMENT_NOTIFICATION:'get_post_comment_notification',
+        
     }
 
 }

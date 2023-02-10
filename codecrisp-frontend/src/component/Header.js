@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
-import { getNotificationFromDB, getNotificationFromSocket } from '../Action/NotificationAction';
+import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket } from '../Action/NotificationAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
@@ -20,7 +20,8 @@ function Header({
     notif: { notification },
     socketReducer: { socket },
     getNotificationFromSocket,
-    getNotificationFromDB }) {
+    getNotificationFromDB,
+    removeNotificationFromSocket }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
@@ -36,8 +37,13 @@ function Header({
             socket.on(NOTIFICATION.EVENT_ON.GET_POST_LIKE_NOTIFICATION, (data) => {
                 getNotificationFromSocket(data)
             })
+            //user post unlike notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_UNLIKE_NOTIFICATION, (data) => {
+                removeNotificationFromSocket(data)
+            })
             //user post comment notification
             socket.on(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,(data)=>{
+                
                 getNotificationFromSocket(data)
             })
         }
@@ -179,7 +185,8 @@ Header.propTypes = {
     logOutUser: PropTypes.func.isRequired,
     searchResult: PropTypes.func.isRequired,
     getNotificationFromSocket: PropTypes.func.isRequired,
-    getNotificationFromDB: PropTypes.func.isRequired
+    getNotificationFromDB: PropTypes.func.isRequired,
+    removeNotificationFromSocket: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -189,4 +196,4 @@ const mapStateToProps = (state) => ({
     socketReducer: state.socketReducer,
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket })(Header)
