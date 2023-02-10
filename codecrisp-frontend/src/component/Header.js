@@ -8,7 +8,7 @@ import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
 import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket } from '../Action/NotificationAction';
-import { addComment } from '../Action/PostAction';
+import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
@@ -23,7 +23,7 @@ function Header({
     getNotificationFromSocket,
     getNotificationFromDB,
     removeNotificationFromSocket,
-    addComment }) {
+    addCommentRealTimeOnNotification }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
@@ -59,7 +59,7 @@ function Header({
                       date: new Date().toISOString()
                     },
                   };
-                addComment(commentData)
+                  addCommentRealTimeOnNotification(commentData)
             })
         }
 
@@ -202,7 +202,7 @@ Header.propTypes = {
     getNotificationFromSocket: PropTypes.func.isRequired,
     getNotificationFromDB: PropTypes.func.isRequired,
     removeNotificationFromSocket: PropTypes.func.isRequired,
-    addComment: PropTypes.func.isRequired,
+    addCommentRealTimeOnNotification: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -213,4 +213,4 @@ const mapStateToProps = (state) => ({
     postRed: state.postReducer
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket, addComment })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket, addCommentRealTimeOnNotification })(Header)
