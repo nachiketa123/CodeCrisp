@@ -121,6 +121,7 @@ const AllPosts = ({
         name: user.name,
         text: comment,
         avatar: user.avatar,
+        date: new Date().toISOString()
       },
     };
     addComment(commentData);

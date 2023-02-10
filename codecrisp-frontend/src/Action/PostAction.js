@@ -67,7 +67,7 @@ export const addComment = (commentData) => (dispatch) => {
     axios.post(`/api/post/add-comment/${commentData.id}`, commentData.data).then(
         res => {
             if (res.data.success === true) {
-                dispatch({ type: ADD_COMMENT, payload: {...commentData, data:{...commentData.data,date: new Date().toISOString()} }})
+                dispatch({ type: ADD_COMMENT, payload: commentData })
             }
 
         }
