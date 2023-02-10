@@ -137,6 +137,7 @@ const AllPosts = ({
       user_who_did: user.id,
       name: user.name,
       avatar: user.avatar ? user.avatar : "",
+      new_comment: comment
      }
 
      socket.emit(NOTIFICATION.EVENT_EMIT.POST_COMMENT,event_data);

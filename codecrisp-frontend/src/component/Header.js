@@ -8,6 +8,7 @@ import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
 import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket } from '../Action/NotificationAction';
+import { addComment } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
@@ -21,7 +22,8 @@ function Header({
     socketReducer: { socket },
     getNotificationFromSocket,
     getNotificationFromDB,
-    removeNotificationFromSocket }) {
+    removeNotificationFromSocket,
+    addComment }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
@@ -45,6 +47,19 @@ function Header({
             socket.on(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,(data)=>{
                 
                 getNotificationFromSocket(data)
+
+                //In order to add the comment on users post in real time
+                const commentData = {
+                    id: data.notification.at(0).action_item_id,
+                    data: { 
+                      user: data.notification.at(0).source.user,
+                      name: data.notification.at(0).source.name,
+                      text: data.new_comment,
+                      avatar: data.notification.at(0).source.avatar,
+                      date: new Date().toISOString()
+                    },
+                  };
+                addComment(commentData)
             })
         }
 
@@ -187,6 +202,7 @@ Header.propTypes = {
     getNotificationFromSocket: PropTypes.func.isRequired,
     getNotificationFromDB: PropTypes.func.isRequired,
     removeNotificationFromSocket: PropTypes.func.isRequired,
+    addComment: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -194,6 +210,7 @@ const mapStateToProps = (state) => ({
     search: state.searchRed,
     notif: state.notificationReducer,
     socketReducer: state.socketReducer,
+    postRed: state.postReducer
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket })(Header)
+export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket, addComment })(Header)

@@ -63,7 +63,7 @@ export const addLike = (userData) => (dispatch) => {
 
 
 export const addComment = (commentData) => (dispatch) => {
-
+    console.log('in add comment',commentData)
     axios.post(`/api/post/add-comment/${commentData.id}`, commentData.data).then(
         res => {
             if (res.data.success === true) {

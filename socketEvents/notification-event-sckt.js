@@ -196,7 +196,7 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
          // else do below
         const reciever = SocketUtils.getUser(onlineUsers, data.user)
         if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
-            io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_POST_COMMENT_NOTIFICATION,newData) 
+            io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_POST_COMMENT_NOTIFICATION,{...newData,new_comment: data.new_comment}) 
         }
 
         //This function checks if notification array already exist for the user if yes then push new notificaiton in notification array
