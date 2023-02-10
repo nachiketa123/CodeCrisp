@@ -260,6 +260,10 @@ router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: fal
     UserPost.findById(post_id).then(
 
         post => {
+            
+            if(!post.comments)
+                post.comments = []
+
             post.comments.push({ user, name, text, avatar });
             post.save().then(
                 p => {

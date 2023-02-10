@@ -19,7 +19,9 @@ const notificationReducer = ( state = initialState, action) =>{
                 notification: newNotification
             }
         case GET_ALL_NOTIFICATION_FROM_DB:
-            newNotification = action.payload.notification.filter(obj=> !obj?.seen)
+            newNotification = []
+            if(action.payload.notification)
+                newNotification = action.payload.notification.filter(obj=> !obj?.seen)
             return {
                 ...state,
                 notification: newNotification

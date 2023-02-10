@@ -14,7 +14,7 @@ router.get('/all-notification/:user_id',(req,res)=>{
     UserNotification.findOne({ user: user_id}).then(notifs=>{
         if(!notifs){
             error.noNotificationFound = 'No notification found for the user'
-            return res.status(403).json(error)
+            return res.status(200).json(error)
         }
         return res.status(200).json(notifs)
     }).catch(err=>{
