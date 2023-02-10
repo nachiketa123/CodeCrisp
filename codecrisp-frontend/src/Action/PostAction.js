@@ -61,6 +61,10 @@ export const addLike = (userData) => (dispatch) => {
 
 }
 
+export const addCommentRealTimeOnNotification = (commentData) => (dispatch) =>{
+    dispatch({ type: ADD_COMMENT, payload: commentData })
+}
+
 
 export const addComment = (commentData) => (dispatch) => {
     console.log('in add comment',commentData)
