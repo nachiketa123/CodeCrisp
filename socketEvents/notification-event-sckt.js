@@ -8,12 +8,14 @@ const NOTIFICATION = {
     EVENT_ON:{
         POST_LIKE:"post_like",
         POST_COMMENT:"post_comment",
+        FRIEND_REQUEST: "friend_request",
     },
 
     EVENT_EMIT:{
         GET_POST_LIKE_NOTIFICATION:'get_post_like_notification',
         GET_POST_UNLIKE_NOTIFICATION:'get_post_unlike_notification',
         GET_POST_COMMENT_NOTIFICATION:'get_post_comment_notification',
+        GET_FRIEND_REQUEST_NOTIFICATION:'get_friend_request_notification',
     }
 
 }
@@ -174,6 +176,8 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
         EVENT: On POST Comment
     */
     socket.on(NOTIFICATION.EVENT_ON.POST_COMMENT,async (data)=>{
+
+        //creating new notification object
         const newData = {
             user: data.user,
             notification:[{
@@ -210,9 +214,49 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
 
     })
 
+     /* 
+        EVENT: On Friend Request
+    */
+
+    socket.on(NOTIFICATION.EVENT_ON.FRIEND_REQUEST,async (data)=>{
+        //creating new notification object
+        const newData = {
+            user: data.user,
+            notification:[{
+                type: NOTIFICATION.EVENT_ON.FRIEND_REQUEST,
+                source: {
+                    user:data.source.user,
+                    name: data.source.name,
+                    avatar: data.source.avatar
+                },
+                seen: false,
+                date: Date.now()
+            }]
+        }
+
+         // If the source and reciver user are same then don't do anything i.e. return from function
+         if(data.user.toString() === data.source.user.toString()) return;
+
+         // else do below
+        const reciever = SocketUtils.getUser(onlineUsers, data.user)
+        console.log('reciever',reciever,'onlineUsers',onlineUsers)
+        if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
+            io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_NOTIFICATION,newData) 
+        }
+
+        //This function checks if notification array already exist for the user if yes then push new notificaiton in notification array
+        //else create new notification object
+        addOrUpdateNotification(newData)
+            .then(data=>{
+                // console.log('Notification saved')
+            }).catch(err=>{
+                console.log(err)
+            })
+    })
+
     }catch(err){
         console.error('notification-event-sckt error',err)
     }
 }
 
-module.exports = notificationEventHandler;
+module.exports = {notificationEventHandler, NOTIFICATION};

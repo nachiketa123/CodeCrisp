@@ -12,6 +12,7 @@ import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
+import { acceptFriendRequest } from '../Action/FriendAction';
 
 function Header({
     logOutUser,
@@ -23,11 +24,17 @@ function Header({
     getNotificationFromSocket,
     getNotificationFromDB,
     removeNotificationFromSocket,
-    addCommentRealTimeOnNotification }) {
+    addCommentRealTimeOnNotification,
+    acceptFriendRequest }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
     let ignore = false;
+
+    useEffect(()=>{
+        if( !isEmpty(socket.emit) )
+            socket.emit('add_new_user',user.id)
+    },[user,socket])
 
     useEffect(() => {
         getNotificationFromDB(user.id)
@@ -60,6 +67,11 @@ function Header({
                     },
                   };
                   addCommentRealTimeOnNotification(commentData)
+            })
+
+            //user friend request notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,(data)=>{
+                getNotificationFromSocket(data)
             })
         }
 
@@ -181,10 +193,17 @@ function Header({
 
                 </nav >
             </div>
+
+            {/* Search result component */}
             <SearchResultBox clearSearchBar={clearSearchBar} />
+
+            {/* Notification component */}
             {state.showNotification
                 ? (<div className='notification-list-div'>
-                    <ListGroupComponent items={notification} />
+                    <ListGroupComponent  
+                    acceptFriendRequest = {acceptFriendRequest}
+                    items={notification} 
+                    user={user.id}/>
                 </div>)
                 : ''}
         </div >
@@ -203,6 +222,8 @@ Header.propTypes = {
     getNotificationFromDB: PropTypes.func.isRequired,
     removeNotificationFromSocket: PropTypes.func.isRequired,
     addCommentRealTimeOnNotification: PropTypes.func.isRequired,
+    acceptFriendRequest: PropTypes.func.isRequired,
+
 }
 
 const mapStateToProps = (state) => ({
@@ -213,4 +234,12 @@ const mapStateToProps = (state) => ({
     postRed: state.postReducer
 })
 
-export default connect(mapStateToProps, { logOutUser, searchResult, getNotificationFromSocket, getNotificationFromDB, removeNotificationFromSocket, addCommentRealTimeOnNotification })(Header)
+export default connect(mapStateToProps, { 
+                                        logOutUser, 
+                                        searchResult, 
+                                        getNotificationFromSocket, 
+                                        getNotificationFromDB, 
+                                        removeNotificationFromSocket, 
+                                        addCommentRealTimeOnNotification, 
+                                        acceptFriendRequest 
+                                    })(Header)

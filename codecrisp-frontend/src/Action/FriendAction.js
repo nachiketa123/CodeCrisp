@@ -1,15 +1,20 @@
 import axios from "axios";
 import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST} from "./Types";
 
+export const sendFriendRequest = () => (dispatch) => {
+    dispatch({
+        type:GET_FLG_IF_FRIEND_WITH_USER,
+        payload: 0
+    })
+}
 
-export const SendFriendRequest = (user_data) => (dispatch) =>{
-
+export const acceptFriendRequest = (user_data) => (dispatch) =>{
     axios.post('/api/friend/sendFriendRequest',user_data)
         .then(res=>{
-            // console.log('request sent ',res)
+
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
-                payload: true
+                payload: 1
             })
         })
         .catch(err=>{
@@ -20,10 +25,9 @@ export const SendFriendRequest = (user_data) => (dispatch) =>{
 export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
     axios.post('/api/friend/sendUnFriendRequest',user_data)
         .then(res=>{
-            // console.log(res.data)
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
-                payload: false
+                payload: -1
             })
         })
         .catch(err=>{
@@ -38,6 +42,8 @@ export const checkIfFriendWithUser = (user_data) => (dispatch)=>{
                 type:GET_FLG_IF_FRIEND_WITH_USER,
                 payload: res.data
             })
+        }).catch(err=>{
+            console.log(err)
         })
 }
 

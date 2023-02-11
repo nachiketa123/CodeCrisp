@@ -18,7 +18,8 @@ const UserProfileSummaryComponent = (
         handleProfilePictureChange ,
         isFriendWithUser,
         handleAddFriend,
-        handleUnFriend
+        handleUnFriend,
+        handleAcceptFriendRequest,
     }) => {
 
     // console.log(loadingForProfilePictureChange,profileImgUrl,user,isCurrentUser)
@@ -74,13 +75,21 @@ const UserProfileSummaryComponent = (
                     {!isCurrentUser?
                     <div className="add-cancel-friend-btn-div">
                         {
-                        !isFriendWithUser
+                        (isFriendWithUser === -1) 
                             ?<button onClick={handleAddFriend} className="btn btn-primary">
                                 Add Friend
                             </button>
-                            :<button onClick={handleUnFriend} className="btn btn-danger">
-                                Unfriend
-                            </button>
+                            :(isFriendWithUser === 0) 
+                                ?<button onClick={handleUnFriend} className="btn btn-danger">
+                                Cancel Request
+                                </button>
+                                :(isFriendWithUser === 1)
+                                    ?<button onClick={handleUnFriend} className="btn btn-danger">
+                                        Unfriend
+                                    </button>
+                                    :<button onClick={handleAcceptFriendRequest} className="btn btn-success">
+                                        Accept Request
+                                    </button>
                         }
                     </div>
                     :''}

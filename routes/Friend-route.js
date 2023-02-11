@@ -4,6 +4,9 @@ const FriendCollection = require('../model/Friend')
 const router = express.Router();
 const isEmpty = require('../utility/is-empty')
 const User = require('../model/User')
+const UserNotification = require('../model/UserNotification')
+const mongoose = require('mongoose');
+const { NOTIFICATION } = require('../socketEvents/notification-event-sckt');
 
 const create_or_update_friend_list = (sender, reciever) => {
     return new Promise((resolve, reject) => {
@@ -144,16 +147,62 @@ router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false})
 
 /*
     @route:     /api/friend/check-if-friend-with-user
-    @desc:      To check if current user is friend with another user
+    @desc:      To check if current user is friend with another user (we send code with each having different meaning 
+                i.e -1 Meaning show Add Friend, 0 Meaning show Cancel request, 1 Meaning show Unfriend and finally 
+                2 Meaning Accept request
     @access:    Private
 */
 router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const { user_id,friend_id } = req.query;
     const error = {}
-    FriendCollection.findOne({ user: user_id })
+    FriendCollection.findOne({ user: mongoose.Types.ObjectId(user_id) })
         .then(data => {
-            const isFriend = data.friend_list.filter(friend => friend.user.toString() === friend_id.toString()).length != 0
-            return res.status(200).json(isFriend)
+
+            //First checking if user is already a friend 
+            let isFriend = data.friend_list.filter(friend => friend.user.toString() === friend_id.toString()).length != 0 ? 1:-1
+
+            if(isFriend === 1) return res.status(200).json(isFriend)
+
+            //checking if a friend request is been sent or not
+            if(isFriend === -1){
+                UserNotification.findOne({user: mongoose.Types.ObjectId(friend_id)})
+                    .then(data=>{
+   
+                        if(!data || isEmpty(data.notification)){
+                            //no friend request is present 
+                            isFriend = -1
+                            return res.status(200).json(isFriend)
+                        }
+
+                        //check in the notification array if notification of type 'friend-request' is present with user 
+                       let isFriend = data.notification
+                            .filter(notif => {
+
+                                return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                && notif.source.user.toString() === user_id}).length === 0? -1 : 0
+                        if(isFriend === 0)
+                            return res.status(200).json(isFriend)
+                        
+                        //Check our own notification if their is request
+                        UserNotification.findOne({user: mongoose.Types.ObjectId(user_id)})
+                            .then(data=>{
+                                    if(!data || isEmpty(data.notification)){
+                                        //no friend request is present 
+                                        isFriend = -1
+                                        return res.status(200).json(isFriend)
+                                    }
+
+                                    //check in the notification array if notification of type 'friend-request' is present with user 
+                                    let isFriend = data.notification
+                                    .filter(notif => {
+
+                                        return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                        && notif.source.user.toString() === friend_id}).length === 0? -1 : 2
+                                    
+                                        return res.status(200).json(isFriend)
+                                })
+                    })
+            }
         }).catch(err => {
             error.dberror = 'DB Error ' + err
             return res.status(403).json(error)

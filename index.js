@@ -15,6 +15,7 @@ const notificationRoutes = require('./routes/Notification-route')
 const createServer = require('http').createServer
 const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
+const notificationEventHandler = require('./socketEvents/notification-event-sckt').notificationEventHandler;
 
 mongo.connect(dbURI).then(
     () => {
@@ -66,7 +67,7 @@ try{
         }
         
         //  notification event handled in other file
-        require('./socketEvents/notification-event-sckt')(socket, io, onlineUsers)
+        notificationEventHandler(socket, io, onlineUsers)
         
         socket.on('disconnect', () => {
             SocketUtils.removeUser(onlineUsers, socket.id)

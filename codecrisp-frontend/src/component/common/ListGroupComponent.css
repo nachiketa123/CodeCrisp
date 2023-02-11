@@ -76,6 +76,25 @@
     }
 }
 
+.friend-request-action-btns-div{
+    background-color: transparent;
+}
+
+.friend-request-action-btns-div .btns{
+    background: transparent;
+    color: white;
+    display: flex;
+    height: 22px;
+    width: 19px;
+    cursor: pointer;
+}
+
+.friend-request-action-btns-div .btns:hover{
+    color: initial;
+    stroke: white;
+    stroke-width: 50px;
+}
+
 @media screen and (max-width: 576px) {
 
     .user-avatar-notification {
