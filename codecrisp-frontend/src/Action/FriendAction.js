@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST} from "./Types";
+import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST, GET_ALL_NOTIFICATION_FROM_DB} from "./Types";
 
 export const sendFriendRequest = () => (dispatch) => {
     dispatch({
@@ -9,12 +9,17 @@ export const sendFriendRequest = () => (dispatch) => {
 }
 
 export const acceptFriendRequest = (user_data) => (dispatch) =>{
-    axios.post('/api/friend/sendFriendRequest',user_data)
+    axios.patch('/api/friend/acceptFriendRequest',user_data)
         .then(res=>{
 
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
                 payload: 1
+            })
+
+            dispatch({
+                type: GET_ALL_NOTIFICATION_FROM_DB,
+                payload: res.data.payload
             })
         })
         .catch(err=>{

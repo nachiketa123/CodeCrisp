@@ -94,11 +94,11 @@ const getFriendDetails = (friend)=>{
     })
 }
 /*
-    @route:     /api/friend/sendFriendRequest
-    @desc:      To send Friend Request to a particular user
+    @route:     /api/friend/acceptFriendRequest
+    @desc:      To accept Friend Request to a particular user also set the notification seen to true
     @access:    Private
 */
-router.post('/sendFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+router.patch('/acceptFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const {sender_user_id, recipient_user_id} = req.body;
     const error = {}
     //TODO: Create a notification model+ add a friend request notification to recipient
@@ -106,20 +106,69 @@ router.post('/sendFriendRequest',passport.authenticate('jwt',{session: false}),(
 
     //For now adding friends directly without acceptance
     //Add recipient in sender
-    //Find the sender user
+    //Find the sender user(one who got the request)
     create_or_update_friend_list(sender_user_id, recipient_user_id)
         .then(data => {
             create_or_update_friend_list(recipient_user_id, sender_user_id)
                 .then(data => {
-                    return res.status(200).json('Friend added')
+                    //set the notification as seen by the user
+                    UserNotification.findOne({user: mongoose.Types.ObjectId(sender_user_id)})
+                        .then(data=>{
+                            if(!data || isEmpty(data.notification)){
+                                return res.status(200).json("No notification for friend request")
+                            }
+                                
+                            let newObj, indexToReplace=-1, indexToDelete=-1
+                            data.notification.map((notif,index)=>{
+                                //make this new notification seen as true as user has accepted the request
+                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                    && notif.source.user.toString() === recipient_user_id
+                                    && notif.seen === false){
+                                        newObj = {
+                                            type:notif.type
+                                            ,data:notif.date
+                                            ,source:notif.source
+                                            ,_id:notif._id,
+                                            seen: true}
+
+                                        indexToReplace = index
+                                    }
+
+                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                    && notif.source.user.toString() === recipient_user_id
+                                    && notif.seen === true){
+                                        indexToDelete = index
+                                    }
+                            })
+                            
+                            data.notification.splice(indexToReplace,1,newObj)
+
+                            if(indexToDelete !== -1)
+                                data.notification.splice(indexToDelete,1)
+                            
+                            data.save()
+                                .then(newdata=>{
+
+                                    return res.status(200).json({success: true, payload: newdata})
+                                }).catch(err=>{
+                                    error.dberror = 'DB error'
+                                    return res.status(500).json(error)
+                                })
+                            
+                        }).catch(err=>{
+                            error.dberror = 'DB error'
+                            return res.status(500).json(error)
+                        })
+                    
+
                 })
                 .catch(err => {
                     error.dberror = 'DB error'
-                    return res.status(403).json(dberror)
+                    return res.status(403).json(error)
                 })
         }).catch(err => {
             error.dberror = 'DB error'
-            return res.status(403).json(dberror)
+            return res.status(403).json(error)
         })
 
 
@@ -179,7 +228,8 @@ router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: fa
                             .filter(notif => {
 
                                 return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                && notif.source.user.toString() === user_id}).length === 0? -1 : 0
+                                && notif.source.user.toString() === user_id
+                                && notif.seen === false}).length === 0? -1 : 0
                         if(isFriend === 0)
                             return res.status(200).json(isFriend)
                         
@@ -197,7 +247,8 @@ router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: fa
                                     .filter(notif => {
 
                                         return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                        && notif.source.user.toString() === friend_id}).length === 0? -1 : 2
+                                        && notif.source.user.toString() === friend_id
+                                        && notif.seen === false}).length === 0? -1 : 2
                                     
                                         return res.status(200).json(isFriend)
                                 })

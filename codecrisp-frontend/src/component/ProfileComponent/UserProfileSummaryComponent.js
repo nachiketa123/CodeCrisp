@@ -87,9 +87,14 @@ const UserProfileSummaryComponent = (
                                     ?<button onClick={handleUnFriend} className="btn btn-danger">
                                         Unfriend
                                     </button>
-                                    :<button onClick={handleAcceptFriendRequest} className="btn btn-success">
-                                        Accept Request
-                                    </button>
+                                    :(<div style={{background:'transparent'}}>
+                                        <button onClick={handleAcceptFriendRequest} className="btn btn-success">
+                                            Accept Request
+                                        </button>
+                                        <button style={{marginLeft:'15px'}} onClick={handleAcceptFriendRequest} className="btn btn-danger">
+                                            Reject Request
+                                        </button>
+                                    </div>)
                         }
                     </div>
                     :''}

@@ -239,7 +239,7 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
 
          // else do below
         const reciever = SocketUtils.getUser(onlineUsers, data.user)
-        console.log('reciever',reciever,'onlineUsers',onlineUsers)
+
         if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
             io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_NOTIFICATION,newData) 
         }

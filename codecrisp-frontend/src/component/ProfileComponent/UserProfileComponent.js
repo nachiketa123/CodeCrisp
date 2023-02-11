@@ -184,8 +184,8 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
 
     const handleAcceptFriendRequest = async () =>{
         const payload = {
-            sender_user_id: user.id,
-            recipient_user_id: await extractUserIdFromURL()
+            sender_user_id: user.id,        //one who got the request
+            recipient_user_id: await extractUserIdFromURL() //one who sent the request
         }
         acceptFriendRequest(payload)
     }
