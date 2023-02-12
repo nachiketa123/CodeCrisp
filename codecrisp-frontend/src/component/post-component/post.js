@@ -3,6 +3,9 @@ import "./post.css";
 import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { timeSince } from "../../utility/dateFormat";
+import { useNavigate } from "react-router-dom";
+
+
 const PostComponent = ({
   username,
   location,
@@ -22,7 +25,7 @@ const PostComponent = ({
     n: 2,
   });
   
-  console.log(comments);
+  const navigate = useNavigate();
   
   const commentReset = (e) =>{
      setState({...state , comment:""});
@@ -35,12 +38,17 @@ const PostComponent = ({
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const seeMore = (e) => {
-    setState({ ...state, n: comments.length });
+  const seeMore = (event,id) => {
+    // setState({ ...state, n: comments.length });
+    
+    navigate(`/post/${id}`);
   };
 
   return (
     <div className="my-card container" style={{ backgroundColor: "white" }}>
+      
+  
+     
       <div
         className="user-details post-common"
         style={{ backgroundColor: "white" }}
@@ -63,11 +71,14 @@ const PostComponent = ({
           </div>
         </div>
         <BsThreeDotsVertical
-          onClick={(event) => handleDeletePost(event, id)}
+         // onClick={(event) => handleDeletePost(event, id)}
+     
           color="black"
           className="post-menu-img"
           title="post menu"
         />
+         
+    
       </div>
       <div
         className="post-body post-common"
@@ -196,7 +207,7 @@ const PostComponent = ({
             cursor:"pointer"
           }}
           className="secondary"
-          onClick={seeMore}
+          onClick={e => seeMore(e,id)}
         >
           see all comments ({comments?.length-state.n})
         </button> : <></>

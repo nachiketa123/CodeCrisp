@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { signUp } from '../../Action/AuthAction'
 import InputTextFieldComponent from '../common/InputTextFieldComponent'
 import isEmpty from '../../utility/is-empty'
+import './HomePage.css'
 
 function Signup(props) {
 
@@ -46,7 +47,7 @@ function Signup(props) {
     }
     const error = props.errorRed?.error
     return (
-        <div className='container'>
+        <div className='container mt-5 signup-container'>
             <div className='back-down row justify-content-md-center'>
                 <div className='login-box-outer  col col-sm-12 col-md-8 col-lg-6'>
 
@@ -66,6 +67,8 @@ function Signup(props) {
                                     value={state.name} 
                                     onChange={handleOnchange}
                                     error={error.name}
+                                    
+                                    
                                 />
                             </div>
 
@@ -128,10 +131,10 @@ function Signup(props) {
                                 />
                             </div>
 
-
+                        
                             <button type="submit" className="btn btn-primary"
                                 onClick={onSubmit}
-                            >SignUp</button>
+                            >SIGNUP</button>
 
                         </form>
                     </div>

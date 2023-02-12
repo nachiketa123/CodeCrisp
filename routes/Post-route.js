@@ -291,4 +291,19 @@ router.post('/likePost', passport.authenticate('jwt', { session: false }) , (req
 } )
 
 
+router.get('/post/:post_id',(req,res) =>{
+    const postId = req.params.post_id;
+    UserPost.findById(postId).then(
+        post => {
+            return res.status(200).json(post);
+        }
+    ).catch(
+        err => {
+            return res.status(400).json(err);
+        }
+    )
+
+})
+
+
 module.exports = router;

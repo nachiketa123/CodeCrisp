@@ -1,5 +1,6 @@
 import axios from "axios"
-import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, ADD_COMMENT, DELETE_USER_POST, POST_LIKE_NOTIFICATION, LIKE_POST } from "./Types"
+import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, ADD_COMMENT, 
+DELETE_USER_POST, POST_LIKE_NOTIFICATION, LIKE_POST , POST_DATA } from "./Types"
 
  
 
@@ -71,5 +72,17 @@ export const addComment = (commentData) => (dispatch) => {
             }
 
         }
+    )
+}
+
+
+export const postData = (id) => (dispatch) =>{
+    
+    
+    axios.get(`/api/post/post/${id}`).then(
+      res =>{ 
+    
+            dispatch({type:POST_DATA , payload:res.data})
+      }
     )
 }

@@ -1,3 +1,4 @@
+
 .background-homePage{
 
     width:100%;
@@ -5,24 +6,35 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+  
+   
 }
 
 .homePage-left{
-    flex-basis: 45%;
+    /* flex-basis: 5%; */
     padding: 5%;
     color:white;
 }
 .homePage-right{
-    flex-basis: 55%;
-}
+
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+} 
 
 .homePage-left h1{
     text-align: center;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 650px) {
     .background-homePage{
         flex-direction: column;
+        margin-top: 70px;
     }
     .homePage-left{
         flex-basis: 100%;

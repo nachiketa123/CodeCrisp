@@ -1,12 +1,14 @@
-import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, LIKE_POST, ADD_COMMENT } from "../Action/Types";
+import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, 
+LIKE_POST, ADD_COMMENT , POST_DATA } from "../Action/Types";
 import isEmpty from "../utility/is-empty";
 
 const initialState = {
     allUserPosts: [],
     newPost: {},
     loading: false,
-    morePostAvailable:true
+    morePostAvailable:true,
     // scrollPosition:0
+    currentPost:{}
 }
 
 const PostReducer = (state = initialState, action) => {
@@ -53,6 +55,11 @@ const PostReducer = (state = initialState, action) => {
                 ...state
 
             }
+            
+        case POST_DATA:
+          return{
+            ...state , currentPost:action.payload
+          }
         default:
             return state;
     }

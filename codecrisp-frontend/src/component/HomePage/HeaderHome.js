@@ -16,10 +16,14 @@ function HeaderHome() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <FaBars color="white" className="hamburger-icon"></FaBars>
+          <FaBars color="white" className="hamburger-icon"
+          style={{color:"black"}}
+          ></FaBars>
         </button>
 
-        <Link to="/" className="navbar-brand" style={{ fontSize: "30px" }}>
+        <Link to="/" className="navbar-brand" 
+        
+        style={{ fontSize: "30px" , color:"black" }}>
           CodeCrisp
         </Link>
         <div
@@ -27,39 +31,73 @@ function HeaderHome() {
             background: "transparent",
           }}
         >
-          <Link to="/login">
-            <button type="button" className="btn btn-primary mx-2">
-              Login
-            </button>
-          </Link>
-
-          <Link to="/signup">
-            <button type="button" className="btn btn-primary mx-2">
-              SignUp
-            </button>
-          </Link>
+    
         </div>
+        
+        
+        
         <div
           className="collapse navbar-collapse
                 "
           id="navbarNavAltMarkup"
-          style={{ background: "transparent" }}
+          style={{ backgroundColor: "white" 
+         
+          }}
         >
           <div className="navbar-nav">
-            <a className="nav-item nav-link nav-options" href="#">
+            <a className="nav-item nav-link nav-options" href="#"
+            style={{background:"transparent" ,color:"black" , 
+            fontWeight:"500" , fontFamily:"inherit" , fontSize:"20px"
+            
+            }}
+            >
               About Us<span className="sr-only">(current)</span>
             </a>
-            <a className="nav-item nav-link" href="#">
+            <a className="nav-item nav-link" href="#"
+             style={{background:"transparent" ,color:"black" , 
+             fontWeight:"500" , fontFamily:"inherit" , fontSize:"20px"
+             
+             }}
+            >
               Features
             </a>
-            <Link to="/developers" className="nav-item nav-link" href="#">
+            <Link to="/developers" className="nav-item nav-link" href="#"
+           style={{background:"transparent" ,color:"black" , 
+           fontWeight:"500" , fontFamily:"inherit" , fontSize:"20px"
+           
+           }}
+            >
               Developer
             </Link>
-            <a className="nav-item nav-link" href="#">
+            <a className="nav-item nav-link" href="#"
+             style={{background:"transparent" ,color:"black" , 
+             fontWeight:"500" , fontFamily:"inherit" , fontSize:"20px"
+             
+             }}
+            >
               ContactUs
             </a>
           </div>
         </div>
+        
+        {/* SignUp */}
+        
+         <Link to="/signup">
+            <button type="button" className="btn btn-primary mx-2"
+              style={{
+                background: "transparent",
+                padding: "10px 15px",
+                borderRadius: "2em",
+                backgroundColor: "#ad42ff",
+                color: "white",
+                fontWeight: "700",
+                fontFamily: "monospace",
+                cursor: "pointer",
+              }}
+            >
+              SIGNUP
+            </button>
+          </Link>
 
       </nav>
     </div>

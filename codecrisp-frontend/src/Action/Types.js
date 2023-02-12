@@ -23,3 +23,4 @@ export const REMOVE_ALL_EVENTS_FROM_SOCKET = "REMOVE_ALL_EVENTS_FROM_SOCKET";
 export const LIKE_POST = "LIKE_POST";
 export const GET_FRIEND_LIST = "GET_FRIEND_LIST";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const POST_DATA = "POST_DATA";

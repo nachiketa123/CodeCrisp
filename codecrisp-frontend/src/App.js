@@ -18,6 +18,7 @@ import ErrorComponent from './component/ErrorComponent/ErrorComponent';
 import FriendComponent from './component/friend-component/FriendComponent';
 import SettingsComponent from './component/setting-component/SettingsComponent';
 import ChangePasswordComponent from './component/setting-component/ChangePassword';
+import Postopen from './component/post-component/Postopen';
 
 
 /* 
@@ -56,8 +57,9 @@ function App() {
             <Route path='/friends/*' element={<PrivateRoutes header={true} component={FriendComponent} />} />
             <Route path='/settings' element={<PrivateRoutes header={true} component={SettingsComponent} />} />
             <Route path='/settings/change-password' element={<PrivateRoutes header={true} component={ChangePasswordComponent} />} />
+            <Route path='/post/*' element={<PrivateRoutes header={true} component={Postopen} />}  />
             <Route path='/page-not-found' element={<ErrorComponent/>} />
-
+            
           </Routes >
 
 

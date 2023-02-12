@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
 *{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, 
+    Verdana, sans-serif;
 }
  
 .navbar{
@@ -8,11 +9,13 @@
     top: 0;
     z-index: 100;
     width: 100%;
-    background-color: #7615CF;
+    /* background-color: #7615CF; */
+    background: white;
     height: 70px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    
 }
 .login-box-outer{
     /* margin-top: 50px; */
@@ -28,21 +31,27 @@
 
 .login-box{
     
-    font-family: 'Assistant', sans-serif;
+    font-family: monospace;
     font-weight: 700;
-    color: white;
-    border: 2px solid white;
+    border: 2px solid rgba(0,0,0,0.2);
     border-radius: 0.5em;
     padding: 10px;
     width: 100%;
-    box-shadow:  0 4px 8px 0 white;
+    box-shadow:  0 2px 2px 0 black;
     background: transparent;
+   
    
 }
 
+.login-container{
+    width:"100%";
+    height: 100vh;
+    background-color: white;
+}
+
 .login-box .btn.btn-primary {
-    background-color: #7615CF;
-    border-color: #7615CF;
+    background-color: #ad42ff;
+    border-color: #ad42ff;
 }
 .login-box .btn.btn-primary:hover {
     background-color: #E3CBF9;
@@ -67,10 +76,10 @@
 
 .navbar-nav a:hover{
     /* border-bottom: 2px solid white; */
-    background-color: white;
-    color: black;
-    border-radius: 0.5em;
+    color: white;
+   
     text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.8);
     
 }
 
@@ -102,11 +111,9 @@
 
 .background-homepage{
  position: relative;
- margin-top: 100px;
 }
 
 .background-homepage .navbar .btn.btn-primary{
-    background-color: #7615CF;
     border-color: #E3CBF9;
 }
 .background-homepage .navbar .btn.btn-primary:hover{
@@ -125,4 +132,23 @@
 .inputLogin{
     box-shadow: none;
     background: white;
+}
+
+.navbar{
+border-bottom: 1px SOLID RGBA(0,0,0,0.08);
+}
+
+
+label{
+background-color: white;
+color: black;
+font-family:Verdana;
+}
+form{
+    background-color: white;
+    font-family: monospace;
+}
+
+.signup-container{
+height: 100vh;
 }
