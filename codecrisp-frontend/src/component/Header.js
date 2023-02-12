@@ -83,9 +83,16 @@ function Header({
         <nav className="navbar navbar-home navbar-expand-lg">
           {/* Left Portion of Navbar */}
           <div className="nav-left">
-            <Link to="/">
+            <Link to="/" className="logo-image-container">
               {" "}
-              <img className="logo-image" src={require("../images/logo.png")} />
+              <img className="logo-image" src={require("../images/logo.png")} 
+              style={{background:"black" ,
+              borderRadius:"50%",
+              height:"25px",
+              width:"25px"
+              
+              }}
+              />
             </Link>
             <Link to="/" className="navbar-brand">
               CodeCrisp
@@ -106,7 +113,7 @@ function Header({
                 onChange={onSearch}
               />
               <FaSearch
-                color="seagreen"
+                color="black"
                 className="search-icon my-2 my-sm-0"
                 title="search"
                 onClick={onSearchClick}
@@ -119,7 +126,7 @@ function Header({
             className="bell-icon-container-div"
           >
             <FaRegBell
-              color="white"
+              color="black"
               className="bell-icon"
               title="notifications"
             />
@@ -132,7 +139,7 @@ function Header({
             )}
           </div>
 
-          <FaRegComments color="white" className="chat-icon" title="chat" />
+          <FaRegComments color="black" className="chat-icon" title="chat" />
 
           {/* Toggle Area */}
           <button
@@ -144,7 +151,7 @@ function Header({
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <FaBars color="white" className="hamburger-icon"></FaBars>
+            <FaBars color="black" className="hamburger-icon"></FaBars>
           </button>
 
           {/* Navigation Link  */}
