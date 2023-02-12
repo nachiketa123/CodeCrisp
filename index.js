@@ -16,7 +16,7 @@ const createServer = require('http').createServer
 const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
 const {notificationEventHandler,initializeNotificationEventHandlerFile} = require('./socketEvents/notification-event-sckt');
-
+const globalnotification =require('./routes/globalNotification-route')
 mongo.connect(dbURI).then(
     () => {
         console.log("Mongoose Connected")
@@ -42,6 +42,7 @@ app.use('/api/post', postRoutes)
 app.use('/api/friend', friendRoutes)
 app.use('/api/user-profile', userProfileRoutes)
 app.use('/api/notification', notificationRoutes)
+app.use('/api/gnotification',globalnotification);
 
 const httpServer = createServer(app);
 const io = new Server(httpServer)

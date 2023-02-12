@@ -8,6 +8,7 @@ import profileReducer from './ProfileReducer';
 import friendReducer from './FriendReducer';
 import socketReducer from './SocketReducer';
 import notificationReducer from './NotificationReducer';
+import globalNotificationReducer from './globalNotificationReducer';
 
 const rootReducer = combineReducers(
     { authRed: authReducer, 
@@ -18,7 +19,8 @@ const rootReducer = combineReducers(
         profileReducer: profileReducer,
         friendReducer: friendReducer,
         socketReducer: socketReducer,
-        notificationReducer: notificationReducer
+        notificationReducer: notificationReducer,
+        globalNotification:globalNotificationReducer
         
      }
 )

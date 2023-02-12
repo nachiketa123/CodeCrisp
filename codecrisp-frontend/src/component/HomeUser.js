@@ -6,13 +6,14 @@ import AllPosts from './post-component/all-posts';
 import PostBox from './post-component/Post-box';
 import CommunityNotification from './SideComponent';
 import NotificationMobile from './NotificationMobile';
-import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
 import SearchResultBox from './SearchResultComponent/SearchResultBox'
 import './SearchResultComponent/SearchResultBox.css'
 import isEmpty from '../utility/is-empty';
+import {global_notification} from '../Action/globalnotificationAction'
+import { connect } from "react-redux";
 
-function HomeUser({ auth: { user }, socketReducer: {socket}}) {
+function HomeUser({ auth: { user }, socketReducer: {socket},global_notification}) {
 
     
 
@@ -21,7 +22,10 @@ function HomeUser({ auth: { user }, socketReducer: {socket}}) {
         user: {}
     })
 
-
+    useEffect(() =>{
+    console.log("Hi-->HomeUser")
+        global_notification();
+    })
     
     // useEffect(()=>{
     //     if( !isEmpty(socket.emit) )
@@ -51,4 +55,4 @@ const mapStateToProps = (state) => ({
     socketReducer: state.socketReducer
 })
 
-export default connect(mapStateToProps)(HomeUser)
+export default connect(mapStateToProps,{global_notification})(HomeUser)

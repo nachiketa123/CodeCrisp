@@ -30,6 +30,7 @@
     justify-content: center;
     font-weight: bolder;
     font-family: monospace;
+    padding: 5px;
 }
 
 .community-notification-container .title {
@@ -44,17 +45,3 @@
     font-size: large;
 }
 
-/* .CommunityNotification{
-}
-
-.TechNews{
-} */
-
-.Quotes{
-    margin-bottom: 10px;
-}
-
-/* .flex-item{
-    
-    
-} */

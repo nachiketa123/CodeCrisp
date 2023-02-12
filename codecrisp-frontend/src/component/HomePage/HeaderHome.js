@@ -40,7 +40,7 @@ function HeaderHome() {
           className="collapse navbar-collapse"
           id="navbarNavAltMarkup"
           style={{ backgroundColor: "white" 
-         
+         ,justifyContent:"center"
           }}
         >
           <div className="navbar-nav">

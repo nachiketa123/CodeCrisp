@@ -25,3 +25,4 @@ export const LIKE_POST = "LIKE_POST";
 export const GET_FRIEND_LIST = "GET_FRIEND_LIST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const POST_DATA = "POST_DATA";
+export const GLOBAL_NOTIFICATION = "GLOBAL_NOTIFICATION";
