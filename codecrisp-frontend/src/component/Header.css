@@ -16,7 +16,7 @@
 
 .nav-link{
     color:white;
-    background-color: #7615CF;
+    background-color: #ad42ff;
     
 }
 
@@ -210,8 +210,8 @@
 }
 
 .nav-item.logout .btn.btn-primary{
-    background-color: #7615CF;
-    border-color: #7615CF;
+    background-color: #ad42ff;
+    border-color: #ad42ff;
 }
 
 .nav-item.logout .btn.btn-primary:hover {
@@ -221,7 +221,7 @@
 }
 
 .navbar-nav .nav-item{
-    background-color: #7615CF;
+    background-color: #ad42ff;
     display: flex;
     align-items: center;
 }
@@ -366,9 +366,9 @@
         margin-left: 5px;
         height: min-content;
     }
-    .nav-link {
+    .nav-item .nav-link {
         font-size: 16px;
-        background-color: #3C68E0;
+        background-color: #ad42ff;
     }
     .nav-item .btn {
         font-size: 16px;
@@ -421,10 +421,10 @@
     } 
 
     .navbar-nav{
-        background-color: #7615CF;
+        background-color: #ad42ff;
     }
     .navbar-nav .nav-link {
-        background-color: #7615CF;
+        background-color: #ad42ff;
         padding: 0.1rem;
     }
     .nav-item.logout .btn.btn-primary {
