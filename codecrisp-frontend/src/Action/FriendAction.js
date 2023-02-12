@@ -41,6 +41,7 @@ export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
 }
 
 export const checkIfFriendWithUser = (user_data) => (dispatch)=>{
+    console.log('In action checking if friend with user')
     axios.get('/api/friend/check-if-friend-with-user', { params : {...user_data} })
         .then(res=>{
             dispatch({

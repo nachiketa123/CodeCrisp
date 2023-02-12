@@ -115,7 +115,19 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
         if (!isEmpty(socket) && !ignore) {
             //user friend request notification
             socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,(data)=>{
-                console.log('I will change the button',data)
+                console.log('Friend request recieved')
+                extractUserIdFromURL()
+                .then(res=>{
+                    let profile_user_id = res;
+                    // console.log('useEffect current url',profile_user_id)
+                    const user_data = {
+                        user_id: user.id,
+                        friend_id: profile_user_id
+                    }
+                    checkIfFriendWithUser(user_data)
+                })
+            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,(data)=>{
                 extractUserIdFromURL()
                 .then(res=>{
                     let profile_user_id = res;
@@ -159,7 +171,6 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                     avatar: user.avatar? user.avatar: ''
                 },
             }
-            console.log('event emitted')
             socket.emit(NOTIFICATION.EVENT_EMIT.FRIEND_REQUEST,data)
         }
         else{
@@ -188,6 +199,16 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
             recipient_user_id: await extractUserIdFromURL() //one who sent the request
         }
         acceptFriendRequest(payload)
+    }
+
+    const handleCancelFriendRequest = async () =>{
+        const payload = {
+            sender_user_id: user.id,        //one who sent the request
+            recipient_user_id: await extractUserIdFromURL() //one who got the request
+        }
+
+        socket.emit(NOTIFICATION.EVENT_EMIT.FRIEND_REQUEST_CANCEL,payload)
+        checkIfFriendWithUser(user.id)
     }
 
     const handleSaveProfilePic = () =>{
@@ -231,6 +252,7 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                         handleAddFriend = {handleAddFriend}
                         handleUnFriend = {handleUnFriend}
                         handleAcceptFriendRequest = {handleAcceptFriendRequest}
+                        handleCancelFriendRequest = {handleCancelFriendRequest}
                     />
                 )
     }
@@ -254,6 +276,7 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                     handleAddFriend = {handleAddFriend}
                     handleUnFriend = {handleUnFriend}
                     handleAcceptFriendRequest = {handleAcceptFriendRequest}
+                    handleCancelFriendRequest = {handleCancelFriendRequest}
                 />
                 
             )

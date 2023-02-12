@@ -67,7 +67,7 @@ try{
         }
         
         //  notification event handled in other file
-        notificationEventHandler(socket, io, onlineUsers)
+        notificationEventHandler(socket, io, onlineUsers) 
         
         socket.on('disconnect', () => {
             SocketUtils.removeUser(onlineUsers, socket.id)

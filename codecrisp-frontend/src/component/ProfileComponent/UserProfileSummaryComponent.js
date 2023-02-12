@@ -20,6 +20,7 @@ const UserProfileSummaryComponent = (
         handleAddFriend,
         handleUnFriend,
         handleAcceptFriendRequest,
+        handleCancelFriendRequest,
     }) => {
 
     // console.log(loadingForProfilePictureChange,profileImgUrl,user,isCurrentUser)
@@ -80,7 +81,7 @@ const UserProfileSummaryComponent = (
                                 Add Friend
                             </button>
                             :(isFriendWithUser === 0) 
-                                ?<button onClick={handleUnFriend} className="btn btn-danger">
+                                ?<button onClick={handleCancelFriendRequest} className="btn btn-danger">
                                 Cancel Request
                                 </button>
                                 :(isFriendWithUser === 1)

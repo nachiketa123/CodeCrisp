@@ -73,6 +73,12 @@ function Header({
             socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,(data)=>{
                 getNotificationFromSocket(data)
             })
+
+            //on friend request cancel notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,()=>{
+                console.log('on cancel notification updating header')
+                getNotificationFromDB(user.id)
+            })
         }
 
         return () => {
