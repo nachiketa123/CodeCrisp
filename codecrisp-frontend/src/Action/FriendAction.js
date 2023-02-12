@@ -40,8 +40,40 @@ export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
         })
 }
 
+export const cancelFriendRequest = (user_data) =>(dispatch)=>{
+    axios.patch('/api/friend/cancelFriendRequest',user_data)
+        .then(res=>{
+            dispatch({
+                type:GET_FLG_IF_FRIEND_WITH_USER,
+                payload: -1
+            })
+        })
+        .catch(err=>{
+            console.log('Error ',err.response.data) 
+        })
+}
+
+export const rejectFriendRequest = (user_data) =>(dispatch)=>{
+    axios.patch('/api/friend/rejectFriendRequest',user_data)
+        .then(res=>{
+            dispatch({
+                type:GET_FLG_IF_FRIEND_WITH_USER,
+                payload: -1
+            })
+            dispatch({
+                type: GET_ALL_NOTIFICATION_FROM_DB,
+                payload: res.data
+            })
+        })
+        .catch(err=>{
+            console.log('Error ',err.response.data) 
+        })
+}
+
+
+
 export const checkIfFriendWithUser = (user_data) => (dispatch)=>{
-    console.log('In action checking if friend with user')
+
     axios.get('/api/friend/check-if-friend-with-user', { params : {...user_data} })
         .then(res=>{
             dispatch({

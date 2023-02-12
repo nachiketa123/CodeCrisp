@@ -12,7 +12,7 @@ import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
-import { acceptFriendRequest } from '../Action/FriendAction';
+import { acceptFriendRequest, rejectFriendRequest } from '../Action/FriendAction';
 
 function Header({
     logOutUser,
@@ -25,7 +25,8 @@ function Header({
     getNotificationFromDB,
     removeNotificationFromSocket,
     addCommentRealTimeOnNotification,
-    acceptFriendRequest }) {
+    acceptFriendRequest,
+    rejectFriendRequest }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
@@ -76,7 +77,11 @@ function Header({
 
             //on friend request cancel notification
             socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,()=>{
-                console.log('on cancel notification updating header')
+                getNotificationFromDB(user.id)
+            })
+
+            //on friend request cancel notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,()=>{
                 getNotificationFromDB(user.id)
             })
         }
@@ -208,6 +213,7 @@ function Header({
                 ? (<div className='notification-list-div'>
                     <ListGroupComponent  
                     acceptFriendRequest = {acceptFriendRequest}
+                    rejectFriendRequest = {rejectFriendRequest}
                     items={notification} 
                     user={user.id}/>
                 </div>)
@@ -229,6 +235,7 @@ Header.propTypes = {
     removeNotificationFromSocket: PropTypes.func.isRequired,
     addCommentRealTimeOnNotification: PropTypes.func.isRequired,
     acceptFriendRequest: PropTypes.func.isRequired,
+    rejectFriendRequest: PropTypes.func.isRequired,
 
 }
 
@@ -247,5 +254,6 @@ export default connect(mapStateToProps, {
                                         getNotificationFromDB, 
                                         removeNotificationFromSocket, 
                                         addCommentRealTimeOnNotification, 
-                                        acceptFriendRequest 
+                                        acceptFriendRequest,
+                                        rejectFriendRequest
                                     })(Header)

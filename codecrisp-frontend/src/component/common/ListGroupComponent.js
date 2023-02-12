@@ -6,7 +6,7 @@ import { timeSince } from '../../utility/dateFormat';
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import NOTIFICATION from '../../Notification_Config/notification-config';
 
-const ListGroupComponent = ({ items, acceptFriendRequest, user}) => {
+const ListGroupComponent = ({ items, acceptFriendRequest,rejectFriendRequest, user}) => {
     return (
         <React.Fragment>
             <div className="list-group-container-div">
@@ -31,7 +31,10 @@ const ListGroupComponent = ({ items, acceptFriendRequest, user}) => {
                                                                                 sender_user_id: user,
                                                                                 recipient_user_id: item.source.user
                                                                             })} title='Accept' className='btns request-accept-btn'/>
-                            <AiFillCloseCircle title='Reject' className='btns request-reject-btn'/>
+                            <AiFillCloseCircle onClick={e=>rejectFriendRequest({
+                                                                                sender_user_id: user,
+                                                                                recipient_user_id: item.source.user
+                                                                            })} title='Reject' className='btns request-reject-btn'/>
                         </div>)}
                 </div>))}
             </div>

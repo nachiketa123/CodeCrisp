@@ -4,12 +4,25 @@ const UserNotification = require('../model/UserNotification')
 const mongoose = require('mongoose')
 
 
+let onlineUserList = []
+let io,socket;
+
+const initializeNotificationEventHandlerFile = (socket,io,onlineUserList) =>{
+
+    //we use global because the global variable define here are with the same name as in the parameter 
+    global.io = io
+    global.socket = socket
+    global.onlineUserList = onlineUserList 
+}
 const NOTIFICATION = {
     EVENT_ON:{
         POST_LIKE:"post_like",
         POST_COMMENT:"post_comment",
         FRIEND_REQUEST: "friend_request",
-        FRIEND_REQUEST_CANCEL: "friend_request_cancel"
+        FRIEND_REQUEST_CANCEL: "friend_request_cancel",
+        FRIEND_REQUEST_REJECT: "friend_request_reject",
+        FRIEND_REQUEST_ACCEPT: "friend_request_accept",
+        UNFRIEND_REQUEST: "unfriend_request",
     },
 
     EVENT_EMIT:{
@@ -18,6 +31,9 @@ const NOTIFICATION = {
         GET_POST_COMMENT_NOTIFICATION:'get_post_comment_notification',
         GET_FRIEND_REQUEST_NOTIFICATION:'get_friend_request_notification',
         GET_FRIEND_REQUEST_CANCEL_NOTIFICATION:'get_friend_request_cancel_notification',
+        GET_FRIEND_REQUEST_REJECT_NOTIFICATION:'get_friend_request_reject_notification',
+        GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION:'get_friend_request_accept_notification',
+        GET_UNFRIEND_REQUEST_NOTIFICATION:'get_unfriend_request_notification',
     }
 
 }
@@ -112,6 +128,8 @@ const removeAndUpdateNotification = (notif_data) =>{
 
 const notificationEventHandler = (socket,io,onlineUsers) =>{
     try{
+    
+        onlineUserList = onlineUsers
 
     /* 
         EVENT: On POST Like
@@ -261,37 +279,37 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
     */
 
         socket.on(NOTIFICATION.EVENT_ON.FRIEND_REQUEST_CANCEL,async (data)=>{
-            const {sender_user_id, recipient_user_id} = data;
-            const error = {}
-            UserNotification.findOne({user: mongoose.Types.ObjectId(recipient_user_id)})
-                .then(data=>{
-                    if(!data || isEmpty(data.notification)){
-                        error.dbError = "Notification array already empty, can't delete"
-                        console.log(error)
-                        return
-                    }
-                    data.notification = data.notification.filter(notif=>{
-                        (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
-                        || notif.source.user.toString() !== sender_user_id)
-                    })
+            // const {sender_user_id, recipient_user_id} = data;
+            // const error = {}
+            // UserNotification.findOne({user: mongoose.Types.ObjectId(recipient_user_id)})
+            //     .then(data=>{
+            //         if(!data || isEmpty(data.notification)){
+            //             error.dbError = "Notification array already empty, can't delete"
+            //             console.log(error)
+            //             return
+            //         }
+            //         data.notification = data.notification.filter(notif=>{
+            //             (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
+            //             || notif.source.user.toString() !== sender_user_id)
+            //         })
                     
-                    data.save()
-                        .then(data=>{
-                            const reciever = SocketUtils.getUser(onlineUsers, recipient_user_id)
+            //         data.save()
+            //             .then(data=>{
+            //                 const reciever = SocketUtils.getUser(onlineUsers, recipient_user_id)
 
-                            if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
-                                io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,{success: true}) 
-                            }
-                        }).catch(err=>{
-                            error.dbError = "DB Error"
-                            console.log(error)
-                            return 
-                        })
-                }).catch(err=>{
-                    error.dbError = "DB Error"
-                    console.log(error)
-                    return 
-                })
+            //                 if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
+            //                     io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,{success: true}) 
+            //                 }
+            //             }).catch(err=>{
+            //                 error.dbError = "DB Error"
+            //                 console.log(error)
+            //                 return 
+            //             })
+            //     }).catch(err=>{
+            //         error.dbError = "DB Error"
+            //         console.log(error)
+            //         return 
+                // })
         })
 
     }catch(err){
@@ -299,4 +317,19 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
     }
 }
 
-module.exports = {notificationEventHandler, NOTIFICATION};
+const notificationEventEmitter = (notification_to_emit,reciever_user_id,payload={}) => {
+    const reciever = SocketUtils.getUser(onlineUserList, reciever_user_id)
+    if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
+        
+        if(isEmpty(payload))
+            payload = {success: true}
+        try{
+            global.io.to(reciever.socket_id).emit(notification_to_emit,payload)
+        }catch(err){
+            console.log('error while emitting event ', err)
+            return err
+        }
+        
+    }
+}
+module.exports = {notificationEventHandler,notificationEventEmitter, initializeNotificationEventHandlerFile, NOTIFICATION};
