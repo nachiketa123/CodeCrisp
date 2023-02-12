@@ -8,9 +8,13 @@ import myStore from '../../Store';
 import { SET_SOCKET } from '../../Action/Types';
 import { io } from 'socket.io-client';
 
-//initializing socket 
-const socket = io()
-
+//initializing socket
+let socket; 
+try{
+socket = io()
+}catch(err){
+    console.error('Error occurred while initializing socket',err)
+}
 
 const PrivateRoutes = ({ header, component: Component, auth: { isAuthenticated }, errorReducer: { error } }) => {
     let ignore = false;
@@ -27,17 +31,26 @@ const PrivateRoutes = ({ header, component: Component, auth: { isAuthenticated }
             // })
             // console.log('init',socket.id)
 
-            socket.on('server_conn', (msg) => {
-                console.log(msg)
-            })
+            try{
+                socket.on('server_conn', (msg) => {
+                    console.log(msg)
+                })
+            }catch(err){
+                console.error('Socket error occurred while connecting to server',err)
+            }
+            
 
         }
 
         return () => {
             ignore = true;
-            socket.off('connect');
-            socket.off('disconnect');
-            socket.off('pong');
+            try{
+                socket.off('connect');
+                socket.off('disconnect');
+                socket.off('pong');
+            }catch(err){
+                console.error('Error occurred while resetting the socket connection', err)
+            }
         }
     }, [])
 

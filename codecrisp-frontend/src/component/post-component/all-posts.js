@@ -6,6 +6,7 @@ import isEmpty from "../../utility/is-empty";
 import { compareDateDesc } from "../../utility/custom-sort";
 import { FaUpload } from "react-icons/fa";
 import "./all-posts.css";
+import NOTIFICATION from "../../Notification_Config/notification-config";
 import {
   getAllUserPosts,
   deletePost,
@@ -14,7 +15,7 @@ import {
 } from "../../Action/PostAction";
 
 const AllPosts = ({
-  postReducer: { allUserPosts, loading, morePostAvailable },
+  postReducer: { allUserPosts, loading, morePostAvailable, page },
   auth: { user },
   getAllUserPosts,
   deletePost,
@@ -24,7 +25,7 @@ const AllPosts = ({
 }) => {
   //to load data when user hits bottom of the page
   const [state, setState] = useState({
-    page: 0, //initial page is 0
+    page: page, //initial page is 0
   });
  
   
@@ -36,13 +37,13 @@ const AllPosts = ({
   let scrollEvent = null;
 
   let ignore = false;
-  //when component renders load all the users post
+  //when component renders load all the users post on particular page number(intial page 0)
   useEffect(() => {
     if (scrollPosition > 0) {
       window.scrollTo(0, scrollPosition);
     }
 
-    if (!ignore) {
+    if (!ignore && (isEmpty(allUserPosts) || allUserPosts[allUserPosts.length-1].page !== state.page)) {
       getAllUserPosts({ user_id: user.id, page: state.page });
     }
 
@@ -53,6 +54,7 @@ const AllPosts = ({
 
     return () => {
       ignore = true;
+      // Remove the scroll event listener
       window.removeEventListener("scroll", scrollEvent);
       scrollEvent = null;
     };
@@ -90,13 +92,13 @@ const AllPosts = ({
 
       const event_data = {
         ...post_data,
-        type: "post_like",
-        user_who_liked: user.id,
+        type: NOTIFICATION.EVENT_EMIT.POST_LIKE,
+        user_who_did: user.id,
         name: user.name,
         avatar: user.avatar ? user.avatar : "",
       };
 
-      socket.emit("post_like", event_data);
+      socket.emit(NOTIFICATION.EVENT_EMIT.POST_LIKE, event_data);
 
       // Like Function --> DB
 
@@ -109,7 +111,9 @@ const AllPosts = ({
     deletePost(id);
   };
 
-  const handlePostComment = (id, comment) => {
+  const handlePostComment = async (id, comment) => {
+
+    // For Saving to DB
     const commentData = {
       id,
       data: { 
@@ -117,10 +121,26 @@ const AllPosts = ({
         name: user.name,
         text: comment,
         avatar: user.avatar,
+        date: new Date().toISOString()
       },
     };
-    console.log("post Comment ", commentData);
     addComment(commentData);
+
+     // For notification
+     const post_data = await getPostData(id);
+     const event_data = {
+      user:post_data.user,
+      avatar:post_data.avatar?post_data.avatar:"",
+      _id:post_data._id,
+      imageUrls: post_data.imageUrls,
+      type: NOTIFICATION.EVENT_EMIT.POST_COMMENT,
+      user_who_did: user.id,
+      name: user.name,
+      avatar: user.avatar ? user.avatar : "",
+      new_comment: comment
+     }
+
+     socket.emit(NOTIFICATION.EVENT_EMIT.POST_COMMENT,event_data);
   };
 
   return (
@@ -146,10 +166,7 @@ const AllPosts = ({
                   handleClickLike={handleClickLike}
                   handlePostComment={handlePostComment}
                   comments={post.comments}
-                  likeState={
-                  
-                     post.likes.filter(e =>  (String(e.user) === user.id)).length !== 0?true:false
-                  }
+                  isLikedByUser={post.isLikedByUser}
                 />
                 
                 

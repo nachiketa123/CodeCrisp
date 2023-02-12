@@ -4,7 +4,7 @@
     Verdana, sans-serif;
 }
  
-.navbar{
+.header-home .navbar{
     position: fixed;
     top: 0;
     z-index: 100;
@@ -24,7 +24,7 @@
     color: white;
     align-items: center;
     background: transparent;
-     justify-content: center;
+    justify-content: center;
     
 }
 
@@ -126,6 +126,7 @@
   display: block;
   margin-right: auto;
   padding: 0px;
+  font-size: 30px;
 }
 
 

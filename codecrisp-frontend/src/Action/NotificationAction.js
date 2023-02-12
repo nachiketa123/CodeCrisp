@@ -1,10 +1,16 @@
-import { POST_LIKE_NOTIFICATION,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR } from "./Types"
+import { POST_LIKE_NOTIFICATION,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR,REMOVE_NOTIFICATION_FROM_SOCKET } from "./Types"
 import axios from "axios"
 
 
 export const getNotificationFromSocket = (data) => (dispatch)=>{
     dispatch({
         type:GET_NOTIFICATION_FROM_SOCKET,
+        payload: data
+    })
+}
+export const removeNotificationFromSocket = (data) => (dispatch)=>{
+    dispatch({
+        type: REMOVE_NOTIFICATION_FROM_SOCKET,
         payload: data
     })
 }

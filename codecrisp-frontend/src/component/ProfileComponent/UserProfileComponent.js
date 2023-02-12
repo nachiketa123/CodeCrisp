@@ -1,7 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SendFriendRequest, sendUnFriendRequest, checkIfFriendWithUser } from '../../Action/FriendAction';
+import {sendFriendRequest, 
+    sendUnFriendRequest, 
+    checkIfFriendWithUser, 
+    acceptFriendRequest,
+    cancelFriendRequest,
+    rejectFriendRequest } from '../../Action/FriendAction';
 import extractUserIdFromURL from '../../utility/UrlidExtract';
 import './UserProfileComponent.css'
 import { MdModeEditOutline } from 'react-icons/md';
@@ -10,16 +15,22 @@ import { changeMyProfilePicture, setProfilePictureLoadingOff, getProfileForUser 
 import isEmpty from '../../utility/is-empty';
 import { useLocation } from 'react-router-dom';
 import UserProfileSummaryComponent from './UserProfileSummaryComponent';
+import NOTIFICATION from '../../Notification_Config/notification-config';
+import { getNotificationFromSocket } from '../../Action/NotificationAction';
 
 const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                                 profileReducer:{ user_profile, profile_page_loading }, 
                                 friendReducer: { isFriendWithUser },
-                                SendFriendRequest, 
+                                socketReducer: {socket},
+                                sendFriendRequest, 
                                 changeMyProfilePicture, 
                                 setProfilePictureLoadingOff, 
                                 getProfileForUser,
                                 sendUnFriendRequest,
-                                checkIfFriendWithUser
+                                checkIfFriendWithUser,
+                                acceptFriendRequest,
+                                cancelFriendRequest,
+                                rejectFriendRequest
                                  } 
                             ) => {
 
@@ -30,6 +41,7 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
     })
 
     const location = useLocation();
+
 
     useEffect(()=>{
         
@@ -105,6 +117,66 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
         }
     },[user.avatar])
 
+    let ignore = false
+    useEffect(() => {
+        if (!isEmpty(socket) && !ignore) {
+            //user friend request notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,async ()=>{
+
+                let profile_user_id = await extractUserIdFromURL()
+                const user_data = {
+                    user_id: user.id,
+                    friend_id: profile_user_id
+                }
+                checkIfFriendWithUser(user_data)
+            })
+
+            //user friend request cancel notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION, async()=>{
+                console.log('cancel event trigger I will update the buttons')
+                let profile_user_id = await extractUserIdFromURL()
+                const user_data = {
+                    user_id: user.id,
+                    friend_id: profile_user_id
+                }
+                checkIfFriendWithUser(user_data)
+            })
+
+            //user friend request reject notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,async ()=>{
+                console.log('reject event trigger I will update the buttons')
+                let profile_user_id = await extractUserIdFromURL()
+                const user_data = {
+                    user_id: user.id,
+                    friend_id: profile_user_id
+                }
+                checkIfFriendWithUser(user_data)
+            })
+
+            //user friend request accept notification
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION,async()=>{
+
+                let profile_user_id = await extractUserIdFromURL()
+                const user_data = {
+                    user_id: user.id,
+                    friend_id: profile_user_id
+                }
+                checkIfFriendWithUser(user_data)
+            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_UNFRIEND_REQUEST_NOTIFICATION,async ()=>{
+                let profile_user_id = await extractUserIdFromURL()
+                const user_data = {
+                    user_id: user.id,
+                    friend_id: profile_user_id
+                }
+                checkIfFriendWithUser(user_data)
+            })
+        }
+        return ()=>{
+            ignore = true
+        }
+    },[socket])
+
     const handleProfilePictureChange = (e)=>{
         setState({
             ...state,
@@ -113,16 +185,25 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
     }
 
     const handleAddFriend = async (e)=>{
-        if( !isFriendWithUser ){
+        if( isFriendWithUser !== 1 ){
             const payload ={
                 sender_user_id: user.id,
                 recipient_user_id: await extractUserIdFromURL()
             }
-            SendFriendRequest(payload);
-            const user_data = {
-                user_id: user.id,
-                friend_id: state.profile_user_id
+
+            sendFriendRequest()
+
+            //send friend request notification event
+            const { recipient_user_id } = payload
+            const data = {
+                user: recipient_user_id,
+                source:{
+                    user: user.id,
+                    name: user.name,
+                    avatar: user.avatar? user.avatar: ''
+                },
             }
+            socket.emit(NOTIFICATION.EVENT_EMIT.FRIEND_REQUEST,data)
         }
         else{
             //TODO: cancel friend request
@@ -131,7 +212,7 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
     }
 
     const handleUnFriend = async (e)=>{
-        if( isFriendWithUser ){
+        if( isFriendWithUser === 1 ){
             const payload = {
                 sender_user_id: user.id,
                 recipient_user_id: await extractUserIdFromURL()
@@ -142,6 +223,32 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                 friend_id: state.profile_user_id
             }
         }
+    }
+
+    const handleAcceptFriendRequest = async () =>{
+        const payload = {
+            sender_user_id: user.id,        //one who got the request
+            recipient_user_id: await extractUserIdFromURL() //one who sent the request
+        }
+        acceptFriendRequest(payload)
+    }
+
+    const handleCancelFriendRequest = async () =>{
+        const payload = {
+            sender_user_id: user.id,        //one who sent the request
+            recipient_user_id: await extractUserIdFromURL() //one who got the request
+        }
+
+        cancelFriendRequest(payload)
+    }
+
+    const handleRejectFriendRequest = async () =>{
+        const payload = {
+            sender_user_id: user.id,        //one who got the request
+            recipient_user_id: await extractUserIdFromURL() //one who sent the request
+        }
+
+        rejectFriendRequest(payload)
     }
 
     const handleSaveProfilePic = () =>{
@@ -184,6 +291,9 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                         isFriendWithUser = {isFriendWithUser}
                         handleAddFriend = {handleAddFriend}
                         handleUnFriend = {handleUnFriend}
+                        handleAcceptFriendRequest = {handleAcceptFriendRequest}
+                        handleCancelFriendRequest = {handleCancelFriendRequest}
+                        handleRejectFriendRequest = {handleRejectFriendRequest}
                     />
                 )
     }
@@ -206,6 +316,9 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
                     isFriendWithUser = {isFriendWithUser}
                     handleAddFriend = {handleAddFriend}
                     handleUnFriend = {handleUnFriend}
+                    handleAcceptFriendRequest = {handleAcceptFriendRequest}
+                    handleCancelFriendRequest = {handleCancelFriendRequest}
+                    handleRejectFriendRequest = {handleRejectFriendRequest}
                 />
                 
             )
@@ -226,26 +339,36 @@ const UserProfileComponent = ( { auth:{ user,loadingForProfilePictureChange },
      );
 }
 UserProfileComponent.propTypes = {
-    SendFriendRequest : PropTypes.func.isRequired, 
+    sendFriendRequest : PropTypes.func.isRequired, 
+    sendUnFriendRequest : PropTypes.func.isRequired, 
     auth: PropTypes.object.isRequired,
     changeMyProfilePicture: PropTypes.func.isRequired,
     setProfilePictureLoadingOff: PropTypes.func.isRequired,
     getProfileForUser: PropTypes.func.isRequired,
-    sendUnFriendRequest: PropTypes.func.isRequired,
-    checkIfFriendWithUser: PropTypes.func.isRequired
+    checkIfFriendWithUser: PropTypes.func.isRequired,
+    acceptFriendRequest: PropTypes.func.isRequired,
+    getNotificationFromSocket: PropTypes.func.isRequired,
+    cancelFriendRequest: PropTypes.func.isRequired,
+    rejectFriendRequest: PropTypes.func.isRequired,
     // errorReducer: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state)=> ({
     auth: state.authRed,
     profileReducer: state.profileReducer,
-    friendReducer: state.friendReducer
+    friendReducer: state.friendReducer,
+    socketReducer: state.socketReducer,
     // errorReducer: state.errorReducer,
 })
  
-export default connect(mapStateToProps, { SendFriendRequest,
+export default connect(mapStateToProps, {
+                                        sendFriendRequest,
+                                        acceptFriendRequest,
+                                        cancelFriendRequest,
+                                        rejectFriendRequest,
                                         changeMyProfilePicture,
                                         setProfilePictureLoadingOff, 
                                         getProfileForUser,
                                         sendUnFriendRequest,
-                                        checkIfFriendWithUser })(UserProfileComponent);
+                                        checkIfFriendWithUser,
+                                        getNotificationFromSocket })(UserProfileComponent);

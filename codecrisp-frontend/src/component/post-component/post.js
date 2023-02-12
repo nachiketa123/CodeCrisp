@@ -3,8 +3,7 @@ import "./post.css";
 import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { timeSince } from "../../utility/dateFormat";
-import { useNavigate } from "react-router-dom";
-
+import {compareDateDesc} from '../../utility/custom-sort';
 
 const PostComponent = ({
   username,
@@ -17,15 +16,13 @@ const PostComponent = ({
   handleClickLike,
   handlePostComment,
   comments,
-  likeState
+  isLikedByUser,
 }) => {
   const [state, setState] = useState({
-    like: likeState,
+    like: isLikedByUser,
     comment: "",
     n: 2,
   });
-  
-  const navigate = useNavigate();
   
   const commentReset = (e) =>{
      setState({...state , comment:""});
@@ -38,10 +35,8 @@ const PostComponent = ({
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const seeMore = (event,id) => {
-    // setState({ ...state, n: comments.length });
-    
-    navigate(`/post/${id}`);
+  const seeMore = (e) => {
+    setState({ ...state, n: comments?.length });
   };
 
   return (
@@ -158,34 +153,20 @@ const PostComponent = ({
 
       {/* map */}
 
-      {comments?.slice(0, state.n).map((e) => (
-        <div className="comment-box">
+      {comments?.sort(compareDateDesc).slice(0, state.n).map((e) => (
+        <div className="user-comment-box">
           <div className="comment-box-tile">
-            
-            
-            
-            <div 
-            className="avatar-comment-div"
-            >
-            <img className="avatar-comment" src={e.avatar} />
+            <div className="avatar-comment-div">
+              <img className="avatar-comment" src={e.avatar} />
             </div>
-            
-            
             <div className="comment-box-tile-details">
-            
               <p className="comment-text-user">
                 {e.name}
                 {"            "}
               </p>
-              
-              
-              
               <p className="comment-text">{e.text}</p>
-            
             </div>
-            
-            
-            
+            <div className='time-since'>{timeSince(e.date)}</div>
           </div>
         </div>
       ))}
@@ -195,19 +176,9 @@ const PostComponent = ({
         style={{ backgroundColor: "white" }}
       >
         {/* Comment Section */}
-       { comments.length > state.n ? <button
-          style={{
-            color: "black",
-            fontSize: "14px",
-            margin: "0",
-            background: "transparent",
-            border:"1px solid #889397",
-            padding:"5px",
-            borderRadius:"0.5em",
-            cursor:"pointer"
-          }}
-          className="secondary"
-          onClick={e => seeMore(e,id)}
+       { comments?.length > state.n ? <button
+          className="see-more-btn"
+          onClick={seeMore}
         >
           see all comments ({comments?.length-state.n})
         </button> : <></>

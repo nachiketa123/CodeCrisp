@@ -11,7 +11,8 @@ function SearchResultBox({ search: { user },clearSearchBar }) {
         clearSearchBar()
         navigate(`/userProfile/${id}`) 
     }
-    return (
+    
+    return !isEmpty(user)?(
         <div className='container search-container'>
 
             <div className='row search-box'>
@@ -34,7 +35,7 @@ function SearchResultBox({ search: { user },clearSearchBar }) {
                 </div>
             </div>
         </div>
-    )
+    ):''
 }
 
 const mapStateToProps = (state) => ({

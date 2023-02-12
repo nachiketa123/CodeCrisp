@@ -72,3 +72,41 @@ h2.navigator-heading {
     font-weight: 400;
     cursor: pointer;
 }
+
+@media  screen and (max-width: 768px) {
+    .friend-navigator-container{
+        flex-direction: column;
+        height: max-content;
+    }
+
+    .selector-div-container {
+        flex-direction: row;
+    }
+
+    .selector-div{
+        width: 33%;
+        height: min-content;
+        margin-right: 5px;
+        font-size: 14px;
+    }
+
+    .selector-div-text{
+        margin-left: 7px;
+    }
+}
+
+@media  screen and (max-width: 576px) {
+    .selector-div{
+        padding: 2px 2px;
+        margin-right: 3px;
+        font-size: 10px;
+    }
+
+    .selector-div-right-part{
+        margin-top: 1px;
+    }
+
+    .selector-div:hover .selector-div-text {
+        font-weight: inherit;
+    }
+}

@@ -1,15 +1,25 @@
 import axios from "axios";
-import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST} from "./Types";
+import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST, GET_ALL_NOTIFICATION_FROM_DB} from "./Types";
 
+export const sendFriendRequest = () => (dispatch) => {
+    dispatch({
+        type:GET_FLG_IF_FRIEND_WITH_USER,
+        payload: 0
+    })
+}
 
-export const SendFriendRequest = (user_data) => (dispatch) =>{
-
-    axios.post('/api/friend/sendFriendRequest',user_data)
+export const acceptFriendRequest = (user_data) => (dispatch) =>{
+    axios.patch('/api/friend/acceptFriendRequest',user_data)
         .then(res=>{
-            // console.log('request sent ',res)
+
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
-                payload: true
+                payload: 1
+            })
+
+            dispatch({
+                type: GET_ALL_NOTIFICATION_FROM_DB,
+                payload: res.data.payload
             })
         })
         .catch(err=>{
@@ -20,10 +30,9 @@ export const SendFriendRequest = (user_data) => (dispatch) =>{
 export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
     axios.post('/api/friend/sendUnFriendRequest',user_data)
         .then(res=>{
-            // console.log(res.data)
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
-                payload: false
+                payload: -1
             })
         })
         .catch(err=>{
@@ -31,13 +40,48 @@ export const sendUnFriendRequest = (user_data) =>(dispatch)=>{
         })
 }
 
+export const cancelFriendRequest = (user_data) =>(dispatch)=>{
+    axios.patch('/api/friend/cancelFriendRequest',user_data)
+        .then(res=>{
+            dispatch({
+                type:GET_FLG_IF_FRIEND_WITH_USER,
+                payload: -1
+            })
+        })
+        .catch(err=>{
+            console.log('Error ',err.response.data) 
+        })
+}
+
+export const rejectFriendRequest = (user_data) =>(dispatch)=>{
+    axios.patch('/api/friend/rejectFriendRequest',user_data)
+        .then(res=>{
+            dispatch({
+                type:GET_FLG_IF_FRIEND_WITH_USER,
+                payload: -1
+            })
+            dispatch({
+                type: GET_ALL_NOTIFICATION_FROM_DB,
+                payload: res.data
+            })
+        })
+        .catch(err=>{
+            console.log('Error ',err.response.data) 
+        })
+}
+
+
+
 export const checkIfFriendWithUser = (user_data) => (dispatch)=>{
+
     axios.get('/api/friend/check-if-friend-with-user', { params : {...user_data} })
         .then(res=>{
             dispatch({
                 type:GET_FLG_IF_FRIEND_WITH_USER,
                 payload: res.data
             })
+        }).catch(err=>{
+            console.log(err)
         })
 }
 

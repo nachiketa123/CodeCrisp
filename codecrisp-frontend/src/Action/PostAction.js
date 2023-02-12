@@ -33,7 +33,7 @@ export const getAllUserPosts = (loadData) => (dispatch) => {
         .then(res => {
             dispatch({
                 type: GET_ALL_USER_POST,
-                payload: res.data
+                payload: {data:res.data,page:loadData.page}
             })
         })
         .catch(err => {
@@ -62,9 +62,13 @@ export const addLike = (userData) => (dispatch) => {
 
 }
 
+export const addCommentRealTimeOnNotification = (commentData) => (dispatch) =>{
+    dispatch({ type: ADD_COMMENT, payload: commentData })
+}
+
 
 export const addComment = (commentData) => (dispatch) => {
-
+    
     axios.post(`/api/post/add-comment/${commentData.id}`, commentData.data).then(
         res => {
             if (res.data.success === true) {

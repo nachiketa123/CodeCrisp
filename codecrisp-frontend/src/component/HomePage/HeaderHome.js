@@ -26,7 +26,7 @@ function HeaderHome() {
         style={{ fontSize: "30px" , color:"black" }}>
           CodeCrisp
         </Link>
-        <div
+        <div className="login-signup-btn-container"
           style={{
             background: "transparent",
           }}
@@ -37,8 +37,7 @@ function HeaderHome() {
         
         
         <div
-          className="collapse navbar-collapse
-                "
+          className="collapse navbar-collapse"
           id="navbarNavAltMarkup"
           style={{ backgroundColor: "white" 
          

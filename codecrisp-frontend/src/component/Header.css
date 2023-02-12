@@ -1,20 +1,22 @@
 
-.container-fluid{
-    padding: 0;;
+.user-homepage-header .container-fluid{
+    padding: 0;
 }
 
-.navbar-home{
+.user-homepage-header .navbar-home{
     font-family: 'Assistant', sans-serif;
     background-color: black;
     display: flex;
     justify-content: space-between;
+    background-color: #ad42ff;
+    z-index: 1;
    
 }
  
 
 .nav-link{
     color:white;
-    background-color: #7615CF;;
+    background-color: #7615CF;
     
 }
 
@@ -26,7 +28,7 @@
 }
 
 .navbar-brand{
-    color: black;
+    color: white;
     font-weight: bolder;
     font-size: 30px;
     margin-left: 15px;
@@ -86,10 +88,9 @@
 .searchBar{
     display: flex;
     /* width: 93%; */
-    height: 85%;
     background: white;
     border: 1px solid black;
-    padding: 4px 12px;
+    padding: 3px 12px;
     border-radius: 2em;
     justify-content: space-between;
 }
@@ -113,10 +114,77 @@
     cursor: pointer;
 }
 
-.bell-icon,.notification-counter {
+/* .bell-icon {
     display: none;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
    
+}
+.notification-counter {
+    display: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+   
+}
+/* bell-icon inside nav-item should be visible */
+
+
+.bell-icon-container-div {
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+}
+
+.bell-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: transparent;
+
+}
+
+.notification-counter {
+    background: red;
+    border-radius: 2em;
+    padding: 4px;
+    position: absolute;
+    top: -18px;
+    color: white;
+    font-size: 16px;
+    right: -10px;
+    border: 2px solid white;
+    height: 30px;
+}
+
+.notification-list-div {
+    position: fixed;
+    right: 319px;
+    top: 67px;
+    width: 46%;
+    max-width: 370px;
+    z-index: 1;
+    background-color: lightslategrey;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 1em;
+    max-height: 254px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.notification-list-div::-webkit-scrollbar {
+    width: 5px;
+}
+.notification-list-div::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 1em;
+}
+
+.notification-list-div::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
 }
 
 .chat-icon {
@@ -154,6 +222,8 @@
 
 .navbar-nav .nav-item{
     background-color: #7615CF;
+    display: flex;
+    align-items: center;
 }
 .navbar-nav .nav-item:nth-child(1) .nav-link{
     /* color: #C0F807;
@@ -177,7 +247,7 @@
         display: flex;
         /* flex:0 0 10%; */
         align-items: center;
-        height: 100%;
+
     }
     .logo-image{ 
         width: 20px;
@@ -304,7 +374,7 @@
         font-size: 16px;
     }
 
-    .bell-icon-container-div {
+     .bell-icon-container-div {
         position: relative;
         background: transparent;
         cursor: pointer;
@@ -348,7 +418,7 @@
     .notification-list-div::-webkit-scrollbar-thumb {
         background: black;
         border-radius: 10px;
-    }
+    } 
 
     .navbar-nav{
         background-color: #7615CF;

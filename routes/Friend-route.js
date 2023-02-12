@@ -4,6 +4,9 @@ const FriendCollection = require('../model/Friend')
 const router = express.Router();
 const isEmpty = require('../utility/is-empty')
 const User = require('../model/User')
+const UserNotification = require('../model/UserNotification')
+const mongoose = require('mongoose');
+const { NOTIFICATION, notificationEventEmitter } = require('../socketEvents/notification-event-sckt');
 
 const create_or_update_friend_list = (sender, reciever) => {
     return new Promise((resolve, reject) => {
@@ -91,32 +94,78 @@ const getFriendDetails = (friend)=>{
     })
 }
 /*
-    @route:     /api/friend/sendFriendRequest
-    @desc:      To send Friend Request to a particular user
+    @route:     /api/friend/acceptFriendRequest
+    @desc:      To accept Friend Request to a particular user also set the notification seen to true
     @access:    Private
 */
-router.post('/sendFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+router.patch('/acceptFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const {sender_user_id, recipient_user_id} = req.body;
     const error = {}
-    //TODO: Create a notification model+ add a friend request notification to recipient
-    // res.json({sender_user_id,recipient_user_id})
 
-    //For now adding friends directly without acceptance
     //Add recipient in sender
-    //Find the sender user
+    //Find the sender user(one who got the request)
     create_or_update_friend_list(sender_user_id, recipient_user_id)
         .then(data => {
             create_or_update_friend_list(recipient_user_id, sender_user_id)
                 .then(data => {
-                    return res.status(200).json('Friend added')
+                    //set the notification as seen by the user
+                    UserNotification.findOne({user: mongoose.Types.ObjectId(sender_user_id)})
+                        .then(data=>{
+                            if(!data || isEmpty(data.notification)){
+                                return res.status(200).json("No notification for friend request")
+                            }
+                                
+                            let newObj, indexToReplace=-1, indexToDelete=-1
+                            data.notification.map((notif,index)=>{
+                                //make this new notification seen as true as user has accepted the request
+                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                    && notif.source.user.toString() === recipient_user_id
+                                    && notif.seen === false){
+                                        newObj = {
+                                            type:notif.type
+                                            ,data:notif.date
+                                            ,source:notif.source
+                                            ,_id:notif._id,
+                                            seen: true}
+
+                                        indexToReplace = index
+                                    }
+
+                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                    && notif.source.user.toString() === recipient_user_id
+                                    && notif.seen === true){
+                                        indexToDelete = index
+                                    }
+                            })
+                            
+                            data.notification.splice(indexToReplace,1,newObj)
+
+                            if(indexToDelete !== -1)
+                                data.notification.splice(indexToDelete,1)
+                            
+                            data.save()
+                                .then(newdata=>{
+                                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION,recipient_user_id)
+                                    return res.status(200).json({success: true, payload: newdata})
+                                }).catch(err=>{
+                                    error.dberror = 'DB error'
+                                    return res.status(500).json(error)
+                                })
+                            
+                        }).catch(err=>{
+                            error.dberror = 'DB error'
+                            return res.status(500).json(error)
+                        })
+                    
+
                 })
                 .catch(err => {
                     error.dberror = 'DB error'
-                    return res.status(403).json(dberror)
+                    return res.status(403).json(error)
                 })
         }).catch(err => {
             error.dberror = 'DB error'
-            return res.status(403).json(dberror)
+            return res.status(403).json(error)
         })
 
 
@@ -133,6 +182,7 @@ router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false})
     try {
         let updatedData = await deleteAndUpdateFriendList(sender_user_id, recipient_user_id);
         updatedData = await deleteAndUpdateFriendList(recipient_user_id, sender_user_id);
+        notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_UNFRIEND_REQUEST_NOTIFICATION,recipient_user_id)
         return res.status(200).json('Unfriend successful, both users are no longer friends');
     } catch (err) {
         error.dberror = 'DB error ' + err
@@ -143,17 +193,146 @@ router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false})
 })
 
 /*
+    @route:     /api/friend/cancelFriendRequest
+    @desc:      To Cancel a already sent request, basically deletes the friend-request notification and emit socket event to the user
+    @access:    Private
+*/
+router.patch('/cancelFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+
+    const {sender_user_id, recipient_user_id} = req.body;
+    const error = {}
+    UserNotification.findOne({user: mongoose.Types.ObjectId(recipient_user_id)})
+        .then(data=>{
+            if(!data || isEmpty(data.notification)){
+                error.dbError = "Notification array already empty, can't delete" 
+                return res.status(403).json(error)
+            }
+            data.notification = data.notification.filter(notif=>{
+                (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
+                || notif.source.user.toString() !== sender_user_id)
+            })
+            
+            data.save()
+                .then(data=>{
+                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,recipient_user_id)
+                    return res.status(200).json({success: true})
+                }).catch(err=>{
+                    error.dbError = "DB Error "+err
+                    return res.status(403).json(error)
+                })
+        }).catch(err=>{
+            error.dbError = "DB Error "+err
+            return res.status(403).json(error)
+    })
+})
+
+/*
+    @route:     /api/friend/rejectFriendRequest
+    @desc:      To Reject friend request, basically deletes the friend-request notification and emit socket event to the user
+    @access:    Private
+*/
+
+router.patch('/rejectFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+
+    const {sender_user_id, recipient_user_id} = req.body;
+    const error = {}
+    UserNotification.findOne({user: mongoose.Types.ObjectId(sender_user_id)})
+        .then(data=>{
+            if(!data || isEmpty(data.notification)){
+                error.dbError = "Notification array already empty, can't delete" 
+                return res.status(403).json(error)
+            }
+            data.notification = data.notification.filter(notif=>{
+                (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
+                || notif.source.user.toString() !== recipient_user_id)
+            })
+            
+            data.save()
+                .then(data=>{
+                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,recipient_user_id,data)
+                    return res.status(200).json({success: true})
+                }).catch(err=>{
+                    error.dbError = "DB Error "+err
+                    return res.status(403).json(error)
+                })
+        }).catch(err=>{
+            error.dbError = "DB Error "+err
+            return res.status(403).json(error)
+    })
+})
+
+/*
     @route:     /api/friend/check-if-friend-with-user
-    @desc:      To check if current user is friend with another user
+    @desc:      To check if current user is friend with another user (we send code with each having different meaning 
+                i.e -1 Meaning show Add Friend, 0 Meaning show Cancel request, 1 Meaning show Unfriend and finally 
+                2 Meaning Accept request
     @access:    Private
 */
 router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: false}),(req,res)=>{
     const { user_id,friend_id } = req.query;
     const error = {}
-    FriendCollection.findOne({ user: user_id })
+    // console.log('checking if friend')
+    FriendCollection.findOne({ user: mongoose.Types.ObjectId(user_id) })
         .then(data => {
-            const isFriend = data.friend_list.filter(friend => friend.user.toString() === friend_id.toString()).length != 0
-            return res.status(200).json(isFriend)
+            // console.log('checking if user exist in friend collection')
+            let isFriend = -1
+            //First checking if user is already a friend 
+            if(data && !isEmpty(data.friend_list))
+                 isFriend = data.friend_list.filter(friend => friend.user.toString() === friend_id.toString()).length !== 0 ? 1:-1
+
+            // console.log('friendlist of user checked result', isFriend)
+            if(isFriend === 1) return res.status(200).json(isFriend)
+
+            //checking if a friend request is been sent or not
+            if(isFriend === -1){
+                UserNotification.findOne({user: mongoose.Types.ObjectId(friend_id)})
+                    .then(data=>{
+                        // console.log('checking I sent the request')
+                        if(data && !isEmpty(data.notification)){
+                           
+                            //check in the notification array if notification of type 'friend-request' is present with user 
+                            isFriend = data.notification
+                                .filter(notif => {
+
+                                    return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                    && notif.source.user.toString() === user_id
+                                    && notif.seen === false}).length === 0? -1 : 0
+                            // console.log('checked if I sent the request result', isFriend)
+                        }
+                        if(isFriend === 0)
+                            return res.status(200).json(isFriend)
+                        
+                        //Check our own notification if their is request
+                        UserNotification.findOne({user: mongoose.Types.ObjectId(user_id)})
+                            .then(data=>{
+                                // console.log('checking if I have a friend request')
+                                    if(!data || isEmpty(data.notification)){
+                                        //no friend request is present 
+                                        isFriend = -1
+                                        return res.status(200).json(isFriend)
+                                    }
+
+                                    //check in the notification array if notification of type 'friend-request' is present with user 
+                                    
+                                    isFriend = data.notification
+                                    .filter(notif => {
+
+                                        return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
+                                        && notif.source.user.toString() === friend_id
+                                        && notif.seen === false}).length === 0? -1 : 2
+                                        
+                                        // console.log('checked if I have a friend request result', isFriend)
+                                        return res.status(200).json(isFriend)
+                                }).catch(err => {
+                                    error.dberror = 'DB Error ' + err
+                                    return res.status(403).json(error)
+                                })
+                        
+                    }).catch(err => {
+                        error.dberror = 'DB Error ' + err
+                        return res.status(403).json(error)
+                    })
+            }
         }).catch(err => {
             error.dberror = 'DB Error ' + err
             return res.status(403).json(error)

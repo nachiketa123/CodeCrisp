@@ -22,10 +22,11 @@ function HomeUser({ auth: { user }, socketReducer: {socket}}) {
     })
 
 
-    useEffect(()=>{
-        if( !isEmpty(socket.emit) )
-            socket.emit('add_new_user',user.id)
-    },[user,socket])
+    
+    // useEffect(()=>{
+    //     if( !isEmpty(socket.emit) )
+    //         socket.emit('add_new_user',user.id)
+    // },[user,socket])
 
     return (
         <div className='app-container'>
