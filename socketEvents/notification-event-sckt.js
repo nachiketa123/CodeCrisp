@@ -54,9 +54,11 @@ const checkIfSameNotificationAlreadyExist = (source={userId:''},reciever={userId
             const prevLength = data.notification.length;
 
             data.notification = data.notification.filter(notif => 
-                    notif.type !== notification_type 
-                && notif.source.user !== mongoose.Types.ObjectId(source.userId)
-                && notif.action_item_id !== reciever.postId)
+                !(
+                    notif.type === notification_type 
+                    && notif.source.user.toString() === source.userId
+                    && notif.action_item_id === reciever.postId
+                ))
             
             const found = (data.notification.length !== prevLength)
             resolve({found, data: found ? data:{}})
@@ -161,7 +163,7 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
         // If the same notification already exist then sent unlike notification so that it is removed i.e. unlike
         const result = await checkIfSameNotificationAlreadyExist(
             {userId:newData.notification.at(0).source.user}
-            ,{userId:newData.user,postId: newData.action_item_id}
+            ,{userId:newData.user,postId: newData.notification.at(0).action_item_id}
             , newData.notification.at(0).type);
 
 
