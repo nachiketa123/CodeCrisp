@@ -276,6 +276,38 @@ router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: fal
 })
 
 /*
+    @route:     /api/post/edit-post-comment
+    @desc:      To edit a comment in the post
+    @access:    Private
+*/
+router.post('/edit-post-comment', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { postId, commentId, newComment } = req.body;
+    const error = {}
+
+    UserPost.findById(postId)
+        .then(post=>{
+            if(!post || isEmpty(post.comments)){
+                console.log('No post or no comment found to be edited')
+                return res.status(403).json({success: false})
+            }
+            const comments = post.comments;
+            comments.map((comment)=>{
+                if(comment._id.toString() === commentId){
+                    comment.text = newComment
+                }
+            })
+            post.comments = comments;
+            post.save()
+            .then(post=>{
+                res.status(200).json({success: true})
+            }).catch(err=>{
+                error.dberror = 'DB Error '+err
+                res.status(500).json(error)
+            })
+        })
+})
+
+/*
     @route:     /api/post/likePost
     @desc:      When user like/unlike the post this API get a hit, and user get added/removed in/from the post.like array on the basis of action(like/unlike respectively) 
     @access:    Private
@@ -321,6 +353,7 @@ router.get('/post/:post_id',(req,res) =>{
     )
 
 })
+
 
 
 module.exports = router;

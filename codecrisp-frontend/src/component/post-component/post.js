@@ -4,8 +4,11 @@ import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { timeSince } from "../../utility/dateFormat";
 import {compareDateDesc} from '../../utility/custom-sort';
+import {MdModeEditOutline} from 'react-icons/md'
+import { IoMdClose, IoMdCheckmark } from "react-icons/io";
 
 const PostComponent = ({
+  user_id,
   username,
   location,
   avatar,
@@ -17,11 +20,15 @@ const PostComponent = ({
   handlePostComment,
   comments,
   isLikedByUser,
+  handleConfirmCommentEdit
 }) => {
   const [state, setState] = useState({
     like: isLikedByUser,
     comment: "",
     n: 2,
+    showEditComment: false,
+    commentTileId:'',
+    editedComment:''
   });
   
   const commentReset = (e) =>{
@@ -31,13 +38,22 @@ const PostComponent = ({
   const onLike = (e)   =>{
     setState({...state , like : !state.like });
   }
-  const onComment = (e) => {
+  const onChangeHandler = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
   const seeMore = (e) => {
     setState({ ...state, n: comments?.length });
   };
+
+  const handleEditComment = (id='',prevComment='') =>{
+    setState({
+      ...state,
+      showEditComment: !state.showEditComment,
+      commentTileId: id,
+      editedComment: prevComment
+    })
+  } 
 
   return (
     <div className="my-card container" style={{ backgroundColor: "white" }}>
@@ -164,9 +180,28 @@ const PostComponent = ({
                 {e.name}
                 {"            "}
               </p>
-              <p className="comment-text">{e.text}</p>
+              {state.showEditComment && e._id === state.commentTileId
+              ?(<div className="edit-comment-input-container">
+                <input onChange={onChangeHandler} name='editedComment' value={state.editedComment} className="edit-comment-input"/>
+                <IoMdCheckmark onClick={()=>{
+                  handleConfirmCommentEdit(id,e._id,state.editedComment)
+                  setState({
+                    ...state,
+                    showEditComment: !state.showEditComment
+                  })
+                }} className="post-edited-comment-tick" title="confirm edit"/>
+               </div>)
+              :<p className="comment-text">{e.text}</p>}
             </div>
-            <div className='time-since'>{timeSince(e.date)}</div>
+            <div className = 'comment-time-edit-container'>
+              <div className='time-since'>{timeSince(e.date)}</div>
+              {e.user===user_id 
+                ?!state.showEditComment
+                  ?<MdModeEditOutline onClick={()=>handleEditComment(e._id,e.text)} size="15" className='edit-post-comment'  title='edit comment'/>
+                  :<IoMdClose onClick={()=>handleEditComment()} size="15" className='edit-close-comment' title='close edit' color="red"/>
+                :''}
+            </div>
+            
           </div>
         </div>
       ))}
@@ -194,7 +229,7 @@ const PostComponent = ({
             placeholder="Add a comment"
             value={state.comment}
             name="comment"
-            onChange={onComment}
+            onChange={onChangeHandler}
             style={{ backgroundColor: "rgb(245,245,245)", height: "40px" , width:"280px" }}
           />
 

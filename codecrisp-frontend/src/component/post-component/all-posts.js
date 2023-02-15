@@ -12,6 +12,7 @@ import {
   deletePost,
   addComment,
   addLike,
+  editCommentById,
 } from "../../Action/PostAction";
 
 const AllPosts = ({
@@ -21,6 +22,7 @@ const AllPosts = ({
   deletePost,
   socketReducer: { socket },
   addComment,
+  editCommentById,
   addLike,
 }) => {
   //to load data when user hits bottom of the page
@@ -143,6 +145,16 @@ const AllPosts = ({
      socket.emit(NOTIFICATION.EVENT_EMIT.POST_COMMENT,event_data);
   };
 
+  const handleConfirmCommentEdit = (postId, commentId, newComment) =>{
+    const data = {
+      postId,
+      commentId,
+      newComment
+    }
+    
+    editCommentById(data)
+  }
+
   return (
     <React.Fragment>
       <div className="all-posts">
@@ -156,6 +168,7 @@ const AllPosts = ({
           
                 <PostComponent
                   key={post._id}
+                  user_id={user.id}
                   id={post._id}
                   username={post.name}
                   location={post.location}
@@ -165,8 +178,10 @@ const AllPosts = ({
                   handleDeletePost={handleDeletePost}
                   handleClickLike={handleClickLike}
                   handlePostComment={handlePostComment}
+                  handleConfirmCommentEdit = {handleConfirmCommentEdit}
                   comments={post.comments}
                   isLikedByUser={post.isLikedByUser}
+
                 />
                 
                 
@@ -194,6 +209,7 @@ AllPosts.propTypes = {
   deletePost: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
+  editCommentById: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -206,5 +222,6 @@ export default connect(mapStateToProps, {
   getAllUserPosts,
   deletePost,
   addComment,
+  editCommentById,
   addLike,
 })(AllPosts);

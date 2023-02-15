@@ -1,6 +1,16 @@
 import axios from "axios"
-import { USER_ADDED_NEW_POST, GET_ERROR, SET_LOADING_ONN, GET_ALL_USER_POST, ADD_COMMENT, 
-DELETE_USER_POST, POST_LIKE_NOTIFICATION, LIKE_POST , POST_DATA } from "./Types"
+import { 
+    USER_ADDED_NEW_POST, 
+    GET_ERROR, 
+    SET_LOADING_ONN, 
+    GET_ALL_USER_POST, 
+    ADD_COMMENT, 
+    DELETE_USER_POST, 
+    POST_LIKE_NOTIFICATION, 
+    LIKE_POST, 
+    POST_DATA, 
+    CONFIRM_EDIT_COMMENT,
+} from "./Types"
 
  
 
@@ -89,4 +99,21 @@ export const postData = (id) => (dispatch) =>{
             dispatch({type:POST_DATA , payload:res.data})
       }
     )
+}
+
+export const editCommentById = (data) => (dispatch) =>{
+    axios.post('/api/post/edit-post-comment',data)
+        .then(res=>{
+            if(res.data.success === true){
+                dispatch({
+                    type: CONFIRM_EDIT_COMMENT,
+                    payload: data
+                })
+            }else{
+                console.log(res.data)
+            }
+            
+        }).catch(err=>{
+            dispatch({type: GET_ERROR, payload: err.response.data})
+        })
 }

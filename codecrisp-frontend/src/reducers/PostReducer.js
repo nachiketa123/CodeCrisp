@@ -1,5 +1,5 @@
 import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, 
-LIKE_POST, ADD_COMMENT , POST_DATA } from "../Action/Types";
+LIKE_POST, ADD_COMMENT , POST_DATA, CONFIRM_EDIT_COMMENT } from "../Action/Types";
 import isEmpty from "../utility/is-empty";
 
 const initialState = {
@@ -39,7 +39,6 @@ const PostReducer = (state = initialState, action) => {
             }
 
         case DELETE_USER_POST:
-            console.log('In reducer', state.allUserPosts)
             return {
                 ...state,
                 allUserPosts: state.allUserPosts.filter(post => post._id !== action.payload)
@@ -62,6 +61,28 @@ const PostReducer = (state = initialState, action) => {
           return{
             ...state , currentPost:action.payload
           }
+
+        case CONFIRM_EDIT_COMMENT:
+          const {postId, commentId, newComment} = action.payload
+          
+          const newAllUserPosts = state.allUserPosts
+          //Find index of the particular post
+          const postIndex = newAllUserPosts.findIndex(post=>post._id === postId)
+          //extract comment array from the post
+          const newCommentArr = state.allUserPosts.at(postIndex).comments
+
+          newCommentArr.map(comment=>{
+            if(comment._id === commentId)
+                comment.text = newComment
+          })
+
+          newAllUserPosts[postIndex].comments = newCommentArr 
+
+          return{
+            ...state,
+            allUserPosts: newAllUserPosts
+          }
+
         default:
             return state;
     }

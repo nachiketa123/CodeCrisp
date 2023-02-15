@@ -30,8 +30,7 @@ function Header({
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
-    let ignore = false;
-
+    //Adding new user socket to the server
     useEffect(()=>{
         if( !isEmpty(socket.emit) )
             socket.emit('add_new_user',user.id)
@@ -41,6 +40,7 @@ function Header({
         getNotificationFromDB(user.id)
     }, [])
 
+    let ignore = false;
     useEffect(() => {
         if (!isEmpty(socket) && !ignore) {
             //user post like notification

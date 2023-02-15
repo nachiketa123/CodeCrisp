@@ -258,6 +258,48 @@ input.comment-box:focus {
   background-color: #E3CBF9;
 }
 
+.comment-time-edit-container{
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-post-comment,.edit-close-comment{
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 15px;
+  margin-right: 5px;
+}
+
+.edit-comment-input-container{
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: row;
+  padding: 0 2px;
+  align-items: center;
+}
+
+.edit-comment-input-container .edit-comment-input {
+  border: none;
+  flex-grow: 1;
+}
+
+.edit-comment-input{
+  border: none;
+  outline: none;
+}
+
+.post-edited-comment-tick{
+  height: 15px;
+  width: 15px;
+  color: green;
+  cursor: pointer;
+}
+
 
 /* Media queries */
 
