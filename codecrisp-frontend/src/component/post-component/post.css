@@ -291,6 +291,7 @@ input.comment-box:focus {
 .edit-comment-input{
   border: none;
   outline: none;
+  font-size: 12px;
 }
 
 .post-edited-comment-tick{

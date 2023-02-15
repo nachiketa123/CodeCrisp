@@ -3,7 +3,7 @@
     flex-direction: row;
 }
 .friend-navigator-div {
-    flex: 1 0 34%;
+    flex: 1 0 30%;
     max-width: 360px;
     min-width: 315px;
 }
