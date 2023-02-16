@@ -242,7 +242,6 @@ const PostComponent = ({
           <button
             className="comment-btn"
             style={{
-              backgroundColor: "blue",
               borderRadius: "0.5em",
               height: "30px",
               height:"38px"
