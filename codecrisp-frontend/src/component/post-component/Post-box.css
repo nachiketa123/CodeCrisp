@@ -100,6 +100,11 @@
     cursor: pointer;
 }
 
+.postBox-outer .post-btn{
+    background-color: rgb(173, 66, 255);
+    border-color: rgb(173, 66, 255);
+}
+
 
 /* Media queries for different screensizes in descending order */
 

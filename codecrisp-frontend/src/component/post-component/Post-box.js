@@ -86,7 +86,7 @@ function PostBox({auth : {user} ,addPost}) {
                 <div className='postBox-textArea'>
 
                     <input name='postText' type='text' className='postBox-text' value={state.postText} onChange={handleOnChange} placeholder='Share your Day !' />
-                    <button type="button" className="btn btn-primary" onClick={handlePost}
+                    <button type="button" className="btn btn-primary post-btn" onClick={handlePost}
                         style={{ borderRadius: "0.5em" }}>Post</button>
 
 
