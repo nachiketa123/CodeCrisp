@@ -489,6 +489,7 @@
     .logo-image {
         width: 30px;
         height: 30px;
+        margin-right: 10px;
     }
     
     .navbar-brand {
@@ -508,6 +509,13 @@
     .searchBar .btn {
         font-size: 12px;
     }
+    
+    .navbar-toggler {
+        padding: 0.25rem;
+    }
+    .navbar-toggler:focus{
+        padding: 0.25rem;
+    }
 
     .nav-link {
         font-size: 12px;
@@ -515,7 +523,6 @@
     }
     .nav-item .btn {
         font-size: 12px;
-       
     }
 
     .bell-icon {
