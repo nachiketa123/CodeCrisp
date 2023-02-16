@@ -35,3 +35,17 @@ background: transparent;
 color: #e1e1e1f5;
 width: 100%;
 }
+
+.comment-openbox{
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+}
+
+@media only screen and (min-width : 700px) {
+  .comment-openbox{
+     display: flex;
+     flex-direction: row;
+     background-color: red;
+  }
+}

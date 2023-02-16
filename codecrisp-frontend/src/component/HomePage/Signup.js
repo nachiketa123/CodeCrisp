@@ -36,7 +36,8 @@ function Signup(props) {
             email: state.email,
             phoneno: state.phoneNo,
             age: state.age,
-            password: state.password
+            password: state.password,
+            signInType:"codecrisp"
         }
 
         props.signUp(newUser);

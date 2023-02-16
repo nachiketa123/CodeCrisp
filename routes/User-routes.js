@@ -52,9 +52,38 @@ const updateAvatarInAllPost = (postArray, avatarURL) => {
 */
 router.post('/signup',
     (req, res) => {
+        
+        const {signInType} = req.body;
+        
+        if(signInType === 'codecrisp'){
         const { name, email, phoneno, age, password } = req.body //Destructoring..
         const user_obj =  { name, email, phoneno, age, password }
+        
+        //Validation
+        const {errors, isValid} = registerInputValidation(user_obj)
+        if(!isValid) return res.status(200).json(errors) 
 
+        const newUser = User(user_obj)
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                newUser.password = hash
+                newUser.save().then(
+                    user => {
+                        res.status(200).json({success:true})
+                    }
+                ).catch(
+                    err => {
+                        res.status(400).json(err)
+                    }
+                )
+            })
+        })
+       }
+       else{
+          
+        const { name, email, phoneno, age, password } = req.body //Destructoring..
+        const user_obj =  { name, email, phoneno, age, password }
+        
         //Validation
         // const {errors, isValid} = registerInputValidation(user_obj)
         const errors = {}
@@ -76,6 +105,8 @@ router.post('/signup',
                 )
             })
         })
+       
+       }
     })
 
 

@@ -73,16 +73,41 @@ router.post('/addPost', passport.authenticate('jwt', { session: false }), async 
                     return res.status(404).json(errors)
                 })
 
-        })
+             })
             .catch(err => {
                 errors.upload = err
                 return res.status(403).json(errors)
             })
 
-    }
+            }
+            else{
+                User.findById(user)
+                    .then(myuser => {
+                        const newPostData = {
+                           
+                            postText,
+                            location,
+                            name,
+                            user,
+                            avatar: myuser.avatar
+                        }
+                        const newPost = new UserPost(newPostData)
+                        newPost.save()
+                            .then(data => {
+                                return res.status(200).json(data)
+                            })
+                            .catch(err => {
+                                errors.dberror = err
+                                return res.status(400).json(errors)
+                            })
+                    }).catch(err => {
+                        errors.pageNotFound = 'user not found ' + err
+                        return res.status(404).json(errors)
+                    })
 
+            }
 
-})
+        })
 
 
 /* Below route is deprecated as we are going to use infinite scrolling now, it is replaced by /api/post/getAllUserPosts1/:user_id API */

@@ -64,36 +64,8 @@ export const signInWithGoogle = () => (dispatch) =>{
          }
          
          if(payload.additionalUserInfo.isNewUser){
-            console.log('signup with google')
-              axios.post('/api/user/signup', newUser).then(
-                res => {
-                    dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
-                    if(res.data.success){
-                        axios.post('/api/user/login', {email: payload.additionalUserInfo.profile.email,
-                            password: payload.additionalUserInfo.profile.id}).then(
-                            res => {
-                                dispatch({
-                                    type: LOGIN_SUCCESS,
-                                    payload: res.data
-                                })
-                            }
-                        ).catch(
-                            err => {
-                                alert("Incorrect Password")
-                                console.log('error', err)
-                                dispatch({
-                                    type: GET_ERROR,
-                                    payload: err.response.data,
-                                })
-                            }
-                        )
-                    }
-                }
-            ).catch(
-                err => {
-                    dispatch({ type: GET_ERROR, payload: err.response.data })
-                }
-            )
+                 dispatch(signUp(newUser));
+                 dispatch(signIn(newUser));
          }
          else{
          
@@ -102,31 +74,9 @@ export const signInWithGoogle = () => (dispatch) =>{
                 password: payload.additionalUserInfo.profile.id
              }
              
-             axios.post('/api/user/login', newUserGoogle).then(
-                res => {
-                    dispatch({
-                        type: LOGIN_SUCCESS,
-                        payload: res.data
-                    })
-                }
-            ).catch(
-                err => {
-                    alert("Incorrect Password")
-                    console.log('error', err)
-                    dispatch({
-                        type: GET_ERROR,
-                        payload: err.response.data,
-                    })
-                }
-            )
-         }
-        
-         
-    
-         console.log(payload); 
-    })
-    .catch(err =>{ alert(err.message)}); 
- }
+         dispatch(signIn(newUserGoogle));
+       }
+    })}
 
 
 

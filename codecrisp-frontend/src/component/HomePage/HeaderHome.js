@@ -94,7 +94,7 @@ function HeaderHome() {
                 cursor: "pointer",
               }}
             >
-              SIGNUP
+              SIGN UP
             </button>
           </Link>
 

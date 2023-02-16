@@ -90,7 +90,7 @@ export const addComment = (commentData) => (dispatch) => {
     )
 }
 
-
+ 
 export const postData = (id) => (dispatch) =>{
     
     
