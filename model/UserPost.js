@@ -26,6 +26,11 @@ const UserPost = new Schema({
     ],
     comments: [
         {
+            id: {
+                type: Schema.Types.ObjectId,
+                require: true,
+                unique: true,
+            },
             user: {
                 type: Schema.Types.ObjectId,
                 ref: 'user_data'

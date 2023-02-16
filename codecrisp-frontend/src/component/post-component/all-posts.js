@@ -13,6 +13,7 @@ import {
   addComment,
   addLike,
   editCommentById,
+  deleteCommentFromPost,
 } from "../../Action/PostAction";
 
 const AllPosts = ({
@@ -24,6 +25,7 @@ const AllPosts = ({
   addComment,
   editCommentById,
   addLike,
+  deleteCommentFromPost,
 }) => {
   //to load data when user hits bottom of the page
   const [state, setState] = useState({
@@ -155,6 +157,19 @@ const AllPosts = ({
     editCommentById(data)
   }
 
+  const handleDeleteComment = (postId,commentId) =>{
+
+    const confirm = window.confirm('This will permanently delete the comment, are you sure?')
+    if(confirm){
+      const data = {
+        postId,
+        commentId
+      }
+      deleteCommentFromPost(data)
+    }
+    
+  }
+
   return (
     <React.Fragment>
       <div className="all-posts">
@@ -179,6 +194,7 @@ const AllPosts = ({
                   handleClickLike={handleClickLike}
                   handlePostComment={handlePostComment}
                   handleConfirmCommentEdit = {handleConfirmCommentEdit}
+                  handleDeleteComment = {handleDeleteComment}
                   comments={post.comments}
                   isLikedByUser={post.isLikedByUser}
                   noOfLikes = {post.likes.length}
@@ -210,6 +226,7 @@ AllPosts.propTypes = {
   addComment: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
   editCommentById: PropTypes.func.isRequired,
+  deleteCommentFromPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -224,4 +241,5 @@ export default connect(mapStateToProps, {
   addComment,
   editCommentById,
   addLike,
+  deleteCommentFromPost,
 })(AllPosts);

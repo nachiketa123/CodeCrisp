@@ -211,8 +211,7 @@ input.comment-box:focus {
 }
 
 .user-comment-box .time-since{
-  padding-top: 5px;
-  padding-right: 5px;
+  padding-top: 1px;
 }
 
 
@@ -263,8 +262,9 @@ input.comment-box:focus {
   display: flex;
   flex-direction: column;
   background-color: transparent;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
+  padding-right: 7px;
 }
 
 .edit-post-comment,.edit-close-comment{
@@ -282,6 +282,19 @@ input.comment-box:focus {
   flex-direction: row;
   padding: 0 2px;
   align-items: center;
+}
+
+.edit-delete-comment-container{
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-delete-icon {
+  cursor: pointer;
+}
+.comment-delete-icon:hover {
+  color: red;
 }
 
 .edit-comment-input-container .edit-comment-input {

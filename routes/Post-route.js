@@ -4,7 +4,6 @@ const isEmpty = require('../utility/is-empty')
 const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
-
 const User = require('../model/User');
 const { default: mongoose } = require('mongoose');
 const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
@@ -247,7 +246,7 @@ router.get('/get-comment/:post_id', passport.authenticate('jwt', { session: fals
 
 /*
     @route:     /api/post/add-comment
-    @desc:      To post the comment in a post  
+    @desc:      To add the comment in a post, using 'shortid library' to generate ID for for comment
     @access:    Private
 */
 router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -264,10 +263,22 @@ router.post('/add-comment/:post_id', passport.authenticate('jwt', { session: fal
             if(!post.comments)
                 post.comments = []
 
-            post.comments.push({ user, name, text, avatar });
+            //Generating ID
+            const newGeneratedCommentId = mongoose.Types.ObjectId()
+
+            const newCommentObj = { 
+                id: newGeneratedCommentId, 
+                user, 
+                name, 
+                text, 
+                avatar,
+                date: new Date().toISOString()
+             }
+
+            post.comments.push(newCommentObj);
             post.save().then(
                 p => {
-                    return res.status(200).json({ success: true });
+                    return res.status(200).json({ success: true,payload: newCommentObj });
                 }
             )
         }
@@ -292,11 +303,42 @@ router.post('/edit-post-comment', passport.authenticate('jwt', { session: false 
             }
             const comments = post.comments;
             comments.map((comment)=>{
-                if(comment._id.toString() === commentId){
+                if(comment.id.toString() === commentId){
                     comment.text = newComment
                 }
             })
             post.comments = comments;
+            post.save()
+            .then(post=>{
+                res.status(200).json({success: true})
+            }).catch(err=>{
+                error.dberror = 'DB Error '+err
+                res.status(500).json(error)
+            })
+        })
+})
+
+/*
+    @route:     /api/post/delete-post-comment
+    @desc:      To delete a comment in the post
+    @access:    Private
+*/
+
+router.patch('/delete-post-comment', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { postId, commentId } = req.body;
+    const error = {}
+
+    UserPost.findById(postId)
+        .then(post=>{
+            if(!post || isEmpty(post.comments)){
+                console.log('No post or no comment found to be edited')
+                return res.status(403).json({success: false})
+            }
+            const comments = post.comments;
+
+            //filtering all comments other than the one passed
+            post.comments = comments.filter((comment)=>  comment.id.toString() !== commentId  )
+
             post.save()
             .then(post=>{
                 res.status(200).json({success: true})

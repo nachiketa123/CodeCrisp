@@ -10,6 +10,7 @@ import {
     LIKE_POST, 
     POST_DATA, 
     CONFIRM_EDIT_COMMENT,
+    DELETE_POST_COMMENT,
 } from "./Types"
 
  
@@ -82,7 +83,7 @@ export const addComment = (commentData) => (dispatch) => {
     axios.post(`/api/post/add-comment/${commentData.id}`, commentData.data).then(
         res => {
             if (res.data.success === true) {
-                dispatch({ type: ADD_COMMENT, payload: commentData })
+                dispatch({ type: ADD_COMMENT, payload:{postId: commentData.id, newComment: res.data.payload }})
             }
 
         }
@@ -115,5 +116,27 @@ export const editCommentById = (data) => (dispatch) =>{
             
         }).catch(err=>{
             dispatch({type: GET_ERROR, payload: err.response.data})
+        })
+}
+
+export const deleteCommentFromPost = (data) => (dispatch) =>{
+    axios.patch('/api/post/delete-post-comment',data)
+        .then(res=>{
+            if(res.data.success === true){
+                dispatch({
+                    type: DELETE_POST_COMMENT,
+                    payload: data
+                })
+            }
+            else{
+                console.log(res.data)
+            }
+            
+        }).catch(err=>{
+            console.log(err)
+            dispatch({
+                type: GET_ERROR,
+                payload: err.response.data
+            })
         })
 }
