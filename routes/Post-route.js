@@ -4,8 +4,6 @@ const isEmpty = require('../utility/is-empty')
 const passport = require('passport')
 const router = express.Router();
 const FriendCollection = require('../model/Friend')
-const shortid = require('shortid')
-
 const User = require('../model/User');
 const { default: mongoose } = require('mongoose');
 const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadImagesToCloudinary;
