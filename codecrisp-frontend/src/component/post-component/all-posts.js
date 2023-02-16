@@ -167,6 +167,7 @@ const AllPosts = ({
                   handlePostComment={handlePostComment}
                   comments={post.comments}
                   isLikedByUser={post.isLikedByUser}
+                  noOfLikes = {post.likes.length}
                 />
                 
                 

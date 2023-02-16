@@ -4,8 +4,18 @@ import "./Home.css";
 import { Stack } from "@mui/material";
 import { fontFamily } from "@mui/system";
 import { Link } from "react-router-dom";
+import { signInWithGoogle } from "../../Action/AuthAction";
+import {connect} from 'react-redux'
 
-function Home() {
+
+
+function Home({signInWithGoogle}) {
+
+  const LoginGoogle =() =>{
+    console.log("hit")
+      signInWithGoogle();
+    }
+
   return (
     <div className="background-homePage">
       {/* Left */}
@@ -46,10 +56,10 @@ function Home() {
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-around",
           }}
         >
-        
+       
         <Link  to="/login">
       
           <button
@@ -67,6 +77,31 @@ function Home() {
             LOGIN
           </button>
           </Link>
+          
+          <button
+            style={{
+              
+              fontFamily:"monospace",
+              padding:"10px 15px",
+              borderRadius:"2em",
+              fontWeight:"700",
+              display:"flex",
+              flexDirection:"row",
+              justifyContent:"center"
+            
+            }}
+            
+            onClick={LoginGoogle}
+          >
+            SIGN IN WITH 
+            
+            <img src='https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png' alt="" 
+               style={{
+                 height:"22px",
+                 marginLeft:"5px"
+              }}
+            />
+          </button>
         </div>
       </div>
 
@@ -80,5 +115,7 @@ function Home() {
     </div>
   );
 }
-
-export default Home;
+const mapStateToProps  = (state) =>({
+  
+})
+export default connect(mapStateToProps , {signInWithGoogle})(Home);
