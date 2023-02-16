@@ -13,11 +13,11 @@ const userSchema = new schema({
     }
     , phoneno: {
         type: String,
-        required: true
+        required: false
     }
     , age: {
         type: String,
-        required: true
+        required: false
     }
     , password: {
         type: String,

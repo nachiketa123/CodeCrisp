@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./post.css";
 import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -6,6 +6,7 @@ import { timeSince } from "../../utility/dateFormat";
 import {compareDateDesc} from '../../utility/custom-sort';
 import {MdModeEditOutline} from 'react-icons/md'
 import { IoMdClose, IoMdCheckmark } from "react-icons/io";
+import { getAllUserPosts } from "../../Action/PostAction";
 
 const PostComponent = ({
   user_id,
@@ -20,7 +21,8 @@ const PostComponent = ({
   handlePostComment,
   comments,
   isLikedByUser,
-  handleConfirmCommentEdit
+  handleConfirmCommentEdit,
+  noOfLikes
 }) => {
   const [state, setState] = useState({
     like: isLikedByUser,
@@ -134,21 +136,12 @@ const PostComponent = ({
           <FaShare className="icon share-img" color="white" title="share" />
         </div>
         <div className="who-liked-post" style={{ backgroundColor: "white" }}>
-          {/* <p
-            style={{
-              color: "black",
-              fontWeight: "bold",
-              fontSize: "14px",
-              margin: "0",
-              background: "transparent",
-              margin: "2px 10px 8px 0",
-            }}
-          >
-            {" "}
-            someone liked your post
-          </p> */}
+
         </div>
       </div>
+      <span
+      style = {{fontFamily:"monospace" , marginTop:"2px"}}
+      >{noOfLikes} Likes</span>
       <div className="username-caption" style={{ backgroundColor: "white" }}>
         <p style={{ color: "grey", fontSize: "15px", margin: "0" }}>
           <span

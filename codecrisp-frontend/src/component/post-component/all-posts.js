@@ -181,7 +181,7 @@ const AllPosts = ({
                   handleConfirmCommentEdit = {handleConfirmCommentEdit}
                   comments={post.comments}
                   isLikedByUser={post.isLikedByUser}
-
+                  noOfLikes = {post.likes.length}
                 />
                 
                 
