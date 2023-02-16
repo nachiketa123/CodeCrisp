@@ -1,20 +1,25 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Login from "./Login";
 import "./Home.css";
 import { Stack } from "@mui/material";
 import { fontFamily } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithGoogle } from "../../Action/AuthAction";
 import {connect} from 'react-redux'
 
 
 
-function Home({signInWithGoogle}) {
-
+function Home({signInWithGoogle, auth :{ isAuthenticated}}) {
+  let navigate = useNavigate();
   const LoginGoogle =() =>{
-    console.log("hit")
       signInWithGoogle();
     }
+
+  useEffect(() => {
+      if (isAuthenticated) {
+          navigate("/")
+      }
+  }, [isAuthenticated])
 
   return (
     <div className="background-homePage">
@@ -116,6 +121,6 @@ function Home({signInWithGoogle}) {
   );
 }
 const mapStateToProps  = (state) =>({
-  
+  auth: state.authRed
 })
 export default connect(mapStateToProps , {signInWithGoogle})(Home);

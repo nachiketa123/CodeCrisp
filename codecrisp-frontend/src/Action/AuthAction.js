@@ -29,6 +29,7 @@ console.log("agaya")
     Action creator: Login User
 */
 export const signIn = (userData) => (dispatch) => {
+    console.log('Signing in')
     axios.post('/api/user/login', userData).then(
         res => {
             dispatch({
@@ -63,7 +64,36 @@ export const signInWithGoogle = () => (dispatch) =>{
          }
          
          if(payload.additionalUserInfo.isNewUser){
-              signUp(newUser);
+            console.log('signup with google')
+              axios.post('/api/user/signup', newUser).then(
+                res => {
+                    dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
+                    if(res.data.success){
+                        axios.post('/api/user/login', {email: payload.additionalUserInfo.profile.email,
+                            password: payload.additionalUserInfo.profile.id}).then(
+                            res => {
+                                dispatch({
+                                    type: LOGIN_SUCCESS,
+                                    payload: res.data
+                                })
+                            }
+                        ).catch(
+                            err => {
+                                alert("Incorrect Password")
+                                console.log('error', err)
+                                dispatch({
+                                    type: GET_ERROR,
+                                    payload: err.response.data,
+                                })
+                            }
+                        )
+                    }
+                }
+            ).catch(
+                err => {
+                    dispatch({ type: GET_ERROR, payload: err.response.data })
+                }
+            )
          }
          else{
          
@@ -72,7 +102,23 @@ export const signInWithGoogle = () => (dispatch) =>{
                 password: payload.additionalUserInfo.profile.id
              }
              
-             signIn(newUserGoogle);
+             axios.post('/api/user/login', newUserGoogle).then(
+                res => {
+                    dispatch({
+                        type: LOGIN_SUCCESS,
+                        payload: res.data
+                    })
+                }
+            ).catch(
+                err => {
+                    alert("Incorrect Password")
+                    console.log('error', err)
+                    dispatch({
+                        type: GET_ERROR,
+                        payload: err.response.data,
+                    })
+                }
+            )
          }
         
          

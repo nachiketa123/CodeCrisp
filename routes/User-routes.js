@@ -56,7 +56,9 @@ router.post('/signup',
         const user_obj =  { name, email, phoneno, age, password }
 
         //Validation
-        const {errors, isValid} = registerInputValidation(user_obj)
+        // const {errors, isValid} = registerInputValidation(user_obj)
+        const errors = {}
+        const isValid = true
         if(!isValid) return res.status(200).json(errors) 
 
         const newUser = User(user_obj)
