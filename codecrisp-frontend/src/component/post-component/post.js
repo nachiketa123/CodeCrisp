@@ -6,6 +6,7 @@ import { timeSince } from "../../utility/dateFormat";
 import {compareDateDesc} from '../../utility/custom-sort';
 import {MdModeEditOutline} from 'react-icons/md'
 import { IoMdClose, IoMdCheckmark } from "react-icons/io";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const PostComponent = ({
   user_id,
@@ -20,7 +21,8 @@ const PostComponent = ({
   handlePostComment,
   comments,
   isLikedByUser,
-  handleConfirmCommentEdit
+  handleConfirmCommentEdit,
+  handleDeleteComment
 }) => {
   const [state, setState] = useState({
     like: isLikedByUser,
@@ -180,11 +182,11 @@ const PostComponent = ({
                 {e.name}
                 {"            "}
               </p>
-              {state.showEditComment && e._id === state.commentTileId
+              {state.showEditComment && e.id === state.commentTileId
               ?(<div className="edit-comment-input-container">
                 <input onChange={onChangeHandler} name='editedComment' value={state.editedComment} className="edit-comment-input"/>
                 <IoMdCheckmark onClick={()=>{
-                  handleConfirmCommentEdit(id,e._id,state.editedComment)
+                  handleConfirmCommentEdit(id,e.id,state.editedComment)
                   setState({
                     ...state,
                     showEditComment: !state.showEditComment
@@ -195,11 +197,15 @@ const PostComponent = ({
             </div>
             <div className = 'comment-time-edit-container'>
               <div className='time-since'>{timeSince(e.date)}</div>
-              {e.user===user_id 
-                ?!state.showEditComment
-                  ?<MdModeEditOutline onClick={()=>handleEditComment(e._id,e.text)} size="15" className='edit-post-comment'  title='edit comment'/>
-                  :<IoMdClose onClick={()=>handleEditComment()} size="15" className='edit-close-comment' title='close edit' color="red"/>
-                :''}
+              <div className="edit-delete-comment-container">
+                {e.user===user_id 
+                  ?!state.showEditComment
+                    ?<MdModeEditOutline onClick={()=>handleEditComment(e.id,e.text)} size="15" className='edit-post-comment'  title='edit comment'/>
+                    :<IoMdClose onClick={()=>handleEditComment()} size="15" className='edit-close-comment' title='close edit' color="red"/>
+                  :''}
+
+                {e.user===user_id ?<RiDeleteBin5Fill onClick={()=> handleDeleteComment(id,e.id)} size="15" className="comment-delete-icon" title="delete comment"/>:''}
+                </div>
             </div>
             
           </div>
