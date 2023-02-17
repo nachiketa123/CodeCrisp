@@ -13,6 +13,8 @@ import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
 import { acceptFriendRequest, rejectFriendRequest } from '../Action/FriendAction';
+import { styled } from "@mui/material/styles";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 function Header({
     logOutUser,
@@ -157,53 +159,57 @@ function Header({
                     <FaRegComments color='white' className='chat-icon' title='chat' />
 
                     {/* Toggle Area */}
-                    <button className='navbar-toggler' type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-
-                        <FaBars color='white' className='hamburger-icon'></FaBars>
-
-                    </button>
-
-                    {/* Navigation Link  */}
-                    <div className="collapse navbar-collapse  nav-right" id="navbarSupportedContent">
-
-                        <div className='navLinks'>
-                            <ul className="navbar-nav">
-                                {(user.name) ? (<li className="nav-item">
-                                    <a className="nav-link" href="#">Hi! {String(user.name).charAt(0).toUpperCase()+String(user.name).slice(1)}<span className="sr-only">(current)</span></a>
-                                </li>) : ""
+                    
+                    
+                           {(user.name) ? (<div className="nav-item">
+                                    <a className="nav-link nav-link-user" href="#">Hi! 
+                                    
+                                    {/* {String(user.name).charAt(0).toUpperCase()+String(user.name).slice(1)} */}
+                                    <span> </span>  User
+                                    <span className="sr-only">(current)</span></a>
+                                </div>) : ""
                                 }
-                                {/* <li className="nav-item">
-                                    <div onClick={handleToggleNotification} className='bell-icon-container-div'>
-                                        <FaRegBell color='white' className='bell-icon' title='notifications' />
-                                        {notification.length ? <span className='notification-counter'>{notification.length}</span> : ''}
-                                    </div>
-                                </li> */}
+                             
+              
 
-                                <li className="nav-item">
+                        <Container >
+                            
+                             
+                        
+
+                                <div className="nav-item">
                                     <Link className="nav-link" to="/jobs">Jobs</Link>
-                                </li>
+                                </div>
 
-                                <li className="nav-item">
+                                <div className="nav-item">
                                     <Link className="nav-link" to="/discuss">Discuss</Link>
-                                </li>
-                                <li className="nav-item">
+                                </div>
+                                
+                                <div className="nav-item">
                                     <Link className="nav-link" to="/friends">Friends</Link>
-                                </li>
-                                <li className="nav-item">
+                                </div>
+                                
+                                
+                                <div className="nav-item">
                                     <Link className="nav-link" to={`/userProfile/${user.id}`}>Profile</Link>
-                                </li>
-                                <li className="nav-item">
+                                </div>
+                                
+                                
+                                <div className="nav-item">
                                     <Link className="nav-link" to="/settings">Settings</Link>
-                                </li>
+                                </div>
 
-                                <li className="nav-item logout">
-                                    <button onClick={logMeOut} type="button" className="btn btn-primary">Logout</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                             
+                                <div className="nav-item">
+                                    <button onClick={logMeOut} type="button" className="logout" >
+                                   <PowerSettingsNewIcon color='black'/> 
+                                    </button>
+                               </div>
+                        </Container>
+                        
+                        
+                        
+                  
 
                 </nav >
             </div>
@@ -249,6 +255,28 @@ const mapStateToProps = (state) => ({
     socketReducer: state.socketReducer,
     postRed: state.postReducer
 })
+
+
+const Container = styled("div")(({ theme }) => ({
+    display: "flex",
+    flexDirection: "row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    marginLeft:"auto",
+    background:"#AD42FF",
+    
+    [theme.breakpoints.down("lg")]: {
+      backgroundColor: "white",
+      bottom: "0",
+      position: "fixed",
+      borderTop: "1px solid rgba(0,0,0,0.08)",
+      width: "100%",
+      height:"60px",
+      justifyContent:"space-around"
+    },
+
+  
+  }));
 
 export default connect(mapStateToProps, { 
                                         logOutUser, 

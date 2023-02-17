@@ -280,44 +280,22 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
         EVENT: On Cancel friend request, on this event we just update the Notification array by removing friend_request notification
     */
 
-        socket.on(NOTIFICATION.EVENT_ON.FRIEND_REQUEST_CANCEL,async (data)=>{
-            // const {sender_user_id, recipient_user_id} = data;
-            // const error = {}
-            // UserNotification.findOne({user: mongoose.Types.ObjectId(recipient_user_id)})
-            //     .then(data=>{
-            //         if(!data || isEmpty(data.notification)){
-            //             error.dbError = "Notification array already empty, can't delete"
-            //             console.log(error)
-            //             return
-            //         }
-            //         data.notification = data.notification.filter(notif=>{
-            //             (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
-            //             || notif.source.user.toString() !== sender_user_id)
-            //         })
-                    
-            //         data.save()
-            //             .then(data=>{
-            //                 const reciever = SocketUtils.getUser(onlineUsers, recipient_user_id)
-
-            //                 if(!isEmpty(reciever) && !isEmpty(reciever.socket_id)){
-            //                     io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,{success: true}) 
-            //                 }
-            //             }).catch(err=>{
-            //                 error.dbError = "DB Error"
-            //                 console.log(error)
-            //                 return 
-            //             })
-            //     }).catch(err=>{
-            //         error.dbError = "DB Error"
-            //         console.log(error)
-            //         return 
-                // })
+        socket.on("message" , (data) =>{  
+          const toUser = SocketUtils.getUser(onlineUsers , data.to);
+          console.log(onlineUsers)
+          if(!isEmpty(toUser) && !isEmpty(toUser.socket_id)){
+          console.log("aYSUH2")
+            socket.to(toUser.socket_id).emit('message' , data.text);
+          }
+          
         })
 
     }catch(err){
         console.error('notification-event-sckt error',err)
     }
 }
+
+
 
 const notificationEventEmitter = (notification_to_emit,reciever_user_id,payload={}) => {
     const reciever = SocketUtils.getUser(onlineUserList, reciever_user_id)

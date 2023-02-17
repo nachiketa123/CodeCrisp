@@ -15,13 +15,23 @@
  
 
 .nav-link{
-    color:white;
-    background-color: #ad42ff;
+    align-items: center;
+    background: #AD42FF;
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    font-weight: 600;
+    justify-content: center;
+    min-height: 52px;
+    min-width: 70px;
+    position: relative;
+    text-decoration: none;
+    color: white;
     
 }
 
 .nav-link:hover{
-    background-color: black;
+    /* background-color: black; */
     border-radius: 0.5em;
     color: black;
     transition-delay: 5ms;
@@ -237,248 +247,77 @@
     font-family: cursive;
     border-radius: 0.5em;
 }
+
+.logout{
+    border: none;
+    line-height: 1.5;
+}
 /* .navbar-nav .nav-item:nth-child(1) .nav-link:hover{
     
 } */
 
 @media screen and (max-width: 1200px) {
-    .nav-left{
-        flex-direction: row;
-        display: flex;
-        /* flex:0 0 10%; */
-        align-items: center;
-
-    }
-    .logo-image{ 
-        width: 20px;
-        height: 20px;
- 
-    }
-
-    .navbar-brand {
-        margin-left: 4px;
-        font-size: 26px;
-    }
-
-    .search {
-        flex: 0 0 30%;
-    }
-
-    .searchBar-input {
-        width: 70%;
-    }
-
-    .nav-right{
-        flex: 0 0 50%;
-    }
-
     .nav-link {
-        font-size: 14px;
+        font-size: 18px;
+        background-color:white;
+        padding: 0px;
+        color: black;
     }
-    .nav-item.logout .btn.btn-primary{
-        font-size: 15px;
+    
+    .nav-link-user{
+      background-color: #AD42FF;
+      color: white;
+    }
+    .logout{
+        border: none;
+        line-height: 1.5;
     }
 }
 /* work the same as max-width: 992px */
-@media screen and (width <= 992px) {
-    .nav-left{
-        /* flex-direction: column; */
-        flex:0 0 5%;
-        align-items: center;
-        
-    }
-
-    .logo-image{ 
-        width: 35px;
-        height: 35px;
-    }
-    .hamburger-icon {
-        width: 30px;
-        height: 30px;
-        background: transparent;
-      
-    }
-    .navLinks {
-        background: black;
-    }
-
-    .nav-item{
-        background: transparent;
-    }
-    .nav-item:hover{
-       border-radius: 0.5em;
-       padding: 2px 0px 2px 0px;
-    }
-
-    .navbar-brand {
-        margin-left: 4px;
-        font-size: 20px;
-    }
-
-    .search {
-        flex: 0 0 40%;
-    }
-
+@media screen and (width <= 800px) {
+    
     .searchBar-input {
         width: 70%;
     }
-
-    .bell-icon {
-        display: block;
-        width: 30px;
-        height: 30px;
-        background: transparent;
-
-    }
-    .notification-counter {
-        display: inline;
+ 
+    .navbar-brand {
+        display: none;
     }
 
-    .chat-icon {
-        display: block;
-        width: 30px;
-        height: 30px;
-        background: transparent;
+    
+    .nav-link {
+        font-size: 12px;
+        background-color:white;
+        padding: 0px;
     }
-
-    .nav-right {
-        flex: 0 0 100%;
-    }
-
-    .collapse .navbar-nav{
-        flex: 0 0 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        height: 32px;
-        /* justify-content: end; */
-    }
-    .collapsing .navbar-nav{
-        flex: 0 0 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        /* justify-content: end; */
-    }
-
-    .nav-item {
-        margin-left: 5px;
-        height: min-content;
-    }
-    .nav-item .nav-link {
-        font-size: 16px;
-        background-color: #ad42ff;
-    }
-    .nav-item .btn {
-        font-size: 16px;
-    }
-
-     .bell-icon-container-div {
-        position: relative;
-        background: transparent;
-        cursor: pointer;
-    }
-
-    .notification-counter {
-        background: red;
-        border-radius: 19em;
-        padding: 4px;
-        position: absolute;
-        top: -16px;
-        color: white;
-        font-size: 16px;
-        right: -12px;
-        border: 2px solid white;
-        height: 35px;
-    }
-
+    
     .notification-list-div {
         position: fixed;
         right: 18px;
         top: 67px;
         width: 46%;
         z-index: 1;
-        background-color: lightslategrey;
-        border: 1px solid rgb(255, 255, 255);
-        border-radius: 1em;
+        background-color: red;
         max-height: 254px;
         overflow: scroll;
         overflow-x: hidden;
+       
     }
-
-    .notification-list-div::-webkit-scrollbar {
-        width: 5px;
+    .nav-item {
+        border: none;
+        
     }
-    .notification-list-div::-webkit-scrollbar-track {
-        background: white;
-        border-radius: 1em;
+    .logout{
+        border: none;
+        line-height: 1.5;
     }
-
-    .notification-list-div::-webkit-scrollbar-thumb {
-        background: black;
-        border-radius: 10px;
-    } 
-
-    .navbar-nav{
-        background-color: #ad42ff;
-    }
-    .navbar-nav .nav-link {
-        background-color: #ad42ff;
-        padding: 0.1rem;
-    }
-    .nav-item.logout .btn.btn-primary {
-        padding: 0.1rem;
-    }
-  
+    .nav-link-user{
+        background-color: #AD42FF;
+        color: white;
+      }
 }
 
-@media screen and (width: 992px){
-    .navbar-expand-lg .navbar-collapse {
-        display: none !important;
-    }
-    .navbar-expand-lg .navbar-toggler {
-        display: flex;
-    }
-    .navbar-expand-lg .navbar-collapse.show {
-        display: -webkit-box!important;
-        display: -ms-flexbox!important;
-        display: block!important;
-        -ms-flex-preferred-size: auto;
-        flex-basis: auto;
-    }
-    .collapse.show{
-        display: block !important;
-        width: 100%;
-    }
-    .navbar {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        padding: 0.5rem 1rem;
-    }
-    .nav-right {
-        flex: 0 0 100%;
-    }
-    .navbar-nav{
-        background-color: #7615CF;
-    }
-    .navbar-nav .nav-link {
-        background-color: #7615CF;
-    }
-    .nav-item.logout .btn.btn-primary:hover {
-        padding: 0;
-    }
-}
+
 
 @media screen and (max-width: 576px) {
 
@@ -510,24 +349,25 @@
         font-size: 12px;
     }
     
-    .navbar-toggler {
-        padding: 0.25rem;
-    }
+
     .navbar-toggler:focus{
         padding: 0.25rem;
     }
 
     .nav-link {
         font-size: 12px;
-        background-color:#3C68E0;;
+        background-color:white;
+        padding: 0px;
+        line-height: 1.5;
     }
     .nav-item .btn {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .bell-icon {
         width: 25px;
         height: 25px;
+        margin-right: 2px;
     }
 
     .notification-counter {
@@ -553,19 +393,23 @@
         height: 15px;
     }
 
-    .hamburger-icon {
-        width: 25px;
-        height: 25px;
-    }
-
+  
     .notification-list-div {
         width: 65%;
     }
+    .nav-link-user{
+        background-color: #AD42FF;
+        color: white;
+      }
+      
+  .logout{
+      border: none;
+      line-height: 1.5;
+  }
 
 }
 
 
-/* @media screen and (max-width: 320px) {
-
-    
-} */
+@media screen and (max-width: 320px) {
+   
+}
