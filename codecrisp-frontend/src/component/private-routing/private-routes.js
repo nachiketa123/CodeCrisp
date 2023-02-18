@@ -8,10 +8,12 @@ import myStore from '../../Store';
 import { SET_SOCKET } from '../../Action/Types';
 import { io } from 'socket.io-client';
 
+
+
 //initializing socket
 let socket; 
 try{
-socket = io()
+socket = io();
 }catch(err){
     console.error('Error occurred while initializing socket',err)
 }

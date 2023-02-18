@@ -12,6 +12,7 @@ import './SearchResultComponent/SearchResultBox.css'
 import isEmpty from '../utility/is-empty';
 import {global_notification} from '../Action/globalnotificationAction'
 import { connect } from "react-redux";
+import Chat from './chat-box-component/Chat';
 
 function HomeUser({ auth: { user }, socketReducer: {socket},global_notification}) {
 
@@ -37,6 +38,7 @@ function HomeUser({ auth: { user }, socketReducer: {socket},global_notification}
             <div className='feed-body'>
                 <div className='chat-box'>
                     <ChatBox />
+
                 </div>
                 <div className='all-posts'>
                     <PostBox />

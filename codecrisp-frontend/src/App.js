@@ -19,6 +19,10 @@ import FriendComponent from './component/friend-component/FriendComponent';
 import SettingsComponent from './component/setting-component/SettingsComponent';
 import ChangePasswordComponent from './component/setting-component/ChangePassword';
 import Postopen from './component/post-component/Postopen';
+import socketIO from 'socket.io-client';
+import Chat from './component/chat-box-component/Chat';
+
+
 
 
 /* 
@@ -58,7 +62,11 @@ function App() {
             <Route path='/settings' element={<PrivateRoutes header={true} component={SettingsComponent} />} />
             <Route path='/settings/change-password' element={<PrivateRoutes header={true} component={ChangePasswordComponent} />} />
             <Route path='/post/*' element={<PrivateRoutes header={true} component={Postopen} />}  />
-            <Route path='/page-not-found' element={<ErrorComponent/>} />
+            <Route path='/chat/*' element={<PrivateRoutes  
+          component={Chat}
+            />} />
+            <Route path='/page-not-found' element={<ErrorComponent/>}/>
+            
             
           </Routes >
 

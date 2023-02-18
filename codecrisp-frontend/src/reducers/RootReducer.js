@@ -9,6 +9,7 @@ import friendReducer from './FriendReducer';
 import socketReducer from './SocketReducer';
 import notificationReducer from './NotificationReducer';
 import globalNotificationReducer from './globalNotificationReducer';
+import {chatReducer} from './ChatReducer';
 
 const rootReducer = combineReducers(
     { authRed: authReducer, 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers(
         friendReducer: friendReducer,
         socketReducer: socketReducer,
         notificationReducer: notificationReducer,
-        globalNotification:globalNotificationReducer
+        globalNotification:globalNotificationReducer,
+        chatreducer:chatReducer
         
      }
 )

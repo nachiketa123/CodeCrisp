@@ -17,6 +17,8 @@ const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
 const {notificationEventHandler,initializeNotificationEventHandlerFile} = require('./socketEvents/notification-event-sckt');
 const globalnotification =require('./routes/globalNotification-route')
+
+
 mongo.connect(dbURI).then(
     () => {
         console.log("Mongoose Connected")
@@ -35,7 +37,7 @@ PassportConfig(passport);
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }))
 app.use(bodyParser.json({ limit: '100mb' })),
 
-    app.use('/api/user', userRoute)
+app.use('/api/user', userRoute)
 app.use('/api/searchuser', searchRoute)
 app.use('/api/jobs', jobRoute)
 app.use('/api/post', postRoutes)
@@ -47,6 +49,10 @@ app.use('/api/gnotification',globalnotification);
 const httpServer = createServer(app);
 const io = new Server(httpServer)
 
+
+
+
+
 const onlineUsers = [];
 try{
     io.on('connection', (socket) => {
@@ -54,23 +60,26 @@ try{
         io.emit('server_conn', 'Welcome! You are now connected with the Server')
         try{
             socket.on('add_new_user', (user_id) => {
-                // console.log('adding new user',user_id)
+               console.log('adding new user',user_id)
         
                 if (user_id) {
                     // console.log('before adding',onlineUsers)
                     SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
                 }
         
-                // console.log('after adding',onlineUsers)
+              console.log('after adding',onlineUsers)
             })
         }catch(err){
             console.error('Error occurred while adding new user:',err)
         }
+    
         
         //  notification event handled in other file
         notificationEventHandler(socket, io, onlineUsers) 
         
         initializeNotificationEventHandlerFile(socket,io,onlineUsers)
+        
+        
         socket.on('disconnect', () => {
             SocketUtils.removeUser(onlineUsers, socket.id)
             // console.log('user disconnected ',onlineUsers)
