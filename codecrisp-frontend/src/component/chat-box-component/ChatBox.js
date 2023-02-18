@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ChatTile from './ChatTile'
 import './ChatBox.css';
+import {connect} from 'react-redux';
+import { getMyFriendList } from '../../Action/FriendAction';
 
-function ChatBox() {
+function ChatBox({authReducer , friendReducer , getMyFriendList}) {
+  
+  useEffect(() =>{
+    getMyFriendList(authReducer.user.id);
+  } , 
+    
+  )
+
     return (
             <div className="container-chatbox">
                 <h3 className='chatbox-title'>
@@ -12,10 +21,24 @@ function ChatBox() {
                     <input type="text" className="form-control search-input-message" 
                     placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 </div>
-                <ChatTile />
+                { friendReducer.friend_list.map(e  => (
+                       <ChatTile 
+                         name = {e.name}
+                         avatar = {e.avatar}
+                       />
+                   )
+                ) 
+                }
             </div>
     )
 }
 
-export default ChatBox
+const mapStateToProps = (state) =>(
+  {   
+      friendReducer:state.friendReducer,
+      authReducer:state.authRed
+  }
+)
+
+export default connect(mapStateToProps,{getMyFriendList})(ChatBox)
 

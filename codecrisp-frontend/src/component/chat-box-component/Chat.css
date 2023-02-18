@@ -1,16 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 
 * {
 
   box-sizing: border-box;
-
   margin: 0;
-
   padding: 0;
-
-  font-family: 'Poppins', sans-serif;
-
+ font-family:monospace;
 }
 
 .home__container {
@@ -86,13 +80,9 @@
 .chat__sidebar {
 
   height: 100%;
-
-  background-color: #f9f5eb;
-
+  background-color: #cc45e1;
   flex: 0.2;
-
   padding: 20px;
-
   border-right: 1px solid #fdfdfd;
 
 }

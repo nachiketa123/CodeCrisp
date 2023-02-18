@@ -17,23 +17,58 @@ const ChatBar = ({friends}) => {
 
     <div className="chat__sidebar">
 
-      <h2>Open Chat</h2>
+    <h2
+    style={{fontWeight:"bolder",
+      color:"white",
+      
+    }}
+    >Friends</h2>
 
 
-      <div>
-
-        <h4 className="chat__header">ACTIVE USERS</h4>
-
-        <div className="chat__users">
-
-          {friends.map(e => (
-             <p
-             onClick = {event => handleUserClick(e.id)}
-             >{e.name}</p>
-          ))}
+         <div>
+            <div className="chat__users">
+    
+              {friends.map(e => (
+              
+              <div
+               style={{
+                 
+                 display:"flex",
+                 alignItems:"center",
+                 flexDirection:"row",
+                 cursor:"pointer",
+                 background:"white",
+                 borderRadius:"2em"
+                        
+               }}
+              >
+          
+              <img src={e.avatar
+              ?e.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRODZob7ROpqlx8WXwjueNwTOlC6Qum-yMiyfXiFRXkdhkHgybCpdvM1UpaXCL1ycfO8NI&usqp=CAU"
+              } 
+                 style={{
+                   height:"50px",
+                   width:"50px",
+                   borderRadius:"50%"
+                 }}
+                 />
+                 
+                 
+                 <p
+                 onClick = {event => handleUserClick(e.id)}
+                 style={{
+                 margin:"0px"
+                 }}
+                 >
+                 {e.name}</p>
+                 
+                 </div>    
+           
+              
+              ))}
+            </div>
+  
         </div>
-
-      </div>
 
     </div>
 
