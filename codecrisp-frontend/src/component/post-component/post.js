@@ -63,7 +63,7 @@ const PostComponent = ({
   };
 
   return (
-    <div className="my-card container" style={{ backgroundColor: "white" }}>
+    <div id="post-component" className="my-card container" style={{ backgroundColor: "white" }}>
       <div
         className="user-details post-common"
         style={{ backgroundColor: "white" }}

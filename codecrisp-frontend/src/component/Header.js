@@ -7,26 +7,31 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
-import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket } from '../Action/NotificationAction';
+import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket, getNotificationFromDBAndPush } from '../Action/NotificationAction';
 import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
 import { acceptFriendRequest, rejectFriendRequest } from '../Action/FriendAction';
+import InfiniteScrollableComponent from './common/infinite-scrollable-component/InfiniteScrollableComponent';
+
 
 function Header({
     logOutUser,
     auth: { user },
     search,
     searchResult,
-    notif: { notification },
+    notif: { notification, moreNotificationAvailable, page, loading },
     socketReducer: { socket },
     getNotificationFromSocket,
     getNotificationFromDB,
+    getNotificationFromDBAndPush,
     removeNotificationFromSocket,
     addCommentRealTimeOnNotification,
     acceptFriendRequest,
-    rejectFriendRequest }) {
+    rejectFriendRequest,
+
+ }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
 
@@ -215,10 +220,15 @@ function Header({
             {state.showNotification
                 ? (<div className='notification-list-div'>
                     <ListGroupComponent  
-                    acceptFriendRequest = {acceptFriendRequest}
-                    rejectFriendRequest = {rejectFriendRequest}
-                    items={notification} 
-                    user={user.id}/>
+                        acceptFriendRequest = {acceptFriendRequest}
+                        rejectFriendRequest = {rejectFriendRequest}
+                        items={notification} 
+                        user={user.id}
+                        dataLoader = {getNotificationFromDBAndPush}
+                        moreDataAvailable = {moreNotificationAvailable}
+                        pageNo = {page}
+                        loading = {loading}
+                        />
                 </div>)
                 : ''}
         </div >
@@ -239,6 +249,7 @@ Header.propTypes = {
     addCommentRealTimeOnNotification: PropTypes.func.isRequired,
     acceptFriendRequest: PropTypes.func.isRequired,
     rejectFriendRequest: PropTypes.func.isRequired,
+    getNotificationFromDBAndPush: PropTypes.func.isRequired,
 
 }
 
@@ -255,6 +266,7 @@ export default connect(mapStateToProps, {
                                         searchResult, 
                                         getNotificationFromSocket, 
                                         getNotificationFromDB, 
+                                        getNotificationFromDBAndPush,
                                         removeNotificationFromSocket, 
                                         addCommentRealTimeOnNotification, 
                                         acceptFriendRequest,
