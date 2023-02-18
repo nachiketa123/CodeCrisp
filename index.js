@@ -17,7 +17,7 @@ const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
 const {notificationEventHandler,initializeNotificationEventHandlerFile} = require('./socketEvents/notification-event-sckt');
 const globalnotification =require('./routes/globalNotification-route')
-
+const chatRoute = require('./routes/Chat-routes')
 
 mongo.connect(dbURI).then(
     () => {
@@ -45,6 +45,7 @@ app.use('/api/friend', friendRoutes)
 app.use('/api/user-profile', userProfileRoutes)
 app.use('/api/notification', notificationRoutes)
 app.use('/api/gnotification',globalnotification);
+app.use('/api/chat',chatRoute);
 
 const httpServer = createServer(app);
 const io = new Server(httpServer)
