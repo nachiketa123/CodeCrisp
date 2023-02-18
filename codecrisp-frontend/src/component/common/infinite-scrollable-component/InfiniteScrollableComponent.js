@@ -24,6 +24,7 @@ const InfiniteScrollableComponent = ({
                                       moreDataAvailable,
                                       loading,
                                       pageNo,
+                                      // uniqueId,
                                     }) =>{
 
   //Component State
@@ -77,13 +78,13 @@ const InfiniteScrollableComponent = ({
       
       if(index+1 === dataArray.length){
         return (
-          <div ref={lastElementRef}>
+          <div id={data._id}  key={data._id} ref={lastElementRef}>
             {renderChild(data)}
           </div>
         )
       }
       return (
-        <div >
+        <div id={data._id} key={data._id}>
           {renderChild(data)}
         </div>
       )

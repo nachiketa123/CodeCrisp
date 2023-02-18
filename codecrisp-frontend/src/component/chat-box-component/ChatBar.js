@@ -31,6 +31,7 @@ const ChatBar = ({friends}) => {
               {friends.map(e => (
               
               <div
+              key={e.id}
                style={{
                  
                  display:"flex",

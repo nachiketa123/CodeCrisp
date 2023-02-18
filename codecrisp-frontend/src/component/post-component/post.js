@@ -63,7 +63,7 @@ const PostComponent = ({
   };
 
   return (
-    <div id="post-component" className="my-card container" style={{ backgroundColor: "white" }}>
+    <div className="my-card container" style={{ backgroundColor: "white" }}>
       <div
         className="user-details post-common"
         style={{ backgroundColor: "white" }}
@@ -172,7 +172,7 @@ const PostComponent = ({
         ?.sort(compareDateDesc)
         .slice(0, state.n)
         .map((e) => (
-          <div className="user-comment-box">
+          <div key={e.id} className="user-comment-box">
             <div className="comment-box-tile">
               <div className="avatar-comment-div">
                 <img className="avatar-comment" src={e.avatar} />

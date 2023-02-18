@@ -59,6 +59,7 @@ const ListGroupComponent = ({
                     moreDataAvailable = {moreDataAvailable}
                     pageNo = {pageNo}
                     loading = {loading}
+                    uniqueId = '_id'
                 />
                 {}
             </div>

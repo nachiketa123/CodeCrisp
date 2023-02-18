@@ -151,6 +151,7 @@ const AllPosts = ({
               moreDataAvailable = {morePostAvailable}
               loading = {loading}
               pageNo = {page}
+              uniqueId = '_id'
               renderChild = {post=>
                 <PostComponent
                 key={post._id}
