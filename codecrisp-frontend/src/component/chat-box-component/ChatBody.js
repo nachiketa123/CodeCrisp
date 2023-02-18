@@ -1,17 +1,36 @@
 import React from 'react';
 import './Chat.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useEffect} from 'react';
 import isEmpty from '../../utility/is-empty'
 import ReactScrollableFeed from 'react-scrollable-feed'
+import NOTIFICATION from '../../Notification_Config/notification-config';
 
-const ChatBody = ({reciveMessage , allmessages ,socket}) => {
+const ChatBody = ({
+  reciveMessage , 
+  allmessages ,
+  socket,
+  loadChatOfUser,
+  user_id
+}) => {
 
+  const location = useLocation()
 
+  let ignore = false
+  useEffect(()=>{
+    const friend_id = location.pathname.toString().split("/").at(-1);
+    if(!ignore)
+      loadChatOfUser({user_id,friend_id})
+
+    return ()=>{
+      ignore = true
+    }
+  },[location])
    
   useEffect(() => {
     if(!isEmpty(socket)){
-         socket.on('message', (data) =>{
+         socket.on(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, (data) =>{
+          console.log('recieved msg',data)
             reciveMessage(data);
         })
     }
@@ -38,7 +57,7 @@ const ChatBody = ({reciveMessage , allmessages ,socket}) => {
  
     <div className="message__container">
     <ReactScrollableFeed>
-    { allmessages.map( e => (
+    { allmessages?allmessages.map( e => (
     <div className="message__chats">
 
       <p className="sender__name">You</p>
@@ -49,7 +68,7 @@ const ChatBody = ({reciveMessage , allmessages ,socket}) => {
 
     </div>
    
-          )) 
+          )) :''
     }
     </ReactScrollableFeed>
  </div>

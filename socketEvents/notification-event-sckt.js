@@ -23,6 +23,7 @@ const NOTIFICATION = {
         FRIEND_REQUEST_REJECT: "friend_request_reject",
         FRIEND_REQUEST_ACCEPT: "friend_request_accept",
         UNFRIEND_REQUEST: "unfriend_request",
+        SEND_MESSAGE_TO_USER: "SEND_MESSAGE_TO_USER",
     },
 
     EVENT_EMIT:{
@@ -34,6 +35,7 @@ const NOTIFICATION = {
         GET_FRIEND_REQUEST_REJECT_NOTIFICATION:'get_friend_request_reject_notification',
         GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION:'get_friend_request_accept_notification',
         GET_UNFRIEND_REQUEST_NOTIFICATION:'get_unfriend_request_notification',
+        GET_NEW_MESSAGE_REQUEST_NOTIFICATION:'GET_NEW_MESSAGE_REQUEST_NOTIFICATION',
     }
 
 }

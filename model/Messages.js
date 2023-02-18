@@ -34,7 +34,6 @@ const MessageSchema = new Schema({
                       },
                       recived:{
                         type:Boolean,
-                        required:true,
                         default:true
                       }
                       

@@ -15,16 +15,22 @@ const ChatFooter = ({socket , user ,sendMessage}) => {
   
       e.preventDefault();
   
-      if (message.length != 0) {
-        socket.emit('message', {
-          text: message,
-          to:pathname,
-          from:user
+      // if (message.length != 0) {
+      //   socket.emit('message', {
+      //     text: message,
+      //     to:pathname,
+      //     from:user
           
-        });
-      }
+      //   });
+      // }
       
-      sendMessage(message);
+      const obj = {
+        user_id: user,
+        text:message,
+        friend_id: pathname
+      }
+      if(message.length !=0)
+        sendMessage(obj);
       
        setMessage('');
   
