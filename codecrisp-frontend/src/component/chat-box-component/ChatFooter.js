@@ -46,7 +46,7 @@ const ChatFooter = ({socket , user ,sendMessage}) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
 
-        />
+        /> 
 
         <button className="sendBtn"
         onClick={handleSendMessage}

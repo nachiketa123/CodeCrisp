@@ -20,24 +20,11 @@ const ChatBody = ({reciveMessage , allmessages ,socket}) => {
   },[socket])
 
   return (
-
-    <>
-
-      <header className="chat__mainHeader">
-
-        <p>CODECRISP</p>
-
-      
-
-      </header>
-
-
-      {/*This shows messages sent from you*/}
-  
    
+    <div>
  
     <div className="message__container">
-    <ReactScrollableFeed>
+  <ReactScrollableFeed>
     { allmessages.map( e => (
     <div className="message__chats">
 
@@ -47,36 +34,39 @@ const ChatBody = ({reciveMessage , allmessages ,socket}) => {
         <p>{e}</p>
       </div>
 
-    </div>
-   
+  
+         <p
+         style={{marg:"0px"}}
+         >Other</p>
+
+         <div className="message__recipient">
+           <p>{e}</p>
+         </div>
+         </div> 
           )) 
     }
     </ReactScrollableFeed>
  </div>
         {/*This shows messages received by you*/}
 
-        {/* <div className="message__chats">
+        {/* <div className="message__chats"> */}
 
-          <p>Other</p>
+     
 
-          <div className="message__recipient">
-            <p>Hey, I'm good, you?</p>
-          </div>
-
-        </div> */}
-
+        {/* </div> */}
+    
 
         {/*This is triggered when a user is typing*/}
 
-        {/* <div className="message__status">
+        <div className="message__status">
 
           <p>Someone is typing...</p>
 
-        </div> */}
+        </div>
 
  
 
-    </>
+    </div>
 
   );
 

@@ -21,24 +21,34 @@ const ChatPage = ({socketReducer:{socket} , authReducer:{user} , sendMessage ,re
   },[user,socket])
     
     
-  
+   
 
   return (
 
     <div className="chat">
+     <div className='chat-bar'>
+  
       <ChatBar 
        friends = {friendReducer.friend_list}
       />
-      <div className="chat__main">
+      
+      </div>  
+      
+      <div className="chat-main">
+      
+      
         <ChatBody 
         reciveMessage = {reciveMessage} 
         allmessages = {chatReducer?.allMessages}
         socket={socket}
         />
+        
         <ChatFooter socket={socket} 
           user={user.id}  
           sendMessage ={sendMessage}
         />
+        
+        
       </div>
     </div>
 
