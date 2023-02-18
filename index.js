@@ -60,17 +60,17 @@ try{
         io.emit('server_conn', 'Welcome! You are now connected with the Server')
         try{
             socket.on('add_new_user', (user_id) => {
-               console.log('adding new user',user_id)
+            //    console.log('adding new user',user_id)
         
                 if (user_id) {
                     // console.log('before adding',onlineUsers)
                     SocketUtils.addNewUser(onlineUsers, user_id, socket.id)
                 }
         
-              console.log('after adding',onlineUsers)
+            //   console.log('after adding',onlineUsers)
             })
         }catch(err){
-            console.error('Error occurred while adding new user:',err)
+            // console.error('Error occurred while adding new user:',err)
         }
     
         
