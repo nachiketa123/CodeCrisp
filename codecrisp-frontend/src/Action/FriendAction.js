@@ -1,5 +1,6 @@
 import axios from "axios";
-import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST, GET_ALL_NOTIFICATION_FROM_DB} from "./Types";
+import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST, GET_ALL_NOTIFICATION_FROM_DB,
+    SET_CURRENT_FRIEND_FROM_URL_FOR_CHAT} from "./Types";
 
 export const sendFriendRequest = () => (dispatch) => {
     dispatch({
@@ -98,4 +99,16 @@ export const getMyFriendList = (user_id) =>(dispatch)=>{
                 payload: err.response.data
             })
         })
+}
+
+export const setCurrentFriendFromURLForChat = (id) =>(dispatch)=>{
+
+    axios.get(`/api/friend/get-friend-detail-by-id/${id}`)
+    .then(res=>{
+        dispatch({
+            type: SET_CURRENT_FRIEND_FROM_URL_FOR_CHAT,
+            payload: res.data
+        })
+    })
+    
 }

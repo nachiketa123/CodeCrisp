@@ -27,7 +27,7 @@ const ChatFooter = ({socket , user ,sendMessage}) => {
       const obj = {
         user_id: user,
         text:message,
-        friend_id: pathname
+        friend_id: pathname,
       }
       if(message.length !=0)
         sendMessage(obj);

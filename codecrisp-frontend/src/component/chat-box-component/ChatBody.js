@@ -11,7 +11,11 @@ const ChatBody = ({
   allmessages ,
   socket,
   loadChatOfUser,
-  user_id
+  setCurrentFriendFromURLForChat,
+  user_id,
+  user_name,
+  user_avatar,
+  current_friend,
 }) => {
 
   const location = useLocation()
@@ -21,6 +25,7 @@ const ChatBody = ({
     const friend_id = location.pathname.toString().split("/").at(-1);
     if(!ignore)
       loadChatOfUser({user_id,friend_id})
+      setCurrentFriendFromURLForChat(friend_id)
 
     return ()=>{
       ignore = true
@@ -29,13 +34,10 @@ const ChatBody = ({
    
   useEffect(() => {
     if(!isEmpty(socket)){
-         socket.on(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, (data) =>{
-          console.log('recieved msg',data)
-            reciveMessage(data);
+        socket.on(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, (data) =>{
+          reciveMessage(data);
         })
     }
-    
-    
   },[socket])
 
   return (
@@ -60,10 +62,10 @@ const ChatBody = ({
     { allmessages?allmessages.map( e => (
     <div className="message__chats">
 
-      <p className="sender__name">You</p>
+      <p className="sender__name">{e.recived?current_friend.name:user_name}</p>
 
       <div className="message__sender">
-        <p>{e}</p>
+        <p>{e.text}</p>
       </div>
 
     </div>

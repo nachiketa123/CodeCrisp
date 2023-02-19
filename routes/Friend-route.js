@@ -373,4 +373,22 @@ router.get('/get-friend-list/:user_id',passport.authenticate('jwt',{session: fal
             return res.status(403).json(error)
         })
 })
+
+/*
+    @route:     /api/friend/get-friend-detail-by-id/:friend_id
+    @desc:      To fetch the details of certain friend
+    @access:    Private
+*/
+router.get('/get-friend-detail-by-id/:friend_id',passport.authenticate('jwt',{session: false}),async (req,res)=>{
+    const friend_id = req.params.friend_id
+    const error = {}
+    try{
+        const data = await getFriendDetails({user:friend_id})
+        return res.status(200).json(data)
+    }catch(err){
+        error.dbError = 'DB Error '+err
+        return res.status(403).json(error)
+    }
+    
+})
 module.exports = router

@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import { useEffect } from 'react';
 import isEmpty from '../../utility/is-empty'
 import { sendMessage , reciveMessage, loadChatOfUser } from '../../Action/ChatAction';
-import { getMyFriendList } from '../../Action/FriendAction';
+import { getMyFriendList, setCurrentFriendFromURLForChat } from '../../Action/FriendAction';
 
 const ChatPage = ({
   socketReducer:{socket} , 
@@ -15,8 +15,9 @@ const ChatPage = ({
   reciveMessage , 
   chatReducer,
   getMyFriendList,
-  friendReducer,
-  loadChatOfUser}) => {
+  friendReducer:{ current_friend_for_chat,friend_list,},
+  loadChatOfUser,
+  setCurrentFriendFromURLForChat,}) => {
   
   
   useEffect(()=>{
@@ -34,7 +35,7 @@ const ChatPage = ({
 
     <div className="chat">
       <ChatBar 
-       friends = {friendReducer.friend_list}
+       friends = {friend_list}
       />
       <div className="chat__main">
         <ChatBody 
@@ -42,7 +43,12 @@ const ChatPage = ({
         allmessages = {chatReducer?.allMessages}
         socket={socket}
         loadChatOfUser = {loadChatOfUser}
+        setCurrentFriendFromURLForChat = {setCurrentFriendFromURLForChat}
+        current_friend = {current_friend_for_chat}
         user_id = {user.id}
+        user_name = {user.name}
+        user_avatar ={user.avatar}
+
         />
         <ChatFooter socket={socket} 
           user={user.id}  
@@ -64,5 +70,6 @@ const mapStateToProps = (state) =>({
 export default connect(mapStateToProps , {sendMessage,
                                           reciveMessage,
                                           getMyFriendList,
-                                          loadChatOfUser
+                                          loadChatOfUser,
+                                          setCurrentFriendFromURLForChat
                                         })(ChatPage);

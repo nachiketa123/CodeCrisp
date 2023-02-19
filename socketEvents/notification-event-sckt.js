@@ -278,19 +278,6 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
             })
     })
 
-    /* 
-        EVENT: On Cancel friend request, on this event we just update the Notification array by removing friend_request notification
-    */
-
-        socket.on("message" , (data) =>{  
-          const toUser = SocketUtils.getUser(onlineUsers , data.to);
-          console.log(onlineUsers)
-          if(!isEmpty(toUser) && !isEmpty(toUser.socket_id)){
-          console.log("aYSUH2")
-            socket.to(toUser.socket_id).emit('message' , data.text);
-          }
-          
-        })
 
     }catch(err){
         console.error('notification-event-sckt error',err)

@@ -8,7 +8,7 @@ export const sendMessage = (data) => (dispatch) =>{
          if(res.data.success === true){
             dispatch({
                type:SEND_MESSAGE,
-               payload:data
+               payload:res.data.payload
             })
          }
          else{
@@ -33,7 +33,6 @@ export const reciveMessage = (data) => (dispatch) =>{
 export const loadChatOfUser = (data) => (dispatch) =>{
    axios.get(`/api/chat/${data.user_id}`,{params:{friend_id:data.friend_id}})
       .then(res=>{
-         console.log(res.data)
          dispatch({
             type: GET_ALL_MESSAGES_OF_FRIEND,
             payload: res.data

@@ -90,7 +90,7 @@ const checkIfFriendExistInUser = (userObj, friend_id) =>{
       }
    })
 }
-router.get('/:user_id',(req,res) =>{
+router.get('/:user_id',passport.authenticate('jwt', { session: false }),(req,res) =>{
     
      const {user_id} = req.params;  //  url
      const {friend_id} = req.query;  //  we will send it 
@@ -101,12 +101,12 @@ router.get('/:user_id',(req,res) =>{
        data =>{
         if(!data) return res.status(200).json([])
 
-        const message_array =  data.friend_list.filter(e => ( e.user.toString() === friend_id))
+        const friend_data =  data.friend_list.filter(e => ( e.user.toString() === friend_id))
 
-        if(isEmpty(message_array)) return res.status(200).json([])
+        if(isEmpty(friend_data) || isEmpty(friend_data[0].messages)) return res.status(200).json([])
 
-        const msgArr = [...message_array[0].messages.map(e=> e.text)]
-           return res.status(200).json(msgArr);
+      //   const msgArr = [...message_array[0].messages.map(e=> e.text)]
+           return res.status(200).json(friend_data[0].messages);
        }     
             
         
@@ -119,7 +119,7 @@ router.get('/:user_id',(req,res) =>{
 })
 
 
-router.post('/send/:user_id',  async (req,res) =>{
+router.post('/send/:user_id',passport.authenticate('jwt', { session: false }),  async (req,res) =>{
      
    const {user_id} = req.params;  //  url
    let {friend_id  ,  text } = req.body;  //  we will send it 
@@ -179,7 +179,7 @@ router.post('/send/:user_id',  async (req,res) =>{
       error.dbError = 'DB Error '+err
       return res.status(500).json(error)
    }
-   return res.status(200).json({success: true})
+   return res.status(200).json({success: true,payload:userObj.data})
 })
    
 

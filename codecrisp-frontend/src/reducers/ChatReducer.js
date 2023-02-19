@@ -8,11 +8,11 @@ export const chatReducer = (state  =  initialState , action) =>{
        
        case SEND_MESSAGE:
          return {
-           ...state , allMessages:[...state.allMessages, action.payload.text] , newMessages:action.payload.text
+           ...state , allMessages:[...state.allMessages, action.payload] , newMessages:action.payload.text
          }
         case RECIEVE_MESSAGE:
             return {
-                ...state , allMessages:[...state.allMessages , action.payload.text] , newMessages:action.payload.text
+                ...state , allMessages:[...state.allMessages , action.payload] , newMessages:action.payload.text
               }
         case GET_ALL_MESSAGES_OF_FRIEND:
               if(!action.payload)
