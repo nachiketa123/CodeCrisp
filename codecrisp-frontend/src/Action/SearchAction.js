@@ -11,7 +11,6 @@ export const searchResult = (userFind) => (dispatch) => {
     setTimeout(()=>{
         axios.get('/api/searchuser', { params: { searchText: userFind.searchText }, cancelToken: source.token }).then(
             res => {
-                console.log('searching..')
                 dispatch({ type: SEARCH_RESULT, payload: res.data })
             }
         ).catch(

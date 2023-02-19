@@ -16,8 +16,16 @@
     justify-content: space-between;
     /* border-bottom: 2px solid white; */
     /* border-radius: 1rem; */
-    margin: 5px 0;
-    background: transparent;
+    /* margin: 5px 0; */
+    background: lightslategrey;
+}
+
+.cs-list-group-seen {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    background-color: cadetblue;
 }
 
 .cs-list-item:nth-child(1), .cs-list-item:nth-child(3) {
@@ -66,17 +74,11 @@
     background: transparent;
 }
 
-@media screen and (max-width: 767px) {
-    .item-user-info{
-        font-size: 15px;
-    }
-
-    .item-content {
-        font-size: 12px;
-    }
-}
-
 .friend-request-action-btns-div{
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: transparent;
 }
 
@@ -95,6 +97,18 @@
     stroke-width: 50px;
 }
 
+
+@media screen and (max-width: 767px) {
+    .item-user-info{
+        font-size: 15px;
+    }
+
+    .item-content {
+        font-size: 12px;
+    }
+}
+
+
 @media screen and (max-width: 576px) {
 
     .user-avatar-notification {
@@ -107,6 +121,11 @@
         width: 40px;
         border-radius: 2em;
     }
+
+    .friend-request-action-btns-div{
+        width: 40px;
+    }
+    
 
     /* .cs-list-item:nth-child(2) {
         font-size: 15px;

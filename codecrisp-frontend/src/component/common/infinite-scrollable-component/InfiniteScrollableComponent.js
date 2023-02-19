@@ -24,7 +24,6 @@ const InfiniteScrollableComponent = ({
                                       moreDataAvailable,
                                       loading,
                                       pageNo,
-                                      // uniqueId,
                                     }) =>{
 
   //Component State
@@ -84,7 +83,7 @@ const InfiniteScrollableComponent = ({
         )
       }
       return (
-        <div id={data._id} key={data._id}>
+        <div id={data._id} key={index}>
           {renderChild(data)}
         </div>
       )

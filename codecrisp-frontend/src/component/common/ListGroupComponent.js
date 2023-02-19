@@ -6,6 +6,7 @@ import { timeSince } from '../../utility/dateFormat';
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import NOTIFICATION from '../../Notification_Config/notification-config';
 import InfiniteScrollableComponent from './infinite-scrollable-component/InfiniteScrollableComponent';
+import getClassNames from '../../utility/getClassNames';
 
 const ListGroupComponent = ({ 
     items, 
@@ -20,7 +21,7 @@ const ListGroupComponent = ({
  
       const renderHTML = (item) => {
         return (
-            <div className="cs-list-group">
+            <div className={getClassNames({dc:"cs-list-group",cc:"cs-list-group-seen"},item.seen,true)}>
                 <div className="cs-list-item">
                     <img className="user-avatar-notification" src={item.source.avatar} alt=""/>
                 </div>
@@ -36,14 +37,14 @@ const ListGroupComponent = ({
                         <img className="action-item-img" src={item.action_item_img[0]} alt=""/>
                     </div>)
                     : (<div className='friend-request-action-btns-div'>
-                        <AiFillCheckCircle onClick={e=>acceptFriendRequest({
+                        <AiFillCheckCircle onClick={e=>{ if(!item.seen) return acceptFriendRequest({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
-                                                                        })} title='Accept' className='btns request-accept-btn'/>
-                        <AiFillCloseCircle onClick={e=>rejectFriendRequest({
+                                                                        })}} title='Accept' className='btns request-accept-btn'/>
+                        <AiFillCloseCircle onClick={e=>{if(!item.seen) return rejectFriendRequest({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
-                                                                        })} title='Reject' className='btns request-reject-btn'/>
+                                                                        })}} title='Reject' className='btns request-reject-btn'/>
                     </div>)}
             </div>)
       }
@@ -59,7 +60,6 @@ const ListGroupComponent = ({
                     moreDataAvailable = {moreDataAvailable}
                     pageNo = {pageNo}
                     loading = {loading}
-                    uniqueId = '_id'
                 />
                 {}
             </div>

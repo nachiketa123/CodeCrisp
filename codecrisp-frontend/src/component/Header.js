@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
-import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket, getNotificationFromDBAndPush } from '../Action/NotificationAction';
+import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket, getNotificationFromDBAndPush, getCountOfUnseenNotification } from '../Action/NotificationAction';
 import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
@@ -22,7 +22,7 @@ function Header({
     auth: { user },
     search,
     searchResult,
-    notif: { notification, moreNotificationAvailable, page, loading },
+    notif: { notification, moreNotificationAvailable, page, loading, number_of_unseen_notif },
     socketReducer: { socket },
     getNotificationFromSocket,
     getNotificationFromDB,
@@ -31,7 +31,7 @@ function Header({
     addCommentRealTimeOnNotification,
     acceptFriendRequest,
     rejectFriendRequest,
-
+    getCountOfUnseenNotification,
  }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
@@ -43,7 +43,7 @@ function Header({
     },[user,socket])
 
     useEffect(() => {
-        getNotificationFromDB(user.id)
+        getCountOfUnseenNotification(user.id)
     }, [])
 
     let ignore = false;
@@ -161,7 +161,7 @@ function Header({
 
                     <div onClick={handleToggleNotification} className='bell-icon-container-div'>
                         <FaRegBell color='white' className='bell-icon' title='notifications' />
-                        {notification.length ? <span className='notification-counter'>{notification.length}</span> : ''}
+                        { number_of_unseen_notif? <span className='notification-counter'>{number_of_unseen_notif}</span> : ''}
                     </div>
                     
                  <ForumIcon 
@@ -269,6 +269,7 @@ Header.propTypes = {
     acceptFriendRequest: PropTypes.func.isRequired,
     rejectFriendRequest: PropTypes.func.isRequired,
     getNotificationFromDBAndPush: PropTypes.func.isRequired,
+    getCountOfUnseenNotification: PropTypes.func.isRequired,
 
 }
 
@@ -311,5 +312,6 @@ export default connect(mapStateToProps, {
                                         removeNotificationFromSocket, 
                                         addCommentRealTimeOnNotification, 
                                         acceptFriendRequest,
-                                        rejectFriendRequest
+                                        rejectFriendRequest,
+                                        getCountOfUnseenNotification
                                     })(Header)

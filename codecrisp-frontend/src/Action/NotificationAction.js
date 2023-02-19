@@ -1,4 +1,4 @@
-import { POST_LIKE_NOTIFICATION,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR,REMOVE_NOTIFICATION_FROM_SOCKET, SET_NOTIFICATION_LOADING_FROM_DB, GET_NOTIFICATION_FROM_DB_AND_PUSH } from "./Types"
+import { GET_COUNT_UNSEEN_NOTIFICATIONS,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR,REMOVE_NOTIFICATION_FROM_SOCKET, SET_NOTIFICATION_LOADING_FROM_DB, GET_NOTIFICATION_FROM_DB_AND_PUSH } from "./Types"
 import axios from "axios"
 
 
@@ -43,7 +43,7 @@ export const getNotificationFromDBAndPush = (data) => (dispatch) =>{
         type: SET_NOTIFICATION_LOADING_FROM_DB,
         payload:{}
     })
-    console.log('data',data)
+
     axios.get(`/api/notification/all-notification/${data.user_id}`,{params:{page: data.page}})
         .then(res=>{
                 //On this dispatch it will push the notification in array
@@ -60,3 +60,22 @@ export const getNotificationFromDBAndPush = (data) => (dispatch) =>{
             })
         })
     }
+
+export const getCountOfUnseenNotification = (user_id) => (dispatch) =>{
+    dispatch({
+        type:SET_NOTIFICATION_LOADING_FROM_DB,
+        payload:{}
+    })
+    axios.get(`/api/notification/new-notif/${user_id}`)
+        .then(res=>{
+            dispatch({
+                type: GET_COUNT_UNSEEN_NOTIFICATIONS,
+                payload: res.data
+            })
+        }).catch(err=>{
+            dispatch({
+                type: GET_ERROR,
+                payload: err.response.data
+            })
+        })
+}
