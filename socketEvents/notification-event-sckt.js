@@ -23,6 +23,7 @@ const NOTIFICATION = {
         FRIEND_REQUEST_REJECT: "friend_request_reject",
         FRIEND_REQUEST_ACCEPT: "friend_request_accept",
         UNFRIEND_REQUEST: "unfriend_request",
+        SEND_MESSAGE_TO_USER: "SEND_MESSAGE_TO_USER",
     },
 
     EVENT_EMIT:{
@@ -34,6 +35,7 @@ const NOTIFICATION = {
         GET_FRIEND_REQUEST_REJECT_NOTIFICATION:'get_friend_request_reject_notification',
         GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION:'get_friend_request_accept_notification',
         GET_UNFRIEND_REQUEST_NOTIFICATION:'get_unfriend_request_notification',
+        GET_NEW_MESSAGE_REQUEST_NOTIFICATION:'GET_NEW_MESSAGE_REQUEST_NOTIFICATION',
     }
 
 }
@@ -276,19 +278,6 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
             })
     })
 
-    /* 
-        EVENT: On Cancel friend request, on this event we just update the Notification array by removing friend_request notification
-    */
-
-        socket.on("message" , (data) =>{  
-          const toUser = SocketUtils.getUser(onlineUsers , data.to);
-          console.log(onlineUsers)
-          if(!isEmpty(toUser) && !isEmpty(toUser.socket_id)){
-          console.log("aYSUH2")
-            socket.to(toUser.socket_id).emit('message' , data.text);
-          }
-          
-        })
 
     }catch(err){
         console.error('notification-event-sckt error',err)
@@ -304,6 +293,7 @@ const notificationEventEmitter = (notification_to_emit,reciever_user_id,payload=
         if(isEmpty(payload))
             payload = {success: true}
         try{
+        console.log(payload)
             global.io.to(reciever.socket_id).emit(notification_to_emit,payload)
         }catch(err){
             console.log('error while emitting event ', err)

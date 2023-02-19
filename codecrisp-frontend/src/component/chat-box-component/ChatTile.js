@@ -1,10 +1,17 @@
-import React from 'react'
+import React from 'react';
 import './ChatTile.css';
+import { useNavigate } from 'react-router';
 
 function ChatTile(props) {
+    const navigate = useNavigate()
+
+    const handleClick = (id) =>{
+        navigate(`/chat/${id}`)
+    }
+
     return (
         <>
-          <div className="chat-tile-outer">
+          <div onClick={evnt=>handleClick(props.id)} className="chat-tile-outer">
 
                 <div className="chat-tile-left mb-2"
                 >

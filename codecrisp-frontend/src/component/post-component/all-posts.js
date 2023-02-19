@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import PostComponent from "./post";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,6 +15,7 @@ import {
   editCommentById,
   deleteCommentFromPost,
 } from "../../Action/PostAction";
+import InfiniteScrollableComponent from "../common/infinite-scrollable-component/InfiniteScrollableComponent";
 
 const AllPosts = ({
   postReducer: { allUserPosts, loading, morePostAvailable, page },
@@ -27,60 +28,28 @@ const AllPosts = ({
   addLike,
   deleteCommentFromPost,
 }) => {
-  //to load data when user hits bottom of the page
-  const [state, setState] = useState({
-    page: page, //initial page is 0
-  });
  
-  
-  
-  const [scrollPosition, setScrollPosition] = useState(
-    Number(sessionStorage.getItem("post_page_scroll"))
-  );
+  // const observer = useRef()
+  // const lastPostRef = useCallback(node=>{
+  //   if(loading) return
+  //   if(observer.current) observer.current.disconnect()
+  //   observer.current = new IntersectionObserver(entries=>{
+  //     if(entries[0].isIntersecting){
+        
+  //     }
+  //   })
+  //   if(node) observer.current.observe(node)
+  // },[loading,morePostAvailable])
 
-  let scrollEvent = null;
-
-  let ignore = false;
-  //when component renders load all the users post on particular page number(intial page 0)
-  useEffect(() => {
-    if (scrollPosition > 0) {
-      window.scrollTo(0, scrollPosition);
-    }
-
-    if (!ignore && (isEmpty(allUserPosts) || allUserPosts[allUserPosts.length-1].page !== state.page)) {
-      getAllUserPosts({ user_id: user.id, page: state.page });
-    }
-
-    // Add the scroll event listener
-    if (!scrollEvent) {
-      scrollEvent = window.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      ignore = true;
-      // Remove the scroll event listener
-      window.removeEventListener("scroll", scrollEvent);
-      scrollEvent = null;
-    };
-  }, [state.page]);
-
-  const handleScroll = () => {
-    // console.log('window.innerHeight',window.innerHeight);
-    // console.log('+ document.documentElement.scrollTop',document.documentElement.scrollTop);
-    // console.log('document.documentElement.scrollHeight',document.documentElement.scrollHeight);
-
-    // console.log('window.scrollY',window.scrollY)
-    if (
-      Math.trunc(window.innerHeight + document.documentElement.scrollTop) ===
-      document.documentElement.scrollHeight
-    ) {
-      sessionStorage.setItem("post_page_scroll", window.scrollY);
-      setScrollPosition(window.scrollY);
-      if (morePostAvailable) {
-        setState({ page: state.page + 1 });
-      }
-    }
-  };
+  // let ignore = false
+  // useEffect(()=>{
+  //   if(!ignore)
+  //     getAllUserPosts({user_id:user.id,page})
+    
+  //   return ()=>{
+  //     ignore = true
+  //   }
+  // },[])
 
   const getPostData = (id) => {
     return new Promise((resolve) => {
@@ -171,39 +140,40 @@ const AllPosts = ({
   }
 
   return (
+    
     <React.Fragment>
-      <div className="all-posts">
-        {!isEmpty(allUserPosts)
-          ? allUserPosts
-              .sort(compareDateDesc)
-              .map((post) => (
-              
-          
-                  
-          
+      <div className="all-posts-small">
+        {<InfiniteScrollableComponent
+              scrollOfComponent = "post_page_scroll"
+              dataArray = {allUserPosts.sort(compareDateDesc)}
+              dataLoader = {getAllUserPosts}
+              identifier = {{user_id:user.id}}
+              moreDataAvailable = {morePostAvailable}
+              loading = {loading}
+              pageNo = {page}
+              uniqueId = '_id'
+              renderChild = {post=>
                 <PostComponent
-                  key={post._id}
-                  user_id={user.id}
-                  id={post._id}
-                  username={post.name}
-                  location={post.location}
-                  avatar={post.avatar}
-                  postText={post.postText}
-                  imageURL={post.imageUrls ? post.imageUrls[0] : undefined}
-                  handleDeletePost={handleDeletePost}
-                  handleClickLike={handleClickLike}
-                  handlePostComment={handlePostComment}
-                  handleConfirmCommentEdit = {handleConfirmCommentEdit}
-                  handleDeleteComment = {handleDeleteComment}
-                  comments={post.comments}
-                  isLikedByUser={post.isLikedByUser}
-                  noOfLikes = {post.likes.length}
-                />
-                
-                
-              
-              ))
-          : ""}
+                key={post._id}
+                user_id={user.id}
+                id={post._id}
+                username={post.name}
+                location={post.location}
+                avatar={post.avatar}
+                postText={post.postText}
+                imageURL={post.imageUrls ? post.imageUrls[0] : undefined}
+                handleDeletePost={handleDeletePost}
+                handleClickLike={handleClickLike}
+                handlePostComment={handlePostComment}
+                handleConfirmCommentEdit = {handleConfirmCommentEdit}
+                handleDeleteComment = {handleDeleteComment}
+                comments={post.comments}
+                isLikedByUser={post.isLikedByUser}
+                noOfLikes = {post?.likes?.length}
+              />
+              }
+            />
+          }
       </div>
       {loading ? (
         <div className="loading-icon">
@@ -215,6 +185,7 @@ const AllPosts = ({
         ""
       )}
     </React.Fragment>
+    // </InfiniteScrollableComponent>
   );
 };
 

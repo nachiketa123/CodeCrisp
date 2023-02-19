@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 
 const CommunityNotification = ({globalNotification}) => {
 
-console.log(globalNotification.globalNotification)
     return (
             <div className='community-notification-container flex-item'>
                 <div className='title'> CommunityNotification </div>

@@ -29,7 +29,6 @@ console.log("agaya")
     Action creator: Login User
 */
 export const signIn = (userData) => (dispatch) => {
-    console.log('Signing in')
     axios.post('/api/user/login', userData).then(
         res => {
             dispatch({

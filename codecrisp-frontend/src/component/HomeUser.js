@@ -24,7 +24,6 @@ function HomeUser({ auth: { user }, socketReducer: {socket},global_notification}
     })
 
     useEffect(() =>{
-    console.log("Hi-->HomeUser")
         global_notification();
     })
     
