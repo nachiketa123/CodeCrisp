@@ -293,7 +293,7 @@ const notificationEventEmitter = (notification_to_emit,reciever_user_id,payload=
         if(isEmpty(payload))
             payload = {success: true}
         try{
-        console.log(payload)
+        // console.log(payload)
             global.io.to(reciever.socket_id).emit(notification_to_emit,payload)
         }catch(err){
             console.log('error while emitting event ', err)

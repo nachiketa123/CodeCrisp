@@ -4,6 +4,7 @@ import { POST_LIKE_NOTIFICATION,
     REMOVE_NOTIFICATION_FROM_SOCKET,
     SET_NOTIFICATION_LOADING_FROM_DB,
     GET_NOTIFICATION_FROM_DB_AND_PUSH,
+    RESET_NOTIFICATION_DATA,
     GET_COUNT_UNSEEN_NOTIFICATIONS,
 } from "../Action/Types"
 import isEmpty from "../utility/is-empty";
@@ -19,18 +20,18 @@ let newNotification = [];
 const notificationReducer = ( state = initialState, action) =>{
     switch(action.type){
         case GET_NOTIFICATION_FROM_SOCKET:
-            newNotification = [...action.payload?.notification,...state.notification]
+            // newNotification = [...new Set([...action.payload?.notification,...state.notification])]
             return {
                 ...state,
-                notification: newNotification,
-                number_of_unseen_notif: newNotification.filter(obj=> !obj?.seen).length
+                // notification: newNotification,
+                number_of_unseen_notif: state.number_of_unseen_notif+1
             }
         case REMOVE_NOTIFICATION_FROM_SOCKET:
-            newNotification = [...action.payload.notification]
+            // newNotification = [...action.payload.notification]
             return {
                 ...state,
-                notification: newNotification,
-                number_of_unseen_notif: newNotification.filter(obj=> !obj?.seen).length,
+                // notification: newNotification,
+                number_of_unseen_notif: (state.number_of_unseen_notif-1<=0) ? 0 : state.number_of_unseen_notif-1
             }
         case GET_ALL_NOTIFICATION_FROM_DB:
             newNotification = []
@@ -39,19 +40,17 @@ const notificationReducer = ( state = initialState, action) =>{
             return {
                 ...state,
                 notification: newNotification,
-                number_of_unseen_notif: newNotification.filter(obj=> !obj?.seen).length,
                 moreNotificationAvailable: !isEmpty(newNotification),
-                page: action.payload.page,
+                // page: action.payload.page,
                 loading:false
             }
         case GET_NOTIFICATION_FROM_DB_AND_PUSH:
-            newNotification = [...action.payload?.data?.notification,...state.notification]
+            newNotification = [...new Set([...action.payload?.data?.notification,...state.notification])]
             return {
                 ...state,
                 notification: newNotification,
-                number_of_unseen_notif: newNotification.filter(obj=> !obj?.seen).length,
                 moreNotificationAvailable: !isEmpty(action.payload?.data?.notification),
-                page: action.payload.page,
+                // page: action.payload.page,
                 loading:false
             }
         case SET_NOTIFICATION_LOADING_FROM_DB:
@@ -64,6 +63,11 @@ const notificationReducer = ( state = initialState, action) =>{
                 ...state,
                 number_of_unseen_notif: action.payload,
                 loading: false
+            }
+        case RESET_NOTIFICATION_DATA:
+            return {
+                ...state,
+                notification:[]
             }
         default:
             return state

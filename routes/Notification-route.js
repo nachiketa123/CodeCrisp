@@ -3,6 +3,28 @@ const passport = require('passport');
 const router = express.Router();
 const UserNotification = require('../model/UserNotification')
 const isEmpty = require('../utility/is-empty')
+const {compareDateDesc} = require('../utility/custom-sort-backend')
+
+//Utility function to set the seen flag of notification as true as user loaded notificatoins till here
+const markNotificationAsSeen = (notifObject, startIndex, limit) =>{
+    return new Promise((resolve,reject)=>{
+        const newNotfication = notifObject.notification.sort(compareDateDesc).map((e,index)=>{
+            if(index >= startIndex && index <= (startIndex + limit -1)){
+                return {...e, seen: true}
+            }
+            return e
+        })
+        notifObject.notification = newNotfication
+        notifObject.save()
+                    .then(data=>{
+                        resolve(data)
+                    }).catch(err=>{
+                        reject(err)
+                    })
+    })
+    
+}
+
 
 /*
     @route:     /api/notification/all-notification/:user_id
@@ -21,7 +43,7 @@ router.get('/all-notification/:user_id',(req,res)=>{
                 notifs.notification = []
             }
 
-            return res.status(200).json(notifs)
+            return res.status(200).json({notification: notifs.notification})
         }).catch(err=>{
             error.dberror = 'DB Error '+err
             return res.status(403).json(error)
@@ -29,20 +51,23 @@ router.get('/all-notification/:user_id',(req,res)=>{
     }
     else{
         page = parseInt(page)
-        const limit = 4;
+        let limit = 4;
         const error = {}
 
-        UserNotification.findOne({ user: user_id}).then(notifs=>{
+        UserNotification.findOne({ user: user_id}).then(async notifs=>{
             if(!notifs || isEmpty(notifs.notification)){
                 notifs.notification = []
-                return res.status(200).json(notifs)
+                return res.status(200).json({notification:notifs.notification})
             }
 
             // let say we have limit of 2 notifications per page then for page 0 we will have from 0 to 1. Note endIndex is exclusive
             const startIndex = page*limit;
 
-            notifs.notification = notifs.notification.splice(startIndex, limit)
-            const newNotification = notifs.notification.map((notif)=>{
+            const newNotifsArr = [...notifs.notification]
+
+            const notifArray = newNotifsArr.sort(compareDateDesc).splice(startIndex, limit)
+
+            const newNotification = notifArray.map((notif)=>{
                 return {
                     action_item_img: notif.action_item_img,
                     source: notif.source,
@@ -55,6 +80,9 @@ router.get('/all-notification/:user_id',(req,res)=>{
                 
             })
 
+            await markNotificationAsSeen(notifs,startIndex,limit)
+
+            
             return res.status(200).json({notification: newNotification})
         }).catch(err=>{
             error.dberror = 'DB Error '+err
@@ -77,7 +105,7 @@ router.get('/new-notif/:user_id',passport.authenticate('jwt',{session:false}),(r
         
         if(!notifs || isEmpty(notifs.notification)){
             notifs.notification = []
-            return res.status(200).json(notifs)
+            return res.status(200).json(0)
         }
 
         const notifications = notifs.notification.filter(e=>e.seen === false)

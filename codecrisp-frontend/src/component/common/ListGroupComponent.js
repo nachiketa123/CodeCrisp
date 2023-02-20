@@ -17,6 +17,7 @@ const ListGroupComponent = ({
     moreDataAvailable,
     pageNo,
     loading,
+    isFriendWithUser,
 }) => {
  
       const renderHTML = (item) => {
@@ -36,7 +37,7 @@ const ListGroupComponent = ({
                     ?(<div className="cs-list-item">
                         <img className="action-item-img" src={item.action_item_img[0]} alt=""/>
                     </div>)
-                    : (<div className='friend-request-action-btns-div'>
+                    : isFriendWithUser === 2? (<div className='friend-request-action-btns-div'>
                         <AiFillCheckCircle onClick={e=>{ if(!item.seen) return acceptFriendRequest({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
@@ -45,7 +46,7 @@ const ListGroupComponent = ({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
                                                                         })}} title='Reject' className='btns request-reject-btn'/>
-                    </div>)}
+                    </div>):''}
             </div>)
       }
       return (

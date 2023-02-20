@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_ERROR, GET_FLG_IF_FRIEND_WITH_USER, GET_FRIEND_LIST, GET_ALL_NOTIFICATION_FROM_DB,
-    SET_CURRENT_FRIEND_FROM_URL_FOR_CHAT} from "./Types";
+    SET_CURRENT_FRIEND_FROM_URL_FOR_CHAT,
+    REMOVE_NOTIFICATION_FROM_SOCKET} from "./Types";
 
 export const sendFriendRequest = () => (dispatch) => {
     dispatch({
@@ -19,8 +20,8 @@ export const acceptFriendRequest = (user_data) => (dispatch) =>{
             })
 
             dispatch({
-                type: GET_ALL_NOTIFICATION_FROM_DB,
-                payload: res.data.payload
+                type: REMOVE_NOTIFICATION_FROM_SOCKET,
+                payload: {}
             })
         })
         .catch(err=>{
@@ -62,8 +63,8 @@ export const rejectFriendRequest = (user_data) =>(dispatch)=>{
                 payload: -1
             })
             dispatch({
-                type: GET_ALL_NOTIFICATION_FROM_DB,
-                payload: res.data
+                type: REMOVE_NOTIFICATION_FROM_SOCKET,
+                payload: {}
             })
         })
         .catch(err=>{

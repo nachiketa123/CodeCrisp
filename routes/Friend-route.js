@@ -8,6 +8,30 @@ const UserNotification = require('../model/UserNotification')
 const mongoose = require('mongoose');
 const { NOTIFICATION, notificationEventEmitter } = require('../socketEvents/notification-event-sckt');
 
+const deleteFriendRequestNotification = (sender,reciver)=>{
+    return new Promise((resolve,reject)=>{
+        UserNotification.findOne({user: mongoose.Types.ObjectId(reciver)})
+            .then(notifObj=>{
+                if(!notifObj || isEmpty(notifObj.notification)){
+                    resolve({success: false, payload:{}})
+                }
+                
+                notifObj.notification = notifObj.notification.filter(e=>{
+                    return !(e.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST
+                    && e.source.user.toString() === sender)
+                })
+                
+                notifObj.save()
+                        .then(notifObj=>{
+                            resolve({success: true,payload:notifObj})
+                        }).catch(err=>{
+                            reject(err)
+                        })
+            }).catch(err=>{
+                reject(err)
+            })
+    })
+}
 const create_or_update_friend_list = (sender, reciever) => {
     return new Promise((resolve, reject) => {
         FriendCollection.findOne({ user: sender })
@@ -107,67 +131,26 @@ router.patch('/acceptFriendRequest',passport.authenticate('jwt',{session: false}
     create_or_update_friend_list(sender_user_id, recipient_user_id)
         .then(data => {
             create_or_update_friend_list(recipient_user_id, sender_user_id)
-                .then(data => {
-                    //set the notification as seen by the user
-                    UserNotification.findOne({user: mongoose.Types.ObjectId(sender_user_id)})
-                        .then(data=>{
-                            if(!data || isEmpty(data.notification)){
-                                return res.status(200).json("No notification for friend request")
-                            }
-                                
-                            let newObj, indexToReplace=-1, indexToDelete=-1
-                            data.notification.map((notif,index)=>{
-                                //make this new notification seen as true as user has accepted the request
-                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                    && notif.source.user.toString() === recipient_user_id
-                                    && notif.seen === false){
-                                        newObj = {
-                                            type:notif.type
-                                            ,data:notif.date
-                                            ,source:notif.source
-                                            ,_id:notif._id,
-                                            seen: true}
-
-                                        indexToReplace = index
-                                    }
-
-                                if(notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                    && notif.source.user.toString() === recipient_user_id
-                                    && notif.seen === true){
-                                        indexToDelete = index
-                                    }
-                            })
-                            
-                            data.notification.splice(indexToReplace,1,newObj)
-
-                            if(indexToDelete !== -1)
-                                data.notification.splice(indexToDelete,1)
-                            
-                            data.save()
-                                .then(newdata=>{
-                                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION,recipient_user_id)
-                                    return res.status(200).json({success: true, payload: newdata})
-                                }).catch(err=>{
-                                    error.dberror = 'DB error'
-                                    return res.status(500).json(error)
-                                })
-                            
-                        }).catch(err=>{
-                            error.dberror = 'DB error'
-                            return res.status(500).json(error)
-                        })
+                .then(async data => {
+                    const result_data = await deleteFriendRequestNotification(recipient_user_id,sender_user_id)
+                    if(result_data.success){
+                        notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_ACCEPT_NOTIFICATION,recipient_user_id)
+                        return res.status(200).json({success: true})
+                    }
+                    error.no_notification_found = 'No Notification found'
+                    return res.status(500).json(error)
+                    
+                }).catch(err=>{
+                    error.dberror = 'DB error'
+                    return res.status(500).json(error)
+                })
                     
 
-                })
-                .catch(err => {
-                    error.dberror = 'DB error'
-                    return res.status(403).json(error)
-                })
-        }).catch(err => {
+        })
+        .catch(err => {
             error.dberror = 'DB error'
             return res.status(403).json(error)
         })
-
 
 })
 
@@ -197,33 +180,27 @@ router.post('/sendUnFriendRequest',passport.authenticate('jwt',{session: false})
     @desc:      To Cancel a already sent request, basically deletes the friend-request notification and emit socket event to the user
     @access:    Private
 */
-router.patch('/cancelFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+router.patch('/cancelFriendRequest',passport.authenticate('jwt',{session: false}),async (req,res)=>{
 
     const {sender_user_id, recipient_user_id} = req.body;
     const error = {}
-    UserNotification.findOne({user: mongoose.Types.ObjectId(recipient_user_id)})
-        .then(data=>{
-            if(!data || isEmpty(data.notification)){
-                error.dbError = "Notification array already empty, can't delete" 
-                return res.status(403).json(error)
-            }
-            data.notification = data.notification.filter(notif=>{
-                (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
-                || notif.source.user.toString() !== sender_user_id)
-            })
-            
-            data.save()
-                .then(data=>{
-                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,recipient_user_id)
-                    return res.status(200).json({success: true})
-                }).catch(err=>{
-                    error.dbError = "DB Error "+err
-                    return res.status(403).json(error)
-                })
-        }).catch(err=>{
-            error.dbError = "DB Error "+err
-            return res.status(403).json(error)
-    })
+    try{
+        const result_data = await deleteFriendRequestNotification(sender_user_id,recipient_user_id)
+        if(result_data.success){
+            notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,recipient_user_id)
+            return res.status(200).json({success: true})
+        }
+        else{
+            error.no_notification_found = 'No Notification found'
+            return res.status(500).json(error)
+        }
+    }catch(err){
+        error.dberror = 'DB Error '+err
+        return res.status(403).json(error)
+    }
+    
+    
+                
 })
 
 /*
@@ -232,33 +209,29 @@ router.patch('/cancelFriendRequest',passport.authenticate('jwt',{session: false}
     @access:    Private
 */
 
-router.patch('/rejectFriendRequest',passport.authenticate('jwt',{session: false}),(req,res)=>{
+router.patch('/rejectFriendRequest',passport.authenticate('jwt',{session: false}),async (req,res)=>{
 
     const {sender_user_id, recipient_user_id} = req.body;
     const error = {}
-    UserNotification.findOne({user: mongoose.Types.ObjectId(sender_user_id)})
-        .then(data=>{
-            if(!data || isEmpty(data.notification)){
-                error.dbError = "Notification array already empty, can't delete" 
-                return res.status(403).json(error)
-            }
-            data.notification = data.notification.filter(notif=>{
-                (notif.type !== NOTIFICATION.EVENT_ON.FRIEND_REQUEST
-                || notif.source.user.toString() !== recipient_user_id)
-            })
+    
+    try{
+        const result_data = await deleteFriendRequestNotification(recipient_user_id,sender_user_id)
+        if(result_data.success){
+            notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,recipient_user_id,result_data.payload)
+            return res.status(200).json({success: true})
+        }
+        else{
+            error.no_notification_found = 'No Notification found'
+            return res.status(500).json(error)
+        }
+    }catch(err){
+        error.dbError = "DB Error "+err
+        return res.status(403).json(error)
+    }
+    
+                
             
-            data.save()
-                .then(data=>{
-                    notificationEventEmitter(NOTIFICATION.EVENT_EMIT.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,recipient_user_id,data)
-                    return res.status(200).json({success: true})
-                }).catch(err=>{
-                    error.dbError = "DB Error "+err
-                    return res.status(403).json(error)
-                })
-        }).catch(err=>{
-            error.dbError = "DB Error "+err
-            return res.status(403).json(error)
-    })
+
 })
 
 /*

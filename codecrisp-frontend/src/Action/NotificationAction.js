@@ -1,4 +1,4 @@
-import { GET_COUNT_UNSEEN_NOTIFICATIONS,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR,REMOVE_NOTIFICATION_FROM_SOCKET, SET_NOTIFICATION_LOADING_FROM_DB, GET_NOTIFICATION_FROM_DB_AND_PUSH } from "./Types"
+import { GET_COUNT_UNSEEN_NOTIFICATIONS,RESET_NOTIFICATION_DATA,GET_NOTIFICATION_FROM_SOCKET,GET_ALL_NOTIFICATION_FROM_DB, GET_ERROR,REMOVE_NOTIFICATION_FROM_SOCKET, SET_NOTIFICATION_LOADING_FROM_DB, GET_NOTIFICATION_FROM_DB_AND_PUSH } from "./Types"
 import axios from "axios"
 
 
@@ -78,4 +78,11 @@ export const getCountOfUnseenNotification = (user_id) => (dispatch) =>{
                 payload: err.response.data
             })
         })
+}
+
+export const resetNotificationData = () => (dispatch)=>{
+    dispatch({
+        type: RESET_NOTIFICATION_DATA,
+        payload:{}
+    })
 }

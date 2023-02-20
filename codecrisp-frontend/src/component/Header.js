@@ -7,12 +7,17 @@ import { Link } from 'react-router-dom';
 import { searchResult } from '../Action/SearchAction'
 import SearchResultBox from './SearchResultComponent/SearchResultBox';
 import isEmpty from '../utility/is-empty';
-import { getNotificationFromDB, getNotificationFromSocket, removeNotificationFromSocket, getNotificationFromDBAndPush, getCountOfUnseenNotification } from '../Action/NotificationAction';
+import { getNotificationFromDB, 
+        getNotificationFromSocket, 
+        removeNotificationFromSocket, 
+        getNotificationFromDBAndPush, 
+        getCountOfUnseenNotification, 
+        resetNotificationData } from '../Action/NotificationAction';
 import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
 import NOTIFICATION from '../Notification_Config/notification-config';
-import { acceptFriendRequest, rejectFriendRequest } from '../Action/FriendAction';
+import { acceptFriendRequest, rejectFriendRequest, checkIfFriendWithUser } from '../Action/FriendAction';
 import { styled } from "@mui/material/styles";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -23,6 +28,7 @@ function Header({
     search,
     searchResult,
     notif: { notification, moreNotificationAvailable, page, loading, number_of_unseen_notif },
+    friendReducer: {isFriendWithUser},
     socketReducer: { socket },
     getNotificationFromSocket,
     getNotificationFromDB,
@@ -32,6 +38,8 @@ function Header({
     acceptFriendRequest,
     rejectFriendRequest,
     getCountOfUnseenNotification,
+    resetNotificationData,
+    checkIfFriendWithUser
  }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
@@ -79,6 +87,11 @@ function Header({
             //user friend request notification
             socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,(data)=>{
                 getNotificationFromSocket(data)
+                const user_data = {
+                    user_id:user.id,
+                    friend_id: data.notification[0].source.user
+                }
+                checkIfFriendWithUser(user_data)
             })
 
             //on friend request cancel notification
@@ -86,7 +99,7 @@ function Header({
                 getNotificationFromDB(user.id)
             })
 
-            //on friend request cancel notification
+            //on friend request reject notification
             socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,()=>{
                 getNotificationFromDB(user.id)
             })
@@ -129,6 +142,10 @@ function Header({
             ...state,
             showNotification: !state.showNotification
         })
+        getCountOfUnseenNotification(user.id)
+        if(!state.showNotification){
+            resetNotificationData()
+        }
     }
     const navigate = useNavigate();
     const handleChat = () =>{
@@ -247,6 +264,7 @@ function Header({
                         moreDataAvailable = {moreNotificationAvailable}
                         pageNo = {page}
                         loading = {loading}
+                        isFriendWithUser = {isFriendWithUser}
                         />
                 </div>)
                 : ''}
@@ -270,6 +288,8 @@ Header.propTypes = {
     rejectFriendRequest: PropTypes.func.isRequired,
     getNotificationFromDBAndPush: PropTypes.func.isRequired,
     getCountOfUnseenNotification: PropTypes.func.isRequired,
+    resetNotificationData: PropTypes.func.isRequired,
+    checkIfFriendWithUser: PropTypes.func.isRequired,
 
 }
 
@@ -278,7 +298,8 @@ const mapStateToProps = (state) => ({
     search: state.searchRed,
     notif: state.notificationReducer,
     socketReducer: state.socketReducer,
-    postRed: state.postReducer
+    postRed: state.postReducer,
+    friendReducer: state.friendReducer
 })
 
 
@@ -313,5 +334,7 @@ export default connect(mapStateToProps, {
                                         addCommentRealTimeOnNotification, 
                                         acceptFriendRequest,
                                         rejectFriendRequest,
-                                        getCountOfUnseenNotification
+                                        getCountOfUnseenNotification,
+                                        resetNotificationData,
+                                        checkIfFriendWithUser
                                     })(Header)
