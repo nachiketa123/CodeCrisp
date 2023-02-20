@@ -22,15 +22,15 @@ const ListGroupComponent = ({
  
       const renderHTML = (item) => {
         return (
-            <div className={getClassNames({dc:"cs-list-group",cc:"cs-list-group-seen"},item.seen,true)}>
+            <div className="cs-list-group">
                 <div className="cs-list-item">
                     <img className="user-avatar-notification" src={item.source.avatar} alt=""/>
                 </div>
                 <div className="cs-list-item">
-                    <div className='item-user-info'>{item.source.name}</div>
+                    <div className={getClassNames({dc:'item-user-info',cc:'item-user-info-seen'},item.seen,true)}>{item.source.name}</div>
                     <div className='item-content'>
-                        <div className='notif-type'>{getContentFromNotificationType(item.type)}</div>
-                        <div className='time-since'>{timeSince(item.date)}</div>
+                        <div className={getClassNames({dc:'notif-type',cc:'notif-type-seen'},item.seen,true)}>{getContentFromNotificationType(item.type)}</div>
+                        <div className={getClassNames({dc:'time-since',cc:'time-since-seen'},item.seen,true)}>{timeSince(item.date)}</div>
                     </div>
                 </div>
                 {item.type !== NOTIFICATION.EVENT_EMIT.FRIEND_REQUEST
@@ -38,11 +38,11 @@ const ListGroupComponent = ({
                         <img className="action-item-img" src={item.action_item_img[0]} alt=""/>
                     </div>)
                     : isFriendWithUser === 2? (<div className='friend-request-action-btns-div'>
-                        <AiFillCheckCircle onClick={e=>{ if(!item.seen) return acceptFriendRequest({
+                        <AiFillCheckCircle onClick={e=>{ acceptFriendRequest({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
                                                                         })}} title='Accept' className='btns request-accept-btn'/>
-                        <AiFillCloseCircle onClick={e=>{if(!item.seen) return rejectFriendRequest({
+                        <AiFillCloseCircle onClick={e=>{rejectFriendRequest({
                                                                             sender_user_id: user,
                                                                             recipient_user_id: item.source.user
                                                                         })}} title='Reject' className='btns request-reject-btn'/>
