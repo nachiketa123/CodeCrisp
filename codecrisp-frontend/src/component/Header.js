@@ -159,6 +159,8 @@ function Header({
                         </form>
                     </div>
 
+                    <div className='header-icons'>
+                    
                     <div onClick={handleToggleNotification} className='bell-icon-container-div'>
                         <FaRegBell color='white' className='bell-icon' title='notifications' />
                         {notification.length ? <span className='notification-counter'>{notification.length}</span> : ''}
@@ -176,20 +178,20 @@ function Header({
                  />
 
                 
-                    {/* Toggle Area */}
+                    
                     
                     
                            {(user.name) ? (<div className="nav-item">
                                     <a className="nav-link nav-link-user" href="#">Hi! 
                                     
                                     {/* {String(user.name).charAt(0).toUpperCase()+String(user.name).slice(1)} */}
-                                    <span> </span>  User
+                                    <span> </span> {user.name.split(" ")[0]}
                                     <span className="sr-only">(current)</span></a>
                                 </div>) : ""
                                 }
                              
               
-
+</div>
                         <Container >
                             
                              
