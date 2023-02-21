@@ -19,7 +19,7 @@ const FriendDetailsComponent = ({
         <>
             <div className='container'>
                 <h3>FRIENDS</h3>
-                <div className='row' style={{ margin: 0}}>
+                <div className='row friend-tile-container' style={{ margin: 0}}>
                     {friend_list?.map(friend => (
                         <div className='col-md-4 col-sm-8 col-lg-3 my-2 mx-1' 
                         style={{minWidth: '200px', background: 'white',

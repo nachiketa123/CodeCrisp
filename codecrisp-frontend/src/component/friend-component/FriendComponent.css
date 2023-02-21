@@ -8,6 +8,13 @@
     min-width: 315px;
 }
 
+.friend-container-div .friend-tile-container{
+    margin: 0px;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 557px;
+}
+
 @media  screen and (max-width: 768px) {
     .friend-container-div {
         flex-direction: column;
