@@ -210,7 +210,7 @@ const PostComponent = ({
                 <div className="time-since">{timeSince(e.date)}</div>
                 <div className="edit-delete-comment-container">
                   {e.user === user_id ? (
-                    !state.showEditComment ? (
+                    (!state.showEditComment || e.id !== state.commentTileId) ? (
                       <MdModeEditOutline
                         onClick={() => handleEditComment(e.id, e.text)}
                         size="15"
