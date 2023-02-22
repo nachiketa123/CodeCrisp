@@ -14,10 +14,11 @@
     flex-direction: row;
     padding: 5px 10px;
     justify-content: space-between;
-    /* border-bottom: 2px solid white; */
-    /* border-radius: 1rem; */
-    /* margin: 5px 0; */
-    background: lightslategrey;
+    background: transparent;
+}
+
+.cs-list-group:hover {
+    background: #8f92cef0;
 }
 
 
@@ -40,14 +41,14 @@
     height: 50px;
     width: 50px;
     border-radius: 1.5em;
-    border: 1.5px solid white;
+    /* border: 1.5px solid white; */
 }
 
 .action-item-img {
     height: 50px;
     width: 50px;
     border-radius: 1.5em;
-    border: 1.5px solid white;
+    /* border: 1.5px solid white; */
 }
 
 .item-user-info,.item-content {
@@ -65,11 +66,11 @@
 
 .notif-type,.time-since,.item-user-info {
     background: transparent;
-    color: black;
+    color: blue;
 }
 
 .notif-type-seen,.time-since-seen,.item-user-info-seen {
-    color: white
+    color: black
 }
 
 .friend-request-action-btns-div{

@@ -56,6 +56,12 @@ function PostBox({auth : {user} ,addPost}) {
     }
 
     const handlePost = (e) =>{
+
+        if(isEmpty(state.urls) && isEmpty(state.postText)){
+            alert('Your post is empty, Please add something to your post!')
+            return;
+        }
+
         const postData ={
             imageUrls: state.urls,
             postText: state.postText,

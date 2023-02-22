@@ -176,9 +176,8 @@
     width: 46%;
     max-width: 370px;
     z-index: 1;
-    background-color: darkslategrey;
-    border: 1px solid rgb(255, 255, 255);
-    border-radius: 1em;
+    background-color: white;
+    border: none;
     max-height: 254px;
     overflow: scroll;
     overflow-x: hidden;
@@ -297,7 +296,6 @@
         top: 67px;
         width: 46%;
         z-index: 1;
-        background-color: darkslategrey;
         max-height: 254px;
         overflow: scroll;
         overflow-x: hidden;
