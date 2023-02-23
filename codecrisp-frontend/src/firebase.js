@@ -2,12 +2,12 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDwqEBajXYMRNNJShvXipuaZG1VCzKaE2w",  
-    authDomain: "codecrisp.firebaseapp.com",
-    projectId: "codecrisp",
-    storageBucket: "codecrisp.appspot.com", 
-    messagingSenderId: "681402889814",
-    appId: "1:681402889814:web:76a5a666118f3385b96df7"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,  
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId:process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET, 
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
   
   };
   

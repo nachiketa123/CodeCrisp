@@ -13,6 +13,7 @@
     "axios": "^0.27.2",
     "bootstrap-icons": "^1.9.1",
     "codecrisp": "file:..",
+    "dotenv": "^16.0.3",
     "firebase": "^9.17.1",
     "firebase-tools": "^11.23.1",
     "http-proxy-middleware": "^2.0.6",
