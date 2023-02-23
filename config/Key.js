@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const config = {
-    mongoURI: "mongodb+srv://test_mern:codecrisp123@cluster0.dxjek.mongodb.net/?retryWrites=true&w=majority",
-    secretKey: "hjbusbufbesifiudsbvsui"
+    mongoURI: process.env.MONGO_URI,
+    secretKey: process.env.MONGO_SECRET
 }
 
 module.exports = config
