@@ -64,12 +64,16 @@
     justify-content: space-between;
 }
 
-.notif-type,.time-since,.item-user-info {
+.cs-list-group .notif-type,
+.cs-list-group .time-since,
+.cs-list-group .item-user-info {
     background: transparent;
     color: blue;
 }
 
-.notif-type-seen,.time-since-seen,.item-user-info-seen {
+.cs-list-group .notif-type-seen,
+.cs-list-group .time-since-seen,
+.cs-list-group .item-user-info-seen {
     color: black
 }
 
