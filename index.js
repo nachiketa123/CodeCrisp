@@ -18,12 +18,13 @@ const SocketUtils = require('./utility/socketUtility')
 const {notificationEventHandler,initializeNotificationEventHandlerFile} = require('./socketEvents/notification-event-sckt');
 const globalnotification =require('./routes/globalNotification-route')
 const chatRoute = require('./routes/Chat-routes')
-const frontend_build = require('./codecrisp-frontend/build')
+const path = require('path');
+
 
 //dotenv
 require('dotenv').config();
 
-mongo.connect(dbURI,{dbName:'codecrisp'}).then(
+mongo.connect(dbURI).then(
     () => {
         console.log("Mongoose Connected")
     }
@@ -102,10 +103,15 @@ httpServer.listen(port, () => {
     console.log("Server challu ho gya hai")
 });
 
-// static files (build of your frontend)
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(firebase_build));
-    app.get('/*', (req, res) => {
-      res.sendFile(require('./codecrisp-frontend/build/index.html'));
-    })
-  }
+app.use(express.static(path.join(__dirname, "./build")));
+
+app.get("*", function(_, res) {
+    res.sendFile(
+        path.join(__dirname, "./build/index.html"),
+        function (err) {
+            if(err) {
+                res.status(500).send(err)
+            }
+        }
+    )
+})
