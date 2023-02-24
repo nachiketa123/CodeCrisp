@@ -33,6 +33,7 @@
     "mongoose": "^6.5.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
     "path-browserify": "^1.0.1",
     "semver": "^7.3.8",
     "shortid": "^2.2.16",
