@@ -8,7 +8,12 @@
       {
         "src": "./codecrisp-frontend/build",    
         "use": "@vercel/static"
-      }
+      },
+      {
+        "env": {
+        "NODE_ENV": "production"
+        }
+    }
     ],
   
     "rewrites": [
