@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header {
+    height: 4em;
+}
+
+.feed-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.chat-box {
+    /* flex-basis: 30%;
+    flex-grow: 1; */
+    min-width: max-content;
+    max-width: 350px;
+    justify-content: center;
+    padding: 50px 5px 0 50px;
+}
+
+.all-posts {
+    flex-basis: 80%;
+    flex-grow: 2;
+    justify-content: center;
+}
+
+.notification-panel {
+    justify-content: center;
+    flex-basis: 50%;
+    flex-grow: 1;
+    padding: 50px 50px 0 5px;
+}
+@media screen and (max-width: 991px) {
+    .notification-panel {
+       display: none;
+    }
+    .chat-box {
+        padding-left: 17px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .chat-box {
+        display: none;
+      }
+}

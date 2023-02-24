@@ -1,0 +1,145 @@
+
+.list-group-container-div {
+    /* border: 1px solid black; */
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    /* width: 30%; */
+    background: transparent;
+}
+
+.cs-list-group {
+
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.cs-list-group:hover {
+    background: #8f92cef0;
+}
+
+
+.cs-list-item:nth-child(1), .cs-list-item:nth-child(3) {
+    background-color: white;
+    border-radius: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
+.cs-list-item:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 50%;
+    padding: 0 10px;
+    background: transparent;
+}
+
+.user-avatar-notification {
+    height: 50px;
+    width: 50px;
+    border-radius: 1.5em;
+    /* border: 1.5px solid white; */
+}
+
+.action-item-img {
+    height: 50px;
+    width: 50px;
+    border-radius: 1.5em;
+    /* border: 1.5px solid white; */
+}
+
+.item-user-info,.item-content {
+    background: transparent;
+    color: white;
+    font-size: 15px;
+}
+
+.item-content {
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cs-list-group .notif-type,
+.cs-list-group .time-since,
+.cs-list-group .item-user-info {
+    background: transparent;
+    color: blue;
+}
+
+.cs-list-group .notif-type-seen,
+.cs-list-group .time-since-seen,
+.cs-list-group .item-user-info-seen {
+    color: black
+}
+
+.friend-request-action-btns-div{
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+}
+
+.friend-request-action-btns-div .btns{
+    background: transparent;
+    color: white;
+    display: flex;
+    height: 22px;
+    width: 19px;
+    cursor: pointer;
+}
+
+.friend-request-action-btns-div .btns:hover{
+    color: initial;
+    stroke: white;
+    stroke-width: 50px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .item-user-info{
+        font-size: 15px;
+    }
+
+    .item-content {
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+
+    .user-avatar-notification {
+        height: 40px;
+        width: 40px;
+        border-radius: 2em;
+    }
+    .action-item-img {
+        height: 40px;
+        width: 40px;
+        border-radius: 2em;
+    }
+
+    .friend-request-action-btns-div{
+        width: 40px;
+    }
+    
+
+    /* .cs-list-item:nth-child(2) {
+        font-size: 15px;
+    } */
+
+    .item-user-info{
+        font-size: 14px;
+    }
+
+    .item-content {
+        font-size: 12px;
+    }
+    
+}

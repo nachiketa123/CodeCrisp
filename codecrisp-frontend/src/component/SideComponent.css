@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+.community-notification-container{
+    position: sticky;
+    top: 113px;
+    background-color: white;
+    height: 572px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    float: right;
+    border: 2px solid white;
+    border-radius: 0.5em;
+    border:1px solid rgba(0,0,0,0.2);
+   
+}
+
+.notif-category{
+    background-color: #E3CBF9;
+    height: 200px;
+    width: 90%;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5em;
+    justify-content: center;
+    font-weight: bolder;
+    font-family: monospace;
+    padding: 5px;
+}
+
+.community-notification-container .title {
+    color: black;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    font-weight: bolder;
+    background-color: transparent;
+    font-weight: bolder;
+    font-family: monospace;
+    font-size: large;
+}
+

@@ -1,0 +1,51 @@
+
+.date {
+  font-size: 11px;
+}
+.comment-text {
+  font-size: 12px;
+}
+.fs-12 {
+  font-size: 12px;
+}
+.shadow-none {
+  box-shadow: none;
+}
+.name {
+  color: #007bff;
+}
+.cursor:hover {
+  color: blue;
+}
+.cursor {
+  cursor: pointer;
+}
+.textarea {
+  resize: none;
+}
+
+
+ i , span{
+background:transparent;
+}
+
+.comment-openbox div{
+
+background: transparent;
+color: #e1e1e1f5;
+width: 100%;
+}
+
+.comment-openbox{
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+}
+
+@media only screen and (min-width : 700px) {
+  .comment-openbox{
+     display: flex;
+     flex-direction: row;
+     background-color: red;
+  }
+}

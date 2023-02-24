@@ -1,0 +1,143 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+.postBox-outer{
+    background-color: white;
+    width: 90%;
+    min-width: 325px;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5em;
+    margin: 0 auto;
+    padding: 10px;
+    justify-content:  space-between;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin-top: 50px;
+}
+
+.profile-photo{
+    background: transparent;
+    flex: 0 0 10%;
+    cursor: pointer;
+}
+
+.user-photo{
+    width: 50px;
+    height: 50px;
+    border-radius: 2em;
+    margin-right: 10px;
+}
+.postBox-textArea{
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 80%;
+    /* flex-grow: 2; */
+    background: white;
+    background: transparent;
+}
+.postBox-text{
+    width: 100%;
+    font-family: monospace;
+    border-style: none;
+    background-color: rgb(243, 240, 240);
+    border-radius: 0.5em;
+    padding: 5px;
+    margin-right:15px ;
+    color: black;
+    font-weight: bold;
+   
+}
+
+.postBox-row1{
+    display: flex;
+    flex-direction: row;
+    color: black;
+    background: transparent;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postBox-row2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: black;
+    background: transparent;
+    font-weight: bold;
+    padding: 0 15px;
+    margin-top: 10px;
+   
+}
+
+.photo{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.icons-postbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+    background: transparent;
+}
+.video{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.article{
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.postBox-outer .post-btn{
+    background-color: rgb(173, 66, 255);
+    border-color: rgb(173, 66, 255);
+}
+
+#post-component:last-child{
+    background: tan;
+}
+
+
+/* Media queries for different screensizes in descending order */
+
+@media screen and (max-width: 991px) {
+
+    .postBox-outer{
+        margin-top: 50px;
+    }
+    .postBox-row2{
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .postBox-row2{
+        font-size: 15px;
+    }
+
+    .photo{
+        width: 15px;
+        height: 15px;
+    }
+    .video{
+        width: 15px;
+        height: 15px;
+    }
+    .article{
+        width: 15px;
+        height: 15px;
+    }
+}

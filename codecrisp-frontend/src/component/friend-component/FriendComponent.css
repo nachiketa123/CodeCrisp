@@ -1,0 +1,27 @@
+.friend-container-div {
+    display: flex;
+    flex-direction: row;
+}
+.friend-navigator-div {
+    flex: 1 0 30%;
+    max-width: 360px;
+    min-width: 315px;
+}
+
+.friend-container-div .friend-tile-container{
+    margin: 0px;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 557px;
+}
+
+@media  screen and (max-width: 768px) {
+    .friend-container-div {
+        flex-direction: column;
+    }
+    .friend-navigator-div {
+        flex: 1 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+}

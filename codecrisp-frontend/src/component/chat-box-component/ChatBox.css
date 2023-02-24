@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+.container-chatbox{
+    position: sticky;
+    top: 114px;
+    background-color: white;
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 568px;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 0.5em;
+    border:1px solid rgba(0,0,0,0.2)
+ 
+}
+.container-chatbox .chatbox-title{
+    color: black;
+    background-color: transparent;
+    font-size: 20px;
+}
+.search-message{
+    border-radius: 0.4em;
+    background:transparent;
+}
+
+.container-chatbox .search-input-message{
+    background-color: rgb(243, 240, 240);
+    font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+
+
+
+/* Media queries */
+@media screen and (max-width: 991px) {
+    .container-chatbox{
+        height: 500px;
+    }
+}

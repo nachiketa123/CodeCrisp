@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik:wght@300&display=swap');
+.chat-tile-outer{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 70px;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 0.5em;
+}
+.chat-tile-outer:hover,.chat-tile-outer:hover .chat-tile-left{
+    background-color: #E3CBF9;
+}
+.chat-tile-left{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 20%; */
+    margin: 0 !important;
+    padding: 5px;
+    
+}
+
+.chat-tile-right{
+display: flex;
+flex-direction: column;
+width: 80%;
+background: transparent;
+}
+
+.chat-tile-right-lower{
+    background:transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    }
+    
+
+.chat-tile-right-upper{
+    background:transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.chat-tile-thumbnail{
+    height: 48px;
+    width: 48px;
+    border-radius: 2em;
+}
+
+.chat-tile-username{
+    color: black!important;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+}
+
+.chat-tile-lm{
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    margin: 0 !important;
+}
+
+.chat-tile-body{
+    background-color: white;
+}
+.chat-tile{
+    width: 100%;   
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.col-md-4{
+    display: flex;
+    align-items: center;
+}
+
+

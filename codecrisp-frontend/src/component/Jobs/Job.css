@@ -1,0 +1,127 @@
+
+.jobs-container-div{
+    margin-top: 8vh;
+    padding: 20px;
+    border-radius: 0.5em;
+    margin: auto;
+    max-width: 85vw;
+  
+}
+.card{
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.JobDetailsBoxBackground{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.JobDetailsBox{
+    height: 70vh;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.5em;
+    color: white;
+}
+.card-body-job{
+    background-color: rgb(0,234,255);
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+
+.JobDetails-left{
+    width: 40%;
+    background-color: white;
+    overflow-y: scroll;
+    padding: 10px;
+}
+.JobDetails-left-title{
+    background-color: black;
+    z-index: 100;
+    color: white;
+    font-size: 25px;
+    border-radius: 0.3em;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.JobDetails-right{  
+    background-color: rgb(255, 255, 255);
+    z-index: 100;;
+    width: 60%;    
+    padding: 10px;
+    overflow-y: scroll;
+}
+h6{
+    background: transparent;
+    font-family:  Roboto;
+    font-weight: bolder;
+    color: black;
+}
+h2{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+.card-title{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+p{
+    background: transparent;
+    color: black;
+    font-family:  Roboto;
+}
+.list-job-points{
+    /* margin-left: 20px; */
+    background: transparent;
+    padding: 20px 0 0 20px;
+}
+.job-description {
+    /* margin-top: 15px; */
+    padding: 20px 0 0 20px;
+    background: transparent;
+    color: white;
+    font-weight: 400;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  a.company, a.jobname {
+    color: #007bff !important;
+    text-decoration: none !important;
+    background-color: transparent !important;
+    margin-left: 20px;
+  }
+
+  a.company:hover, a.jobname:hover {
+    color: #0056b3 !important;
+    text-decoration: underline !important;
+  }
+  a.company:hover {
+    text-decoration: none !important
+  }
