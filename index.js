@@ -18,8 +18,12 @@ const SocketUtils = require('./utility/socketUtility')
 const {notificationEventHandler,initializeNotificationEventHandlerFile} = require('./socketEvents/notification-event-sckt');
 const globalnotification =require('./routes/globalNotification-route')
 const chatRoute = require('./routes/Chat-routes')
+const frontend_build = require('./codecrisp-frontend/build')
 
-mongo.connect(dbURI).then(
+//dotenv
+require('dotenv').config();
+
+mongo.connect(dbURI,{dbName:'codecrisp'}).then(
     () => {
         console.log("Mongoose Connected")
     }
@@ -92,6 +96,16 @@ try{
     console.log('error in index.js due to socket', err)
 }
 
-httpServer.listen(8070, () => {
+  const port = process.env.PORT || 8070;
+
+httpServer.listen(port, () => {
     console.log("Server challu ho gya hai")
 });
+
+// static files (build of your frontend)
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(firebase_build));
+    app.get('/*', (req, res) => {
+      res.sendFile(require('./codecrisp-frontend/build/index.html'));
+    })
+  }

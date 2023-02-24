@@ -1,4 +1,5 @@
 {
+  "homepage": "https://codecrisp-app.vercel.app",
   "name": "codecrisp-frontend",
   "version": "0.1.0",
   "private": true,
@@ -43,7 +44,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:8070",
   "browserslist": {
     "production": [
       ">0.2%",

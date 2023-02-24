@@ -50,7 +50,7 @@ function App() {
 
       <Provider store={myStore}>
 
-        <BrowserRouter>
+        <BrowserRouter basename='/'>
           <Routes>
             <Route path='/*' element={<HomePage />} />
             <Route path='/' element={<PrivateRoutes header={true} component={HomeUser} />} />
