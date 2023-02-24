@@ -5,7 +5,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const {notificationEventEmitter, NOTIFICATION} = require('../socketEvents/notification-event-sckt')
 const isEmpty = require('../utility/is-empty');
-const { emit } = require('nodemon');
 
 
 const createNewDocumenForMessageSchema = (user_id,friend_id,messageArr) =>{
