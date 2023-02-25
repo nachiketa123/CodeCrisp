@@ -13,7 +13,7 @@ import { io } from 'socket.io-client';
 //initializing socket
 let socket; 
 try{
-socket = io();
+socket = io(process.env.REACT_APP_SOCKET_IO_ENDPOINT);
 }catch(err){
     console.error('Error occurred while initializing socket',err)
 }
