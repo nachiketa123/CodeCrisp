@@ -5,7 +5,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "build/**",
+      "src": "codecrisp-frontend/build",
       "use": "@vercel/static"
     }
   ],
@@ -22,10 +22,10 @@
     {
       "src": "/api/login",
       "dest": "index.js"
+    },
+    {
+      "src": "/.*",
+      "dest": "codecrisp-frontend/build/index.html"
     }
-  ],
-  
-  "rewrites": [
-    { "source": "/(.*)", "destination": "build/index.html" }
   ]
 }
