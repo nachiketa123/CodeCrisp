@@ -103,9 +103,9 @@ httpServer.listen(port, () => {
     console.log("Server challu ho gya hai")
 });
 
-app.use(express.static(path.join(__dirname, "./build")));
+app.use(express.static(path.join(__dirname, "./codecrisp-frontend/build")));
 
-app.get("*", function(_, res) {
+app.get("/", function(_, res) {
     res.sendFile(
         path.join(__dirname, "./codecrisp-frontend/index.html"),
         function (err) {
