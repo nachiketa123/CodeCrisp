@@ -105,7 +105,7 @@ httpServer.listen(port, () => {
 
 app.use(express.static(path.join(__dirname,'codecrisp-frontend','build')));
 
-app.get("/", function(_, res) {
+app.get("/*", function(_, res) {
     res.sendFile(
         path.join(__dirname, 'codecrisp-frontend','build','index.html'),
         function (err) {
