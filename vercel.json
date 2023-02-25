@@ -5,7 +5,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "codecrisp-frontend/build",
+      "src": "codecrisp-frontend/**",
       "use": "@vercel/static"
     }
   ],
