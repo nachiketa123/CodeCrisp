@@ -22,11 +22,10 @@
     {
       "src": "/api/login",
       "dest": "index.js"
-    },
-    {
-      "rewrites": [
-        { "source": "/(.*)", "destination": "build/index.html" }
-      ]
     }
+  ],
+  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "build/index.html" }
   ]
 }
