@@ -1,7 +1,17 @@
-FROM node:16
+# Build frontend
+FROM node:latest AS frontend
 WORKDIR /
-COPY . /
+COPY codecrisp-frontend/package*.json ./
 RUN npm install
-ENV PORT 8070
-EXPOSE 8070
-CMD ["npm", "run", "dev"]
+COPY codecrisp-frontend/ .
+RUN npm run build
+
+# Build backend
+FROM node:latest AS backend
+WORKDIR /
+COPY /package*.json ./
+RUN npm install
+COPY / .
+COPY --from=frontend /app/build ./public
+EXPOSE 3000
+CMD ["npm", "start"]
