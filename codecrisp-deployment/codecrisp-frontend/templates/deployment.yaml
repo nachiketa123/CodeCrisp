@@ -5,7 +5,7 @@ metadata:
   labels:
     app: codecrisp-frontend
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: codecrisp-frontend
