@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codecrisp-frontend
+  labels:
+    app: codecrisp-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: codecrisp-frontend
+  template:
+    metadata:
+      labels:
+        app: codecrisp-frontend
+    spec:
+      containers:
+      - name: codecrisp-frontend
+        image: codecrisp-frontend-version-1
+        ports:
+        - containerPort: 3000
