@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.node
-    image: code-crisp-backendv3
+    image: code-crisp-backendv4
     container_name: myapp-node-server
     command: node ./index.js
     volumes:
