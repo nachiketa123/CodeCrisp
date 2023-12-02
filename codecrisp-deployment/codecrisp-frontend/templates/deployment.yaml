@@ -19,3 +19,4 @@ spec:
         image: codecrisp-frontend-version-1
         ports:
         - containerPort: 3000
+      imagePullPolicy: Never
