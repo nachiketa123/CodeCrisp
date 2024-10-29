@@ -100,9 +100,10 @@ try{
   const port = process.env.PORT || 8070;
 
 httpServer.listen(port, () => {
-    console.log("Server challu ho gya hai")
+    console.log("Server boot up successful")
 });
 
+/*
 app.use(express.static(path.join(__dirname,'codecrisp-frontend','build')));
 
 app.get("/*", function(_, res) {
@@ -115,3 +116,4 @@ app.get("/*", function(_, res) {
         }
     )
 })
+    */
