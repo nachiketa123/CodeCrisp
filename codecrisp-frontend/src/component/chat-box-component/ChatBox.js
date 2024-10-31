@@ -7,8 +7,11 @@ import { getMyFriendList } from '../../Action/FriendAction';
 function ChatBox({authReducer , friendReducer , getMyFriendList}) {
   
   useEffect(() =>{
-    getMyFriendList(authReducer.user.id);
-  } ,[] 
+    if(authReducer.user){
+      console.log('authReducer.user', authReducer.user)
+      getMyFriendList(authReducer.user.id);
+    }
+  } ,[authReducer.user] 
     
   )
 
@@ -21,7 +24,7 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
                     <input type="text" className="form-control search-input-message" 
                     placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 </div>
-                { friendReducer.friend_list.map(e  => (
+                { authReducer.user && friendReducer?.friend_list?.map(e  => (
                        <ChatTile key={e.id}
                          name = {e.name}
                          avatar = {e.avatar}
