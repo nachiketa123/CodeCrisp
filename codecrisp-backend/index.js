@@ -19,6 +19,7 @@ const {notificationEventHandler,initializeNotificationEventHandlerFile} = requir
 const globalnotification =require('./routes/globalNotification-route')
 const chatRoute = require('./routes/Chat-routes')
 const path = require('path');
+const cors = require('cors');
 
 
 //dotenv
@@ -37,6 +38,12 @@ mongo.connect(dbURI).then(
 app.use(passport.initialize());
 PassportConfig(passport);
 
+app.use(cors({
+    origin: 'http://43.204.230.74', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,  // Include if using cookies
+}));
 
 
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }))
