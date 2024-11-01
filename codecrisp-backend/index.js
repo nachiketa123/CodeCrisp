@@ -39,7 +39,7 @@ app.use(passport.initialize());
 PassportConfig(passport);
 
 app.use(cors({
-    origin: 'http://43.204.230.74', // Replace with your frontend URL
+    origin: 'http://35.154.211.184/*', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,  // Include if using cookies
@@ -60,7 +60,13 @@ app.use('/api/gnotification',globalnotification);
 app.use('/api/chat',chatRoute);
 
 const httpServer = createServer(app);
-const io = new Server(httpServer)
+const io = new Server(httpServer,{
+    cors: {
+        origin: 'http://35.154.211.184/*', // Ensure this matches your frontend URL
+        methods: ['GET', 'POST'],
+        credentials: true // Allow credentials if needed
+    }
+})
 
 
 
