@@ -9,9 +9,9 @@ const bodyParser = require("body-parser");
 const searchRoute = require("./routes/Search-route")
 const jobRoute = require('./routes/Job-route');
 const postRoutes = require('./routes/Post-route')
-const friendRoutes = require('./routes/Friend-route')
+const {router:friendRoutes} = require('./routes/Friend-route')
 const userProfileRoutes = require('./routes/profile-route')
-const notificationRoutes = require('./routes/Notification-route')
+const {router: notificationRoutes} = require('./routes/Notification-route')
 const createServer = require('http').createServer
 const Server = require('socket.io').Server
 const SocketUtils = require('./utility/socketUtility')
@@ -39,7 +39,7 @@ app.use(passport.initialize());
 PassportConfig(passport);
 
 app.use(cors({
-    origin: 'http://35.154.211.184/*', // Replace with your frontend URL
+    origin: process.env.HOST || '*', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,  // Include if using cookies
@@ -62,7 +62,7 @@ app.use('/api/chat',chatRoute);
 const httpServer = createServer(app);
 const io = new Server(httpServer,{
     cors: {
-        origin: 'http://35.154.211.184/*', // Ensure this matches your frontend URL
+        origin: process.env.HOST || '*', // Ensure this matches your frontend URL
         methods: ['GET', 'POST'],
         credentials: true // Allow credentials if needed
     }

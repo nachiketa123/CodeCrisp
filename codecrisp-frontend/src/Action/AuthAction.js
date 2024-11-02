@@ -13,13 +13,15 @@ import {auth , provider} from '../firebase'
     Action creator: Register User
 */
 export const signUp = (userData) => (dispatch) => {
-console.log("agaya")
     axios.post('/api/user/signup', userData).then(
         res => {
             dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
         }
     ).catch(
         err => {
+            if(err.response.data?.userAlreadyExists){
+                alert("Signup failed, User already exists.")
+            }
             dispatch({ type: GET_ERROR, payload: err.response.data })
         }
     )
@@ -31,15 +33,19 @@ console.log("agaya")
 export const signIn = (userData) => (dispatch) => {
     axios.post('/api/user/login', userData).then(
         res => {
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: res.data
-            })
+            Promise.all([
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: res.data
+                }),
+                dispatch({
+                    type: GET_ERROR,
+                    payload: {},
+                })
+            ])
         }
     ).catch(
         err => {
-            alert("Incorrect Password")
-            console.log('error', err)
             dispatch({
                 type: GET_ERROR,
                 payload: err.response.data,
@@ -51,10 +57,7 @@ export const signIn = (userData) => (dispatch) => {
 export const signInWithGoogle = () => (dispatch) =>{
    
     auth.signInWithPopup(provider)
-    .then((payload) =>{
-         
-         console.log(payload);
-         
+    .then((payload) =>{         
          const newUser = {
             name : payload.additionalUserInfo.profile.name,
             email: payload.additionalUserInfo.profile.email,

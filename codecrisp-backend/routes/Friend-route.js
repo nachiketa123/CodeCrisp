@@ -8,6 +8,19 @@ const UserNotification = require('../model/UserNotification')
 const mongoose = require('mongoose');
 const { NOTIFICATION, notificationEventEmitter } = require('../socketEvents/notification-event-sckt');
 
+const createEntryWithZeroFriendOnUserSignup = (user) =>{
+    return new Promise((resolve,reject)=>{
+        const newEntry = new FriendCollection({
+            user,
+            friend_list: []
+        })
+        newEntry.save().then(data => {
+            resolve(data)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
 const deleteFriendRequestNotification = (sender,reciver)=>{
     return new Promise((resolve,reject)=>{
         UserNotification.findOne({user: mongoose.Types.ObjectId(reciver)})
@@ -364,4 +377,4 @@ router.get('/get-friend-detail-by-id/:friend_id',passport.authenticate('jwt',{se
     }
     
 })
-module.exports = router
+module.exports = {router,createEntryWithZeroFriendOnUserSignup}

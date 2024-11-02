@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../Action/AuthAction'
@@ -10,6 +10,7 @@ function Signup(props) {
 
 
     const navigate = useNavigate();
+    const [formSubmittedFlag,setFormSubmittedFlag] = useState(false);
 
     const [state, setState] = useState({
         name: "",
@@ -21,10 +22,17 @@ function Signup(props) {
     },
     )
 
+    useEffect(()=>{
+        if(isEmpty(props.errorRed?.error) && formSubmittedFlag){
+            navigate('/login')
+        }
+    },[props.errorRed?.error,navigate])
+
     const handleOnchange = (e) => {
         setState({
             ...state, [e.target.name]: e.target.value
         })
+        setFormSubmittedFlag(false);
 
     }
 
@@ -41,9 +49,7 @@ function Signup(props) {
         }
 
         props.signUp(newUser);
-        if(isEmpty(props.errorRed?.error)){
-            navigate('/login')
-        }
+        setFormSubmittedFlag(true);
 
     }
     const error = props.errorRed?.error
@@ -52,7 +58,7 @@ function Signup(props) {
             <div className='back-down row justify-content-md-center'>
                 <div className='login-box-outer  col col-sm-12 col-md-8 col-lg-6'>
 
-                    <h1>SignUp</h1>
+                    <h1>Signup</h1>
                     <div className='login-box'>
                         <form>
 

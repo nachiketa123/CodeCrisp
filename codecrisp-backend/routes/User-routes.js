@@ -11,7 +11,9 @@ const cloudinaryUploader = require('../utility/cloudinaryFileManager').uploadIma
 const deleteImagesFromCloudinary = require('../utility/cloudinaryFileManager').deleteImagesFromCloudinary;
 const isEmpty = require("../utility/is-empty")
 const registerInputValidation = require("../validation/register-validation");
-
+const {createEntryWithZeroFriendOnUserSignup} = require("./Friend-route");
+const {createZeroNotificationEntryOnUserSignup} = require('./Notification-route')
+const loginInputValidation = require("../validation/login-validation")
 
 const getPostForUser = (user_id) => {
     return new Promise((resolve, reject) => {
@@ -56,28 +58,43 @@ router.post('/signup',
         const {signInType} = req.body;
         
         if(signInType === 'codecrisp'){
-        const { name, email, phoneno, age, password } = req.body //Destructoring..
-        const user_obj =  { name, email, phoneno, age, password }
-        
-        //Validation
-        const {errors, isValid} = registerInputValidation(user_obj)
-        if(!isValid) return res.status(200).json(errors) 
+            const { name, email, phoneno, age, password } = req.body //Destructoring..
+            const user_obj =  { name, email, phoneno, age, password }
+            
+            //Validation
+            const {errors, isValid} = registerInputValidation(user_obj)
+            if(!isValid) return res.status(403).json(errors) 
 
-        const newUser = User(user_obj)
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                newUser.password = hash
-                newUser.save().then(
-                    user => {
-                        res.status(200).json({success:true})
-                    }
-                ).catch(
-                    err => {
-                        res.status(400).json(err)
-                    }
-                )
+            //Check if user already exists then send error 403
+            User.findOne({email}).then(user=>{
+                if(user && !isEmpty(user)){
+                    errors.userAlreadyExists = "User Already exists"
+                    return res.status(403).json(errors)
+                }else{
+                    const newUser = User(user_obj)
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            newUser.password = hash
+                            newUser.save().then(
+                                user => {
+                                    //for friendList
+                                    createEntryWithZeroFriendOnUserSignup(user._id)
+                                    //for notification
+                                    createZeroNotificationEntryOnUserSignup(user._id)
+                                    res.status(200).json({success:true})
+                                }
+                            ).catch(
+                                err => {
+                                    res.status(400).json(err)
+                                }
+                            )
+                        })
+                    })
+                }
+            }).catch(err=>{
+                return res.status(500).json(err)
             })
-        })
+        
        }
        else{
           
@@ -90,24 +107,36 @@ router.post('/signup',
         const isValid = true
         if(!isValid) return res.status(200).json(errors) 
 
-        const newUser = User(user_obj)
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                newUser.password = hash
-                newUser.save().then(
-                    user => {
-                        res.status(200).json({success:true})
-                    }
-                ).catch(
-                    err => {
-                        res.status(400).json(err)
-                    }
-                )
-            })
-        })
+        //Check if user already exists then send error 403
+        User.findOne({email}).then(user=>{
+            if(user && !isEmpty(user)){
+                errors.userAlreadyExists = "User Already exists"
+                return res.status(403).json(errors)
+            }else{
+
+                    const newUser = User(user_obj)
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            newUser.password = hash
+                            newUser.save().then(
+                                user => {
+                                    //for friendList
+                                    createEntryWithZeroFriendOnUserSignup(user._id)
+                                    //for notification
+                                    createZeroNotificationEntryOnUserSignup(user._id)
+                                    res.status(200).json({success:true})
+                                }
+                            ).catch(
+                                err => {
+                                    res.status(400).json(err)
+                                }
+                            )
+                        })
+                    })
+            }
        
-       }
-    })
+       })
+    }})
 
 
 /*
@@ -117,17 +146,21 @@ router.post('/signup',
 */
 router.post('/login', (req, res) => {
     const { email, password } = req.body //Destructoring..
-    const err = {}
+
+    //Validation
+    const {errors, isValid} = loginInputValidation({email,password})
+    if(!isValid) return res.status(403).json(errors) 
+
     User.findOne({ email }).then((user) => {
         if (!user) {
-            err.email = "Email does not exist";
-            return res.status(404).json(err);
+            errors.email = "Email does not exist";
+            return res.status(404).json(errors);
         }
         else {
             bcrypt.compare(password, user.password).then((isMatched) => {
                 if (!isMatched) {
-                    err.password = "Incorrect Password";
-                    return res.status(404).json(err);
+                    errors.password = "Incorrect Password";
+                    return res.status(404).json(errors);
                 }
                 else {
                     const payload = {
@@ -136,7 +169,7 @@ router.post('/login', (req, res) => {
                         name: user.name,
                         avatar: user.avatar
                     }
-                    jwt.sign(payload, secretKey, { expiresIn: 3600 }, (err, token) => {
+                    jwt.sign(payload, secretKey, { expiresIn: 3600 }, (errors, token) => {
                         return res.status(200).json({ token: "Bearer " + token })
 
                     })

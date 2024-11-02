@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import './Post-box.css'
-import { FaFileImage, FaVideo, FaRegStickyNote } from "react-icons/fa";
+import { FaFileImage, FaVideo, FaRegStickyNote, FaUserAlt } from "react-icons/fa";
 import FilePreviewComponent from '../common/FilePreviewComponent';
 import isEmpty from '../../utility/is-empty';
 import { connect } from 'react-redux'
@@ -84,10 +84,10 @@ function PostBox({auth : {user} ,addPost}) {
 
             <div className='postBox-row1'>
                 <div className='profile-photo'>
-
-                    <img
-                        className='user-photo'
-                        src={user.avatar?user.avatar:require('../../assets/images/nach_profile.jpg')} alt="Profile Photo" />
+                    {user.avatar?(<img className='user-photo' src={user.avatar} alt="Profile Photo" />)
+                    :(<FaUserAlt size="30" />)
+                    }
+                    
                 </div>
                 <div className='postBox-textArea'>
 

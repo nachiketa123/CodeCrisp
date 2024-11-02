@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
-import { Link } from "react-router-dom";
-import { FaBars, FaRegBell, FaRegComments, FaSearch } from "react-icons/fa";
+import { Link, useLocation,useNavigate } from "react-router-dom";
+import { FaBars} from "react-icons/fa";
+import { connect } from "react-redux";
+import { resetError } from "../../Action/ErrorAction";
 
-function HeaderHome() {
+function HeaderHome(props) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  //To toggle the button on the header for signup/login
+  //if the path is /login use would like to see the button to goto signup and vice versa
+  const [headerButtonToggler,setHeaderButtonToggler] = useState('signup')
+
+  useEffect(()=>{
+    const pathname = location.pathname.toString();
+    if(pathname === '/signup')
+      setHeaderButtonToggler('signup')
+    else
+      setHeaderButtonToggler('login')
+  },[location])
+
+  const navigateToLogin = () => {
+    props.resetError()//reset action for error reducer
+    navigate('/login')
+  }
+
+  const navigateToSignup = () => {
+    props.resetError()//reset action for error reducer
+    navigate('/signup')
+  }
+
   return (
     <div className="header-home">
       <nav className="navbar navbar-expand-lg">
@@ -79,10 +106,10 @@ function HeaderHome() {
           </div>
         </div>
         
-        {/* SignUp */}
-        
-         <Link to="/signup">
-            <button type="button" className="btn btn-primary mx-2"
+        {/* SignUp Or Login Button */}
+        {headerButtonToggler==='login'?
+         (
+            <button onClick={navigateToSignup} type="button" className="btn btn-primary mx-2"
               style={{
                 background: "transparent",
                 padding: "10px 15px",
@@ -96,11 +123,30 @@ function HeaderHome() {
             >
               SIGN UP
             </button>
-          </Link>
+         ):(
+          <button onClick={navigateToLogin} type="button" className="btn btn-primary mx-2"
+            style={{
+              background: "transparent",
+              padding: "10px 15px",
+              borderRadius: "2em",
+              backgroundColor: "#ad42ff",
+              color: "white",
+              fontWeight: "700",
+              fontFamily: "monospace",
+              cursor: "pointer",
+            }}
+          >
+            LOGIN
+          </button>
+       )}
 
       </nav>
     </div>
   );
 }
 
-export default HeaderHome;
+const mapStateToProps = (state) =>({
+  errorRed: state.errorReducer
+})
+
+export default connect(mapStateToProps, {resetError})(HeaderHome);

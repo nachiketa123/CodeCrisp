@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './HomePage.css'
 import { connect } from 'react-redux'
-import { signIn, signUp } from '../../Action/AuthAction'
+import { signIn } from '../../Action/AuthAction'
 
 import { useNavigate } from 'react-router-dom'
 import InputTextFieldComponent from '../common/InputTextFieldComponent'
@@ -38,7 +38,7 @@ function Login(props) {
 
         props.signIn(user);
     }
-
+    const error = props.errorRed?.error;
     return (
         <div className='container mt-5 login-container'>
             <div className='back-down row justify-content-md-center mt-5' >
@@ -69,7 +69,7 @@ function Login(props) {
                                     name="email" 
                                     value={state.email} 
                                     onChange={onChangeLogin}
-                                    
+                                    error={error.email}
                                    
                                 />
                                 <small id="emailHelp" className="form-text text-muted"
@@ -91,6 +91,7 @@ function Login(props) {
                                     value={state.password} 
                                     onChange={onChangeLogin} 
                                     placeholder="Password"
+                                    error={error.password}
                                 />
                             </div>
 
@@ -110,7 +111,8 @@ function Login(props) {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.authRed
+    auth: state.authRed,
+    errorRed: state.errorReducer
 })
 
 export default connect(mapStateToProps, { signIn })(Login)

@@ -5,6 +5,21 @@ const UserNotification = require('../model/UserNotification')
 const isEmpty = require('../utility/is-empty')
 const {compareDateDesc} = require('../utility/custom-sort-backend')
 
+//Utility function for creating notification with empty array [] on user signup to avoid runtime errors
+const createZeroNotificationEntryOnUserSignup = (user)=>{
+    return new Promise((resolve,reject)=>{
+        const newNotificationItemWithZeroNotification = new UserNotification({
+            user,
+            notification:[]
+        })
+        newNotificationItemWithZeroNotification.save().then(()=>{
+            resolve();
+        }).catch(err=>{
+            reject(err);
+        })  
+        
+    })
+}
 //Utility function to set the seen flag of notification as true as user loaded notificatoins till here
 const markNotificationAsSeen = (notifObject, startIndex, limit) =>{
     return new Promise((resolve,reject)=>{
@@ -118,4 +133,4 @@ router.get('/new-notif/:user_id',passport.authenticate('jwt',{session:false}),(r
     })
 }) 
 
-module.exports = router;
+module.exports = {router,createZeroNotificationEntryOnUserSignup};

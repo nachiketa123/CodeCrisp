@@ -8,7 +8,6 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
   
   useEffect(() =>{
     if(authReducer.user){
-      console.log('authReducer.user', authReducer.user)
       getMyFriendList(authReducer.user.id);
     }
   } ,[authReducer.user] 

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./post.css";
-import { FaHeart, FaRegComment, FaShare } from "react-icons/fa";
+import { FaHeart, FaRegComment, FaShare, FaUserAlt } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { timeSince } from "../../utility/dateFormat";
 import { compareDateDesc } from "../../utility/custom-sort";
 import { MdModeEditOutline } from "react-icons/md";
 import { IoMdClose, IoMdCheckmark } from "react-icons/io";
-import { getAllUserPosts } from "../../Action/PostAction";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom'
 
@@ -69,13 +68,12 @@ const PostComponent = ({
         style={{ backgroundColor: "white" }}
       >
         <div className="user-dp-info">
-          <img
-            className="dp-img"
-            src={
-              avatar ? avatar : require("../../assets/images/nach_profile.jpg")
-            }
-            alt="Profile Picture"
-          />
+          {avatar?(<img
+                    className="dp-img"
+                    src={avatar}
+                    alt="Profile Picture"/>)
+                    :(<FaUserAlt style={{color:"black"}} size="50"  />)
+          }
           <div className="user-info">
             <p className="user-name">
               {username ? username : "Here goes user name"}
