@@ -41,7 +41,7 @@ const ChatBar = ({friends}) => {
     
               {friends.map(e => (
               
-              <div
+              <div key={e.id}
               className='chat-tile'
               >
           

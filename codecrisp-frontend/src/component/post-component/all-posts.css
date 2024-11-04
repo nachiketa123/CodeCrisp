@@ -27,3 +27,9 @@
     100% {color: black;}
 }
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@600&family=Atkinson+Hyperlegible&family=Fugaz+One&family=Lato&family=Lexend+Deca:wght@300&family=Montserrat:wght@500&family=Poppins:wght@200;500&family=Shadows+Into+Light&family=Shippori+Antique&family=Varela+Round&display=swap');
+
+@media screen and (width< 1200px) {
+    .all-posts {
+        margin-bottom: 4em;
+    }
+}

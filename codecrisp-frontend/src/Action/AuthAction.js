@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {
     GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER
-    , GET_ALL_JOB, REMOVE_ALL_EVENTS_FROM_SOCKET,SIGN_IN_WITH_GOOGLE
+    , GET_ALL_JOB, REMOVE_ALL_EVENTS_FROM_SOCKET
 } from './Types';
 
 import {auth , provider} from '../firebase'
+
 
 
 
@@ -13,18 +14,23 @@ import {auth , provider} from '../firebase'
     Action creator: Register User
 */
 export const signUp = (userData) => (dispatch) => {
-    axios.post('/api/user/signup', userData).then(
-        res => {
-            dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
-        }
-    ).catch(
-        err => {
-            if(err.response.data?.userAlreadyExists){
-                alert("Signup failed, User already exists.")
+    return new Promise((resolve,reject)=>{
+        axios.post('/api/user/signup', userData).then(
+            res => {
+                dispatch({ type: GET_ERROR, payload: (!res.data?.success)?res.data:{} })
+                resolve(true)
             }
-            dispatch({ type: GET_ERROR, payload: err.response.data })
-        }
-    )
+        ).catch(
+            err => {
+                if(err.response.data?.userAlreadyExists){
+                    alert("Signup failed, User already exists.")
+                }
+                dispatch({ type: GET_ERROR, payload: err.response.data })
+                reject(err)
+            }
+        )
+    })
+    
 }
 
 /* 
@@ -57,7 +63,7 @@ export const signIn = (userData) => (dispatch) => {
 export const signInWithGoogle = () => (dispatch) =>{
    
     auth.signInWithPopup(provider)
-    .then((payload) =>{         
+    .then( (payload) =>{         
          const newUser = {
             name : payload.additionalUserInfo.profile.name,
             email: payload.additionalUserInfo.profile.email,
@@ -66,8 +72,18 @@ export const signInWithGoogle = () => (dispatch) =>{
          }
          
          if(payload.additionalUserInfo.isNewUser){
-                 dispatch(signUp(newUser));
-                 dispatch(signIn(newUser));
+                try{
+                dispatch(signUp(newUser)).then((success)=>{
+                    if(success)
+                        dispatch(signIn(newUser))
+                    else
+                        console.error('Login failed try again')
+                })
+            }catch(err){
+                console.error('error here in catch ',err)
+            }
+                 
+        
          }
          else{
          
@@ -99,3 +115,27 @@ export const logOutUser = () => (dispatch) => {
     })
 }
 
+export const deleteAccount = (userEmail) => (dispatch) => {
+    axios.delete('/api/user/delete-account',{data:{email: userEmail}})
+        .then(res=>{
+            
+            const user = auth.currentUser;
+            if(user){ //deleting google signed in user from firebase
+                user.delete().then(()=>{
+                    dispatch({
+                        type: LOGOUT_USER,
+                        payload:{}
+                    })
+                }).catch(err=>{
+                    console.error(err)
+                })
+            }else{
+                dispatch({
+                    type: LOGOUT_USER,
+                    payload:{}
+                })
+            }
+        }).catch(err=>{
+            console.error(err)
+        })
+}

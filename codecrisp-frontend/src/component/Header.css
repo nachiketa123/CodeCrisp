@@ -23,7 +23,7 @@
     font-weight: 600;
     justify-content: center;
     min-height: 52px;
-    min-width: 70px;
+    min-width: 64px;
     position: relative;
     text-decoration: none;
     color: white;
@@ -108,9 +108,7 @@
 .searchBar-input{
     flex-grow: 2;
     background-color: white;
-    border: none;
-    border-radius: 0.5em;
-    border-color: 5px solid rgb(27,115,47);
+    border: 1px solid white;
 }
 
 .searchBar-input:focus {
@@ -251,11 +249,25 @@
     border: none!important;
     line-height: 1.5;
 }
+
+.logout-btn{
+    background: transparent;
+    fill: white !important;
+    stroke: aliceblue;
+}
 /* .navbar-nav .nav-item:nth-child(1) .nav-link:hover{
     
 } */
 
-@media screen and (max-width: 1200px) {
+@media screen and (width <= 1370px){
+    .search {
+        flex: 0 0 27%;
+        background-color: transparent;
+    }
+
+}
+
+@media screen and (width< 1200px) {
     .nav-link {
         font-size: 18px;
         background-color:white;
@@ -270,6 +282,15 @@
     .logout{
         border: none;
         line-height: 1.5;
+    }
+    .logout-btn{
+        background: transparent;
+        fill: black !important;
+        stroke: aliceblue;
+    }
+    .search {
+        flex: 0 0 39%;
+        margin-right: auto;
     }
 }
 /* work the same as max-width: 992px */
@@ -410,7 +431,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    width:20%!important;
+    width:34%!important;
     /* background-color: red; */
     margin-right: auto;
     margin-left: 5px!important;

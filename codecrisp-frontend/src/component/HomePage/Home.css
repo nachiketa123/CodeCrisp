@@ -32,7 +32,8 @@
 @media screen and (max-width: 650px) {
     .background-homePage{
         flex-direction: column;
-        margin-top: 70px;
+        margin-top: 100px;
+        margin-bottom: 6em;
     }
     .homePage-left{
         flex-basis: 100%;

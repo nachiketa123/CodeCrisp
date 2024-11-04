@@ -22,6 +22,7 @@ import { styled } from "@mui/material/styles";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import ForumIcon from '@mui/icons-material/Forum';
 import { useNavigate } from 'react-router-dom';
+import ModalBackgroundComponent from './common/modal-background-component/ModalBackgroundComponent';
 function Header({
     logOutUser,
     auth: { user },
@@ -210,11 +211,7 @@ function Header({
               
 </div>
                         <Container >
-                            
-                             
-                        
-
-                                <div className="nav-item">
+                            <div className="nav-item">
                                     <Link className="nav-link" to="/jobs">Jobs</Link>
                                 </div>
 
@@ -239,15 +236,10 @@ function Header({
                              
                                 <div className="nav-item">
                                     <button onClick={logMeOut} type="button" className="logout" >
-                                   <PowerSettingsNewIcon color='black'/> 
+                                   <PowerSettingsNewIcon className='logout-btn' color='black'/> 
                                     </button>
                                </div>
                         </Container>
-                        
-                        
-                        
-                  
-
                 </nav >
             </div>
 
@@ -270,6 +262,8 @@ function Header({
                         />
                 </div>)
                 : ''}
+
+                {state.showNotification && (<ModalBackgroundComponent/>)}
         </div >
     )
 
@@ -313,7 +307,7 @@ const Container = styled("div")(({ theme }) => ({
     marginLeft:"auto",
     background:"#AD42FF",
     
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("1199")]: {
       backgroundColor: "white",
       bottom: "0",
       position: "fixed",
@@ -322,8 +316,6 @@ const Container = styled("div")(({ theme }) => ({
       height:"60px",
       justifyContent:"space-around"
     },
-
-  
   }));
 
 export default connect(mapStateToProps, { 

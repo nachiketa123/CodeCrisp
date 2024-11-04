@@ -113,7 +113,7 @@ function Home({signInWithGoogle, auth :{ isAuthenticated}}) {
       <div className="homePage-right">
         <img src={require("../../assets/images/homepageImage.png")} 
         style={{
-             height:"60vh"
+             height:"400px"
         }}
         />
       </div>

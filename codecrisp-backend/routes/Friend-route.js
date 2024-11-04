@@ -7,6 +7,7 @@ const User = require('../model/User')
 const UserNotification = require('../model/UserNotification')
 const mongoose = require('mongoose');
 const { NOTIFICATION, notificationEventEmitter } = require('../socketEvents/notification-event-sckt');
+const MessageSchema = require('../model/Messages');
 
 const createEntryWithZeroFriendOnUserSignup = (user) =>{
     return new Promise((resolve,reject)=>{
@@ -21,6 +22,25 @@ const createEntryWithZeroFriendOnUserSignup = (user) =>{
         })
     })
 }
+
+const getLastMessageWithFriend = (userId,friendId) => {
+    return new Promise(async (resolve,reject)=>{
+        try{
+            //extracting document
+            const data = await MessageSchema.findOne({user: mongoose.Types.ObjectId(userId)});
+
+            //fetch message array for specific friend
+            const {messages} = data.friend_list.find(friend=>friend.user.toString() === friendId.user.toString())
+
+            //return last message
+            resolve(messages.at(-1).text);
+
+        }catch(err){
+            reject(err)
+        }
+    })
+}
+
 const deleteFriendRequestNotification = (sender,reciver)=>{
     return new Promise((resolve,reject)=>{
         UserNotification.findOne({user: mongoose.Types.ObjectId(reciver)})
@@ -344,7 +364,8 @@ router.get('/get-friend-list/:user_id',passport.authenticate('jwt',{session: fal
                 const friendDetails = []
                 for(let i=0; i<friend_list.length; ++i){
                     try{
-                        const userDetails = await getFriendDetails(friend_list[i])
+                        let userDetails = await getFriendDetails(friend_list[i])
+                        userDetails = {...userDetails, "lastMessage":await getLastMessageWithFriend(user_id,friend_list[i])}
                         friendDetails.push(userDetails)
                     }catch(err){
                         error.dberror = 'DB Error '+err

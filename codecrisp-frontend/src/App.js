@@ -21,6 +21,7 @@ import ChangePasswordComponent from './component/setting-component/ChangePasswor
 import Postopen from './component/post-component/Postopen';
 import socketIO from 'socket.io-client';
 import Chat from './component/chat-box-component/Chat';
+import DeleteAccount from './component/setting-component/DeleteAccount.js';
 
 
 
@@ -61,6 +62,7 @@ function App() {
             <Route path='/friends/*' element={<PrivateRoutes header={true} component={FriendComponent} />} />
             <Route path='/settings' element={<PrivateRoutes header={true} component={SettingsComponent} />} />
             <Route path='/settings/change-password' element={<PrivateRoutes header={true} component={ChangePasswordComponent} />} />
+            <Route path='/settings/delete-account' element={<PrivateRoutes header={true} component={DeleteAccount} />} />
             <Route path='/post/*' element={<PrivateRoutes header={true} component={Postopen} />}  />
             <Route path='/chat/*' element={<PrivateRoutes  
           component={Chat}

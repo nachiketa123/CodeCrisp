@@ -1,0 +1,42 @@
+.delete-account .modal.show{
+    display: block;
+    background: #FFFFFF;
+}
+
+.delete-account .modal-title{
+    font-size: 30px;
+}
+
+.delete-account .modal-dialog{
+    width: 85%;
+    max-width: 800px;
+}
+
+/* Till screen width size 576px below css is applied*/
+@media screen and (max-width: 768px) {
+    .delete-account .input-group{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .delete-account .input-group .form-control{
+        width: 100%;
+    }
+
+    .delete-account .input-group .input-group-text{
+        width: 38px;
+        align-self: center;
+        margin: 10px 0 10px 0;
+    }
+
+    .delete-account .modal-title{
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 576px) {
+    .delete-account .modal-dialog{
+        margin: 2.5rem;
+    }
+}

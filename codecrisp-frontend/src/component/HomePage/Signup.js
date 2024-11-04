@@ -58,7 +58,7 @@ function Signup(props) {
             <div className='back-down row justify-content-md-center'>
                 <div className='login-box-outer  col col-sm-12 col-md-8 col-lg-6'>
 
-                    <h1>Signup</h1>
+                    <h1 style={{color: "rgb(173, 66, 255)",fontSize: "25px"}}>Registration Form</h1>
                     <div className='login-box'>
                         <form>
 

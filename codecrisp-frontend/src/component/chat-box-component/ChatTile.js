@@ -28,7 +28,7 @@ function ChatTile(props) {
                         <h6 className="chat-tile-username">4:30 PM</h6>
                     </div>
                     <div className='chat-tile-right-lower'>
-                        <p className="chat-tile-lm">Hello</p>
+                        <p className="chat-tile-lm">{props.lastMessage.substring(0,20)+"..."}</p>
                         <p className="chat-tile-lm">*</p>
                     </div>
 

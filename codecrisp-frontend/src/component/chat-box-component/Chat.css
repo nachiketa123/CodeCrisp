@@ -139,3 +139,30 @@ padding: 10px;
 .message__chats{
 padding: 10px;
 }
+
+@media screen and (max-width: 576px) {
+  .chat-bar-header{
+    font-size: 30px;
+  }
+
+  .chat-tile{
+    height: 75px;
+    width: 50px;
+  }
+  .chat-bar-avatar{
+    height: 50px;
+    width: 41px;
+  }
+
+  .chat-bar-name{
+    font-size: 10px;
+  }
+  .message{
+    padding: 8px;
+    width: 70%;
+  }
+  .sendBtn{
+    margin-left: 15px;
+    font-size: 15px;
+  }
+}

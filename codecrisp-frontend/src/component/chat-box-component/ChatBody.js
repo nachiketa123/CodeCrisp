@@ -46,8 +46,8 @@ const ChatBody = ({
  
     <div className="message__container">
   <ReactScrollableFeed>
-    { allmessages.map( e => (
-    <div className="message__chats">
+    { allmessages.map((e,i) => (
+    <div key={i} className="message__chats">
 
      { e.recived ? <></>:<>
       <p className="sender__name">{user_name}</p>

@@ -3,6 +3,7 @@ import ChatTile from './ChatTile'
 import './ChatBox.css';
 import {connect} from 'react-redux';
 import { getMyFriendList } from '../../Action/FriendAction';
+import isEmpty from '../../utility/is-empty';
 
 function ChatBox({authReducer , friendReducer , getMyFriendList}) {
   
@@ -10,9 +11,8 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
     if(authReducer.user){
       getMyFriendList(authReducer.user.id);
     }
-  } ,[authReducer.user] 
-    
-  )
+  } ,[authReducer.user])
+
 
     return (
             <div className="container-chatbox">
@@ -28,6 +28,7 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
                          name = {e.name}
                          avatar = {e.avatar}
                          id = {e.id}
+                         lastMessage = {e.lastMessage}
                        />
                    )
                 ) 

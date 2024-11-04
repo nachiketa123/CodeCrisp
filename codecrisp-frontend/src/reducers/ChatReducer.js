@@ -11,7 +11,6 @@ export const chatReducer = (state  =  initialState , action) =>{
            ...state , allMessages:[...state.allMessages, action.payload] , newMessages:action.payload.text
          }
         case RECIEVE_MESSAGE:
-            console.log(action.payload)
             return {
                 ...state , allMessages:[...state.allMessages , action.payload] , newMessages:action.payload.text
               }

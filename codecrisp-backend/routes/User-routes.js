@@ -263,4 +263,33 @@ router.post('/change-password', passport.authenticate('jwt', { session: false })
     })
 })
 
+/*
+    @route:     /api/user/delete-account
+    @desc:      To delete an user account
+    @access:    Private
+*/
+
+router.delete('/delete-account',(req,res)=>{
+    const {email} = req.body;
+    User.findOne({email}).then(user=>{
+        const errors = {}
+        if(!user) {
+            errors.userNotFound = "User does not exists"
+            return res.status(404).json(errors)
+        }
+        //delete users posts -> also delete from cloudinary
+        //delete user profile
+        //delete user notification
+        //delete user friend list
+
+        //delete user itself
+        user.delete().then(()=>{
+            res.status(204).json({success:true})
+        }).catch(err=>{
+            res.status(403).json(err)
+        })
+
+    })
+})
+
 module.exports = router
