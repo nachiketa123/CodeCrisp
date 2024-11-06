@@ -68,10 +68,11 @@ const PostComponent = ({
         style={{ backgroundColor: "white" }}
       >
         <div className="user-dp-info">
-          {avatar?(<img
+          {avatar?(<div><img
                     className="dp-img"
                     src={avatar}
-                    alt="Profile Picture"/>)
+                    alt="Profile Picture"/>
+                    </div>)
                     :(<FaUserAlt style={{color:"black"}} size="50"  />)
           }
           <div className="user-info">

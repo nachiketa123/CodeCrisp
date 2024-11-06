@@ -26,11 +26,11 @@ function ChatTile(props) {
 
                     <div className='chat-tile-right-upper'>
                         <h5 className="chat-tile-username">{props.name}</h5>
-                        <h6 className="chat-tile-username">4:30 PM</h6>
+                        <h6 className="chat-tile-username">{ props.time}</h6>
                     </div>
                     <div className='chat-tile-right-lower'>
-                        <p className="chat-tile-lm">{ isEmpty(props.lastMessage.error) ? props.lastMessage.substring(0,20)+"..." : props.lastMessage.error}</p>
-                        <p className="chat-tile-lm">*</p>
+                        <p className="chat-tile-lm">{ !isEmpty(props.lastMessage) ? props.lastMessage.substring(0,20)+"..." : ''}</p>
+                        {/* <p className="chat-tile-lm">*</p> */}
                     </div>
 
                 </div>

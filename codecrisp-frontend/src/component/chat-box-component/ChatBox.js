@@ -4,6 +4,7 @@ import './ChatBox.css';
 import {connect} from 'react-redux';
 import { getMyFriendList } from '../../Action/FriendAction';
 import isEmpty from '../../utility/is-empty';
+import { timeSince } from '../../utility/dateFormat';
 
 function ChatBox({authReducer , friendReducer , getMyFriendList}) {
   
@@ -28,7 +29,8 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
                          name = {e.name}
                          avatar = {e.avatar}
                          id = {e.id}
-                         lastMessage = {e.lastMessage}
+                         lastMessage = {e.lastMessage.text}
+                         time = {!isEmpty(e.lastMessage.dt_time)?timeSince(e.lastMessage.dt_time,true):''}
                        />
                    )
                 ) 

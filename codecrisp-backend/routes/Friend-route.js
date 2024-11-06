@@ -23,22 +23,22 @@ const createEntryWithZeroFriendOnUserSignup = (user) =>{
     })
 }
 
-const getLastMessageWithFriend = (userId,friendId) => {
+const getLastMessageWithFriend = (messageSchema,friendId) => {
     return new Promise(async (resolve,reject)=>{
         try{
             //extracting document
-            const data = await MessageSchema.findOne({user: mongoose.Types.ObjectId(userId)});
-
-            if(isEmpty(data)){
-                resolve({error:"No recent messages"});
+            if(isEmpty(messageSchema)){
+                resolve({error:"No recent messages", dt_time:''});
                 return;
             }
             //fetch message array for specific friend
-            const {messages} = data.friend_list.find(friend=>friend.user.toString() === friendId.user.toString())
-
+            const friend = messageSchema.friend_list.filter(friend=>friend.user.toString() === friendId.toString())
             //return last message
-            resolve(messages.at(-1).text);
-
+            if(isEmpty(friend))
+                resolve({error: '', dt_time:''})
+            else{
+                resolve(friend[0].messages.at(-1))
+            }
         }catch(err){
             reject(err)
         }
@@ -364,10 +364,16 @@ router.get('/get-friend-list/:user_id',passport.authenticate('jwt',{session: fal
             else{
                 const friend_list = document.friend_list;
                 const friendDetails = []
+
+                //To get last message of every friend
+                //getMessageSchema for current user
+                const messageSchema = await MessageSchema.findOne({user: mongoose.Types.ObjectId(user_id)})
                 for(let i=0; i<friend_list.length; ++i){
                     try{
-                        let userDetails = await getFriendDetails(friend_list[i])
-                        userDetails = {...userDetails, "lastMessage":await getLastMessageWithFriend(user_id,friend_list[i])}
+                        let userDetails = await getFriendDetails(friend_list[i]) 
+                        //adding last message to the friendDetails
+                        const lastMessage = await getLastMessageWithFriend(messageSchema,friend_list[i].user);
+                        userDetails = {...userDetails, "lastMessage":lastMessage}
                         friendDetails.push(userDetails)
                     }catch(err){
                         error.dberror = 'DB Error '+err
