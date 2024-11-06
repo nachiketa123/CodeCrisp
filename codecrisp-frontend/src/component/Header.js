@@ -12,7 +12,8 @@ import { getNotificationFromDB,
         removeNotificationFromSocket, 
         getNotificationFromDBAndPush, 
         getCountOfUnseenNotification, 
-        resetNotificationData } from '../Action/NotificationAction';
+        resetNotificationData,
+        checkIfNotificationsExist } from '../Action/NotificationAction';
 import { addCommentRealTimeOnNotification } from '../Action/PostAction';
 import PropTypes from 'prop-types';
 import ListGroupComponent from './common/ListGroupComponent';
@@ -28,7 +29,7 @@ function Header({
     auth: { user },
     search,
     searchResult,
-    notif: { notification, moreNotificationAvailable, page, loading, number_of_unseen_notif },
+    notif: { notification, moreNotificationAvailable, page, loading, number_of_unseen_notif, totalNotification },
     friendReducer: {isFriendWithUser},
     socketReducer: { socket },
     getNotificationFromSocket,
@@ -40,7 +41,8 @@ function Header({
     rejectFriendRequest,
     getCountOfUnseenNotification,
     resetNotificationData,
-    checkIfFriendWithUser
+    checkIfFriendWithUser,
+    checkIfNotificationsExist
  }) {
 
     const [state, setState] = useState({ searchtext: "", showNotification: false })
@@ -146,6 +148,7 @@ function Header({
         getCountOfUnseenNotification(user.id)
         if(!state.showNotification){
             resetNotificationData()
+            checkIfNotificationsExist(user.id)
         }
     }
     const navigate = useNavigate();
@@ -259,6 +262,7 @@ function Header({
                         pageNo = {page}
                         loading = {loading}
                         isFriendWithUser = {isFriendWithUser}
+                        totalNotification = {totalNotification}
                         />
                 </div>)
                 : ''}
@@ -286,6 +290,7 @@ Header.propTypes = {
     getCountOfUnseenNotification: PropTypes.func.isRequired,
     resetNotificationData: PropTypes.func.isRequired,
     checkIfFriendWithUser: PropTypes.func.isRequired,
+    checkIfNotificationsExist: PropTypes.func.isRequired,
 
 }
 
@@ -330,5 +335,6 @@ export default connect(mapStateToProps, {
                                         rejectFriendRequest,
                                         getCountOfUnseenNotification,
                                         resetNotificationData,
-                                        checkIfFriendWithUser
+                                        checkIfFriendWithUser,
+                                        checkIfNotificationsExist
                                     })(Header)

@@ -3,7 +3,8 @@ const passport = require('passport');
 const router = express.Router();
 const UserNotification = require('../model/UserNotification')
 const isEmpty = require('../utility/is-empty')
-const {compareDateDesc} = require('../utility/custom-sort-backend')
+const {compareDateDesc} = require('../utility/custom-sort-backend');
+const { default: mongoose } = require('mongoose');
 
 //Utility function for creating notification with empty array [] on user signup to avoid runtime errors
 const createZeroNotificationEntryOnUserSignup = (user)=>{
@@ -132,5 +133,24 @@ router.get('/new-notif/:user_id',passport.authenticate('jwt',{session:false}),(r
         return res.status(403).json(error)
     })
 }) 
+
+/*
+    @route:     /api/notification/check-if-notification-empty
+    @desc:      To check if there are notification for the current user or not
+    @access:    Private
+*/
+
+router.get('/check-if-notification-empty/:user_id',(req,res)=>{
+    const userId = req.params.user_id
+    UserNotification.findOne({user: mongoose.Types.ObjectId(userId)})
+    .then(data=>{
+        if(isEmpty(data) || isEmpty(data.notification)){
+            return res.status(404).json({totalNotification: 0})
+        }
+        return res.status(200).json({totalNotification: data.notification.length});
+    }).catch(err=>{
+        res.status(403).json(err);
+    })
+})
 
 module.exports = {router,createZeroNotificationEntryOnUserSignup};

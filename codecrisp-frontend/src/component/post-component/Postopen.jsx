@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { postData } from "../../Action/PostAction";
 import PropTypes from "prop-types";
-import { Grid } from "@mui/material";
 import "./Postopen.css";
-import { margin } from "@mui/system";
+
 function Postopen({ postRed, postData, authRed }) {
   
   
@@ -24,7 +23,7 @@ function Postopen({ postRed, postData, authRed }) {
       className='comment-openbox'
     >
         <div>
-          <img src={postRed.currentPost.imageUrls[0]} 
+          <img src={postRed.currentPost?.imageUrls[0]} 
              style={{
                 height:"50vh",
                 width:"95%"

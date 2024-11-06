@@ -29,6 +29,10 @@ const getLastMessageWithFriend = (userId,friendId) => {
             //extracting document
             const data = await MessageSchema.findOne({user: mongoose.Types.ObjectId(userId)});
 
+            if(isEmpty(data)){
+                resolve({error:"No recent messages"});
+                return;
+            }
             //fetch message array for specific friend
             const {messages} = data.friend_list.find(friend=>friend.user.toString() === friendId.user.toString())
 
@@ -301,8 +305,7 @@ router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: fa
                                 .filter(notif => {
 
                                     return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                    && notif.source.user.toString() === user_id
-                                    && notif.seen === false}).length === 0? -1 : 0
+                                    && notif.source.user.toString() === user_id}).length === 0? -1 : 0
                             // console.log('checked if I sent the request result', isFriend)
                         }
                         if(isFriend === 0)
@@ -324,8 +327,7 @@ router.get('/check-if-friend-with-user',passport.authenticate('jwt',{session: fa
                                     .filter(notif => {
 
                                         return notif.type === NOTIFICATION.EVENT_ON.FRIEND_REQUEST 
-                                        && notif.source.user.toString() === friend_id
-                                        && notif.seen === false}).length === 0? -1 : 2
+                                        && notif.source.user.toString() === friend_id}).length === 0? -1 : 2
                                         
                                         // console.log('checked if I have a friend request result', isFriend)
                                         return res.status(200).json(isFriend)

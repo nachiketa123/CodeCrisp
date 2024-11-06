@@ -33,6 +33,10 @@ function ChatBox({authReducer , friendReducer , getMyFriendList}) {
                    )
                 ) 
                 }
+                {authReducer.user 
+                && friendReducer.friend_list 
+                && friendReducer.friend_list.length === 0
+                && <span className='text-group-input'>No recent chats</span>}
             </div>
     )
 }

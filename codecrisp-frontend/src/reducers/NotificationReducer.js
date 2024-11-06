@@ -6,6 +6,7 @@ import { POST_LIKE_NOTIFICATION,
     GET_NOTIFICATION_FROM_DB_AND_PUSH,
     RESET_NOTIFICATION_DATA,
     GET_COUNT_UNSEEN_NOTIFICATIONS,
+    GET_IF_NOTIFICATION_EXISTS,
 } from "../Action/Types"
 import isEmpty from "../utility/is-empty";
 
@@ -15,6 +16,7 @@ const initialState = {
     moreNotificationAvailable: true,   
     page:0,
     loading: false,
+    totalNotification:0,
 }
 let newNotification = [];
 const notificationReducer = ( state = initialState, action) =>{
@@ -68,6 +70,11 @@ const notificationReducer = ( state = initialState, action) =>{
             return {
                 ...state,
                 notification:[]
+            }
+        case GET_IF_NOTIFICATION_EXISTS:
+            return {
+                ...state,
+                totalNotification: action.payload.totalNotification
             }
         default:
             return state

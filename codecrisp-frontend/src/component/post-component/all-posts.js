@@ -80,7 +80,6 @@ const AllPosts = ({
   };
 
   const handleDeletePost = (event, id) => {
-    console.log("deleting ", id);
     deletePost(id);
   };
 

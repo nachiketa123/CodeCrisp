@@ -168,11 +168,11 @@ const notificationEventHandler = (socket,io,onlineUsers) =>{
             ,{userId:newData.user,postId: newData.notification.at(0).action_item_id}
             , newData.notification.at(0).type);
 
-
+        const notifSendData = {...newData,notification:[{...newData.notification[0],type:'post_unlike'}]}
         if(result.found){
                 try{
                     if(reciever)
-                        io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_POST_UNLIKE_NOTIFICATION,result.data)
+                        io.to(reciever.socket_id).emit(NOTIFICATION.EVENT_EMIT.GET_POST_UNLIKE_NOTIFICATION,notifSendData)
                 }catch(err){
                     console.error('error in unlike notification event', err)
                 }

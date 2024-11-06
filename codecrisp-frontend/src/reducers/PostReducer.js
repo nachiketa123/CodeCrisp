@@ -11,7 +11,7 @@ const initialState = {
 }
 
 const PostReducer = (state = initialState, action) => {
-    let postId, commentId, newComment,newAllUserPosts, postIndex, newCommentArr
+    let postId, commentId, newComment,newAllUserPosts, postIndex, newCommentArr,index
 
     switch (action.type) {
         case USER_ADDED_NEW_POST:
@@ -35,6 +35,15 @@ const PostReducer = (state = initialState, action) => {
                 loading: true
             }
         case LIKE_POST:
+            index = state.allUserPosts.findIndex(post => post._id === action.payload.post_id);
+            if(isEmpty(state.allUserPosts[index].likes))
+                state.allUserPosts[index].likes = []
+            
+            let likeIndex = state.allUserPosts[index].likes.findIndex(user => user.user === action.payload.user_id)
+            if(likeIndex === -1)
+                state.allUserPosts[index].likes.push({user:action.payload.user_id});
+            else
+                state.allUserPosts[index].likes.splice(likeIndex,1);
             return {
                 ...state,
 
@@ -48,11 +57,9 @@ const PostReducer = (state = initialState, action) => {
 
         case ADD_COMMENT:
 
-            const index = state.allUserPosts.findIndex(post => post._id === action.payload.postId);
-            
+            index = state.allUserPosts.findIndex(post => post._id === action.payload.postId);
             if(!state.allUserPosts[index].comments)
                 state.allUserPosts[index].comments = []
-
             state.allUserPosts[index].comments.push(action.payload.newComment);
             return {
                 ...state

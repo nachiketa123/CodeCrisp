@@ -62,10 +62,9 @@ export const deletePost = (id) => (dispatch) => {
     })
 }
 export const addLike = (userData) => (dispatch) => {
-
     axios.post('/api/post/likePost', userData).then(
         res => {
-            dispatch({ type: LIKE_POST, payload: res.data })
+            dispatch({ type: LIKE_POST, payload: userData })
         }
 
     )

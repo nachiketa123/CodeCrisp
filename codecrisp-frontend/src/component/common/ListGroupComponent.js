@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ListGroupComponent.css'
 import getContentFromNotificationType from '../../utility/getContentFromNotificationType';
 import { compareDateDesc } from '../../utility/custom-sort';
@@ -7,6 +7,8 @@ import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import NOTIFICATION from '../../Notification_Config/notification-config';
 import InfiniteScrollableComponent from './infinite-scrollable-component/InfiniteScrollableComponent';
 import getClassNames from '../../utility/getClassNames';
+import { MdOutlineTextSnippet } from "react-icons/md";
+
 
 const ListGroupComponent = ({ 
     items, 
@@ -17,10 +19,25 @@ const ListGroupComponent = ({
     moreDataAvailable,
     pageNo,
     loading,
-    isFriendWithUser,
+    totalNotification,
 }) => {
- 
+
+    const [showFriendRequestActionIcons,setShowFriendRequestActionIcons] = useState(true);
       const renderHTML = (item) => {
+        const handleAcceptFriendRequest = () => {
+            setShowFriendRequestActionIcons(false);
+            acceptFriendRequest({
+                sender_user_id: user,
+                recipient_user_id: item.source.user
+            })
+        }
+        const handleRejectFriendRequest = () => {
+            setShowFriendRequestActionIcons(false);
+            rejectFriendRequest({
+                sender_user_id: user,
+                recipient_user_id: item.source.user
+            })
+        }
         return (
             <div className="cs-list-group">
                 <div className="cs-list-item">
@@ -35,23 +52,20 @@ const ListGroupComponent = ({
                 </div>
                 {item.type !== NOTIFICATION.EVENT_EMIT.FRIEND_REQUEST
                     ?(<div className="cs-list-item">
-                        <img className="action-item-img" src={item.action_item_img[0]} alt=""/>
+                        {item.action_item_img[0]?<img className="action-item-img" src={item.action_item_img[0]} alt=""/>
+                        :<MdOutlineTextSnippet className='action-item-img' title='Text post'/>}
                     </div>)
-                    : isFriendWithUser === 2? (<div className='friend-request-action-btns-div'>
-                        <AiFillCheckCircle onClick={e=>{ acceptFriendRequest({
-                                                                            sender_user_id: user,
-                                                                            recipient_user_id: item.source.user
-                                                                        })}} title='Accept' className='btns request-accept-btn'/>
-                        <AiFillCloseCircle onClick={e=>{rejectFriendRequest({
-                                                                            sender_user_id: user,
-                                                                            recipient_user_id: item.source.user
-                                                                        })}} title='Reject' className='btns request-reject-btn'/>
-                    </div>):''}
+                    : showFriendRequestActionIcons?  (<div className='friend-request-action-btns-div'>
+                        <AiFillCheckCircle onClick={handleAcceptFriendRequest} title='Accept' className='btns request-accept-btn'/>
+                        <AiFillCloseCircle onClick={handleRejectFriendRequest} title='Reject' className='btns request-reject-btn'/>
+                    </div>)
+                    :''}
             </div>)
       }
       return (
         <React.Fragment>
             <div className="list-group-container-div">
+            { totalNotification !== 0?(     
                 <InfiniteScrollableComponent
                     renderChild={renderHTML}
                     scrollOfComponent = 'notification_page_scroll'
@@ -61,8 +75,9 @@ const ListGroupComponent = ({
                     moreDataAvailable = {moreDataAvailable}
                     pageNo = {pageNo}
                     loading = {loading}
-                />
-                {}
+                />)
+                
+                :(<span className="no-new-notif">No new notifications</span>)} 
             </div>
         </React.Fragment>
       )
