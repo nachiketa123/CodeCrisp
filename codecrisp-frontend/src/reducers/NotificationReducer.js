@@ -7,6 +7,7 @@ import { POST_LIKE_NOTIFICATION,
     RESET_NOTIFICATION_DATA,
     GET_COUNT_UNSEEN_NOTIFICATIONS,
     GET_IF_NOTIFICATION_EXISTS,
+    RESET_ALL_POST_DATA,
 } from "../Action/Types"
 import isEmpty from "../utility/is-empty";
 

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
     GET_USER, GET_ERROR, LOGIN_SUCCESS, LOGOUT_USER
-    , GET_ALL_JOB, REMOVE_ALL_EVENTS_FROM_SOCKET
+    , GET_ALL_JOB, REMOVE_ALL_EVENTS_FROM_SOCKET,
+    RESET_ALL_POST_DATA
 } from './Types';
 
 import {auth , provider} from '../firebase'
@@ -113,6 +114,10 @@ export const logOutUser = () => (dispatch) => {
         type: LOGOUT_USER,
         payload: {}
     })
+    dispatch({
+        type:RESET_ALL_POST_DATA,
+        payload:{}
+    })
 }
 
 export const deleteAccount = (userEmail) => (dispatch) => {
@@ -130,10 +135,15 @@ export const deleteAccount = (userEmail) => (dispatch) => {
                     console.error(err)
                 })
             }else{
+                Promise.all([
                 dispatch({
                     type: LOGOUT_USER,
                     payload:{}
-                })
+                }),
+                dispatch({
+                    type: RESET_ALL_POST_DATA,
+                    payload: {}
+                })])
             }
         }).catch(err=>{
             console.error(err)

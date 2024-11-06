@@ -1,5 +1,6 @@
 import { DELETE_USER_POST, GET_ALL_USER_POST, SET_LOADING_ONN, USER_ADDED_NEW_POST, 
-LIKE_POST, ADD_COMMENT , POST_DATA, CONFIRM_EDIT_COMMENT, DELETE_POST_COMMENT } from "../Action/Types";
+LIKE_POST, ADD_COMMENT , POST_DATA, CONFIRM_EDIT_COMMENT, DELETE_POST_COMMENT, 
+RESET_ALL_POST_DATA} from "../Action/Types";
 import isEmpty from "../utility/is-empty";
 
 const initialState = {
@@ -109,6 +110,15 @@ const PostReducer = (state = initialState, action) => {
             return{
               ...state,
               allUserPosts: newAllUserPosts
+            }
+        case RESET_ALL_POST_DATA:
+            return{
+                ...state,
+                allUserPosts: [],
+                newPost: {},
+                loading: false,
+                morePostAvailable:true,
+                page:0
             }
         default:
             return state;
