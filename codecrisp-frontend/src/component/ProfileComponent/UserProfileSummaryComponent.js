@@ -23,25 +23,44 @@ const UserProfileSummaryComponent = (
         handleCancelFriendRequest,
         handleRejectFriendRequest,
     }) => {
+    
+    const currentUserHTML = (
+        <>
+        {loadingForProfilePictureChange
+            ?(<div style={{ height: '-webkit-fill-available', borderRadius: '1em' }}>
+                <FaUpload className='profile-pic-change-loading-icon' color='white' size={50}/> 
+              </div>)
+            
+            : profileImgUrl 
+                ?(<div className='user-profile-img-preview-div'>
+                    <img className='user-profile-img' src={profileImgUrl} alt="User Profile preview" />
+                    <button onClick={handleSaveProfilePic} className='onpreview-save-btn btn btn-primary'>Save</button>
+                    <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
+                </div>)
+                : (!isEmpty(imgUrl))   
+                    ? (<img className='user-profile-img' src={imgUrl} alt="User Profile Pic" />) 
+                    : (<FaUserAlt size="100" className='user-profile-img-default'/>)
+            }
+        </>
+    )
 
-    // console.log(loadingForProfilePictureChange,profileImgUrl,user,isCurrentUser)
+    //If Not current user html
+    const friendUser = (<>
+        {
+         !isEmpty(imgUrl)
+            ? (<img className='user-profile-img' src={imgUrl} alt="User Profile Pic" />) 
+            : (<FaUserAlt size="100" className='user-profile-img-default'/>)
+        }
+        </>
+        )
     return ( 
                 <div className="user-profile-div">
+                    {/* if current user then show profile of current user */}
+                    {isCurrentUser && currentUserHTML}
+                    {/* if not current user then show profile of friend user */}
+                    {!isCurrentUser && friendUser}
 
-                    {loadingForProfilePictureChange
-                    ?(<div style={{ height: '-webkit-fill-available', borderRadius: '1em' }}><FaUpload className='profile-pic-change-loading-icon' color='white' size={50}> </FaUpload></div>)
-                    
-                    : profileImgUrl 
-                        ?(<div className='user-profile-img-preview-div'>
-                            <img className='user-profile-img' src={profileImgUrl} alt="User Profile preview" />
-                            <button onClick={handleSaveProfilePic} className='onpreview-save-btn btn btn-primary'>Save</button>
-                            <button onClick={handleCancelProfilePic} className='onpreview-cancel-btn btn btn-danger'>Cancel</button>
-                        </div>)
-                        : (!isEmpty(imgUrl))   
-                            ? (<img className='user-profile-img' src={imgUrl} alt="User Profile Pic" />) 
-                            : (<FaUserAlt size="100" className='user-profile-img-default'/>)
-                    }
-                    
+
                     {isCurrentUser?
                         (<React.Fragment>
                             

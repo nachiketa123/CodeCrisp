@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Chat.css'
 import { useNavigate,useLocation } from 'react-router-dom';
 import { useEffect} from 'react';
 import isEmpty from '../../utility/is-empty'
 import ReactScrollableFeed from 'react-scrollable-feed'
 import NOTIFICATION from '../../Notification_Config/notification-config';
+import InfiniteScrollableComponent from '../common/infinite-scrollable-component/InfiniteScrollableComponent';
+import ReverseInfiniteScrollableComponent from '../common/infinite-scrollable-component/ReverseInfiniteScrollableComponent';
 
 const ChatBody = ({
   reciveMessage , 
   allmessages ,
+  loading,
+  moreDataAvailable,
   socket,
   loadChatOfUser,
   setCurrentFriendFromURLForChat,
@@ -19,14 +23,10 @@ const ChatBody = ({
 }) => {
 
   const location = useLocation()
-
+  const [friend_id,setFriend_id] = useState('');
   let ignore = false
   useEffect(()=>{
-    const friend_id = location.pathname.toString().split("/").at(-1);
-    if(!ignore)
-      loadChatOfUser({user_id,friend_id})
-      setCurrentFriendFromURLForChat(friend_id)
-
+    setFriend_id(location.pathname.toString().split("/").at(-1));
     return ()=>{
       ignore = true
     }
@@ -40,13 +40,20 @@ const ChatBody = ({
     }
   },[socket])
 
+  useEffect(()=>{
+    if(!isEmpty(friend_id)){
+      // loadChatOfUser({user_id,friend_id,page:0})
+      setCurrentFriendFromURLForChat(friend_id)
+    }
+  },[friend_id])
+
   return (
    
     <div>
  
     <div className="message__container">
-  <ReactScrollableFeed>
-    { allmessages.map((e,i) => (
+  {/* <ReactScrollableFeed>
+    { allmessages.messages.map((e,i) => (
     <div key={i} className="message__chats">
 
      { e.recived ? <></>:<>
@@ -73,7 +80,49 @@ const ChatBody = ({
     </div> 
           )) 
     }
-    </ReactScrollableFeed>
+    </ReactScrollableFeed> */}
+
+{/* Implementing infinite scrolling */}
+{/* <ReactScrollableFeed> */}
+    {!isEmpty(friend_id) && <ReverseInfiniteScrollableComponent
+      scrollOfComponent={"user_chat_scroll"}
+     dataArray={allmessages.messages}
+     dataLoader={loadChatOfUser}
+     identifier={{user_id,friend_id}}
+     key={allmessages.messages._id}
+     pageNo={allmessages.page}
+     moreDataAvailable={moreDataAvailable}
+     reverseScroll={true}
+     loading={loading}
+     renderChild={e=> (
+            <div className="message__chats">
+
+            { e.recived ? <></>:<>
+              <p className="sender__name">{user_name}</p>
+
+              <div className="message__sender">
+                <p>{e.text}</p>
+              </div>
+              </>}
+            
+                { e.recived ?
+                <>
+                <p
+                style={{marg:"0px"}}
+                >{current_friend.name}</p>
+
+                <div className="message__recipient">
+                  <p
+                  style={{margin:"0px"}}
+                  >{e.text}</p>
+                </div>
+                </>:<></>
+                }
+            </div> 
+          )}
+          />}
+        
+    {/* </ReactScrollableFeed> */}
  </div>
         {/*This shows messages received by you*/}
 

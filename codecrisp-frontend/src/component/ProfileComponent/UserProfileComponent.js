@@ -9,8 +9,7 @@ import {sendFriendRequest,
     rejectFriendRequest } from '../../Action/FriendAction';
 import extractUserIdFromURL from '../../utility/UrlidExtract';
 import './UserProfileComponent.css'
-import { MdModeEditOutline } from 'react-icons/md';
-import { FaUserAlt,FaUpload } from 'react-icons/fa';
+import { FaUpload } from 'react-icons/fa';
 import { changeMyProfilePicture, setProfilePictureLoadingOff, getProfileForUser } from '../../Action/ProfileAction';
 import isEmpty from '../../utility/is-empty';
 import { useLocation } from 'react-router-dom';

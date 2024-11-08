@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers/RootReducer';
 import jwt_decode from 'jwt-decode';
-import { LOGOUT_USER, SET_USER } from './Action/Types';
+import { LOGOUT_USER, RESET_ALL_POST_DATA, SET_USER } from './Action/Types';
 import setAuthHeader from './utility/set-auth-header';
 
 const initial = {};
@@ -35,6 +35,10 @@ myStore.subscribe(() => {
         if (user.exp * 1000 < new Date().getTime()) {
             myStore.dispatch({
                 type: LOGOUT_USER,
+                payload: {}
+            })
+            myStore.dispatch({
+                type: RESET_ALL_POST_DATA,
                 payload: {}
             })
         }

@@ -16,10 +16,24 @@ router.get('/get-profile/:user_id', passport.authenticate('jwt', { session: fals
         .then(profile => {
             if (!profile) {
                 // error.profileNotFound = 'User does not have a profile'
-                return res.status(200).json();
+                //for now we are sending simple profile containing only few things like name,phoneNo,email and avatar
+                // return res.status(200).json({
+                //     name: user.name,
+                //     phoneNo: user.phoneno,
+                //     email: user.email,
+                //     avatar: user.avatar
+                // });
             }
             User.findById(user_id)
                 .then(user => {
+                    if(!profile){
+                        return res.status(200).json({
+                            name: user.name,
+                            phoneNo: user.phoneno,
+                            email: user.email,
+                            avatar: user.avatar
+                        });
+                    }
                     const newProfileWithAvatar = {
                         ...profile._doc,
                         name: user.name,

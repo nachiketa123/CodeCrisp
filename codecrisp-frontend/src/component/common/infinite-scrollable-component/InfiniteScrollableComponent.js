@@ -44,7 +44,6 @@ const InfiniteScrollableComponent = ({
     if (!ignore && (isEmpty(dataArray) || dataArray[dataArray.length-1].page !== page)) {
       dataLoader({ ...identifier, page: page });
     }
-
     window.addEventListener('scroll',handleScroll)
 
     return () => {
@@ -52,6 +51,10 @@ const InfiniteScrollableComponent = ({
       window.removeEventListener('scroll',handleScroll)
     };
   }, [page]);
+
+  useEffect(()=>{
+    setPage(pageNo)
+  },[pageNo])
 
   const observer = useRef();
 

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { SEND_MESSAGE , RECIEVE_MESSAGE,GET_ALL_MESSAGES_OF_FRIEND } from "./Types"
+import { SEND_MESSAGE , RECIEVE_MESSAGE,GET_ALL_MESSAGES_OF_FRIEND, RESET_CHAT_MESSAGES, SET_CHAT_MESSAGES_LOADING } from "./Types"
 
 export const sendMessage = (data) => (dispatch) =>{
    
@@ -31,11 +31,28 @@ export const reciveMessage = (data) => (dispatch) =>{
 }
 
 export const loadChatOfUser = (data) => (dispatch) =>{
-   axios.get(`/api/chat/${data.user_id}`,{params:{friend_id:data.friend_id}})
+   dispatch({
+      type: SET_CHAT_MESSAGES_LOADING,
+      payload: true
+   })
+   axios.get(`/api/chat/${data.user_id}`,{params:{friend_id:data.friend_id,page:data.page}})
       .then(res=>{
          dispatch({
             type: GET_ALL_MESSAGES_OF_FRIEND,
             payload: res.data
          })
+         dispatch({
+            type: SET_CHAT_MESSAGES_LOADING,
+            payload: false
+         })
+      }).catch(err=>{
+         console.log(err)
       })
+}
+
+export const resetChatMessages = () => (dispatch) =>{
+   dispatch({
+      type: RESET_CHAT_MESSAGES,
+      payload: {}
+   })
 }

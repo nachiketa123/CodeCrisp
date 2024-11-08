@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React  from "react";
 import PostComponent from "./post";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -102,7 +102,6 @@ const AllPosts = ({
      const post_data = await getPostData(id);
      const event_data = {
       user:post_data.user,
-      avatar:post_data.avatar?post_data.avatar:"",
       _id:post_data._id,
       imageUrls: post_data.imageUrls,
       type: NOTIFICATION.EVENT_EMIT.POST_COMMENT,

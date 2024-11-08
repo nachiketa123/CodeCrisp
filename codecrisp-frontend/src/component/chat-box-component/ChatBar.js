@@ -5,14 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const ChatBar = ({friends}) => {
+const ChatBar = ({friends,resetChatMessages}) => {
 
     const navigate = useNavigate();
     
    const handleBack = () =>{
+     resetChatMessages();
      navigate('/')
    }
    const handleUserClick = (id) =>{
+       resetChatMessages();
        navigate(`/chat/${id}`)
    }
 
@@ -41,7 +43,7 @@ const ChatBar = ({friends}) => {
     
               {friends.map(e => (
               
-              <div key={e.id}
+              <div onClick = {event => handleUserClick(e.id)} key={e.id}
               className='chat-tile'
               >
           
@@ -67,7 +69,6 @@ const ChatBar = ({friends}) => {
               
                  
                  <div
-                 onClick = {event => handleUserClick(e.id)}
                  className="chat-bar-name"
                  >
                  {e.name.split(" ")[0]}</div>

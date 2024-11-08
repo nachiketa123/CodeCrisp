@@ -5,6 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const {notificationEventEmitter, NOTIFICATION} = require('../socketEvents/notification-event-sckt')
 const isEmpty = require('../utility/is-empty');
+const { compareDateAsc, compareDateDesc } = require('../utility/custom-sort-backend');
 
 
 const createNewDocumenForMessageSchema = (user_id,friend_id,messageArr) =>{
@@ -90,7 +91,13 @@ const checkIfFriendExistInUser = (userObj, friend_id) =>{
       }
    })
 }
-router.get('/:user_id',passport.authenticate('jwt', { session: false }),(req,res) =>{
+
+/*    Deprecated API
+    @route:     /api/chat/:user_id
+    @desc:      To get all the chat of the user with user's friends
+    @access:    Private
+*/
+router.get('/my/:user_id',passport.authenticate('jwt', { session: false }),(req,res) =>{
     
      const {user_id} = req.params;  //  url
      const {friend_id} = req.query;  //  we will send it 
@@ -118,7 +125,11 @@ router.get('/:user_id',passport.authenticate('jwt', { session: false }),(req,res
     }
 })
 
-
+/*
+    @route:     /api/chat/send/:user_id
+    @desc:      To add message 
+    @access:    Private
+*/
 router.post('/send/:user_id',passport.authenticate('jwt', { session: false }),  async (req,res) =>{
      
    const {user_id} = req.params;  //  url
@@ -191,6 +202,88 @@ router.post('/send/:user_id',passport.authenticate('jwt', { session: false }),  
    }
    // return res.status(200).json({success: true,payload:userObj.data})
 })
-   
+
+
+/*
+    @route:     /api/chat/:user_id
+    @desc:      To get all the chat of the user with user's friends
+    @access:    Private
+*/
+router.get('/:user_id'
+      ,passport.authenticate('jwt', { session: false })
+      ,(req,res) =>{
+         const {user_id} = req.params;
+         let {friend_id,page} = req.query;
+         const limit = 3;
+
+         //convert page into int
+         page = parseInt(page)
+
+         if(!isEmpty(user_id) && !isEmpty(friend_id)){
+            MessageSchema.aggregate(
+               [
+                  {
+                    $match: {
+                      user:mongoose.Types.ObjectId(user_id)
+                    }
+                  },
+                  {
+                    $unwind: "$friend_list"
+                  },
+                  {
+                    $project: {
+                      "_id":0,
+                      "user_id":"$_id",
+                      "friend_id":"$friend_list.user",
+                      "messages":"$friend_list.messages"
+                    }
+                  },
+                  {
+                    $match: {
+                      "friend_id": mongoose.Types.ObjectId(friend_id)
+                    }
+                  },
+                  {
+                    $addFields: {
+                      messages: {
+                        $sortArray: {
+                          input: "$messages",
+                          sortBy: { dt_time: -1 }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    $addFields: {
+                      messages: {
+                        $slice: ["$messages",page*limit,3]
+                      }
+                    }
+                  },
+                  {
+                     $project:{
+                        messages:1,
+                        page:1,
+                     }
+                  }
+                ]
+            ).then(data=>{
+               
+               if(isEmpty(data) || isEmpty(data[0].messages))
+                  return res.status(200).json({page,messages:[]})
+               
+               //else
+               return res.status(200).json({
+                                             messages:data[0].messages.sort(compareDateAsc),
+                                             page
+                                       })
+            }).catch(err=>{
+               console.log('error in database',err)
+               res.status(403).json(err)
+            })
+         }else{
+            res.status(403).json("Invalid user_id, friend_id")
+         }
+      })
 
 module.exports = router

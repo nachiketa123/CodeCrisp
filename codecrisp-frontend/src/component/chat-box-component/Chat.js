@@ -5,7 +5,7 @@ import ChatFooter from './ChatFooter';
 import {connect} from 'react-redux'
 import { useEffect } from 'react';
 import isEmpty from '../../utility/is-empty'
-import { sendMessage , reciveMessage, loadChatOfUser } from '../../Action/ChatAction';
+import { sendMessage , reciveMessage, loadChatOfUser, resetChatMessages } from '../../Action/ChatAction';
 import { getMyFriendList, setCurrentFriendFromURLForChat } from '../../Action/FriendAction';
 import {useLocation} from 'react-router-dom'
 
@@ -19,6 +19,7 @@ const ChatPage = ({
   getMyFriendList,
   friendReducer:{ current_friend_for_chat,friend_list,},
   loadChatOfUser,
+  resetChatMessages,
   setCurrentFriendFromURLForChat,}) => {
   
   
@@ -44,6 +45,7 @@ const ChatPage = ({
   
       <ChatBar 
        friends = {friend_list}
+       resetChatMessages = {resetChatMessages}
       />
       
       </div>  
@@ -56,6 +58,8 @@ const ChatPage = ({
     <ChatBody 
         reciveMessage = {reciveMessage} 
         allmessages = {chatReducer?.allMessages}
+        loading = {chatReducer?.loading}
+        moreDataAvailable = {chatReducer?.moreDataAvailable}
         socket={socket}
         loadChatOfUser = {loadChatOfUser}
         setCurrentFriendFromURLForChat = {setCurrentFriendFromURLForChat}
@@ -63,6 +67,7 @@ const ChatPage = ({
         user_id = {user.id}
         user_name = {user.name}
         user_avatar ={user.avatar}
+
 
         /> 
         <ChatFooter socket={socket} 
@@ -92,5 +97,6 @@ export default connect(mapStateToProps , {sendMessage,
                                           reciveMessage,
                                           getMyFriendList,
                                           loadChatOfUser,
-                                          setCurrentFriendFromURLForChat
+                                          setCurrentFriendFromURLForChat,
+                                          resetChatMessages
                                         })(ChatPage);

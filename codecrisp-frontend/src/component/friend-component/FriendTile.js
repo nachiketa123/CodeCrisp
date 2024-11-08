@@ -3,18 +3,20 @@ import { FaUserAlt } from 'react-icons/fa'
 
 function FriendTile({
     avatar,
-    name
+    name,
+    friendId,
+    onFriendClick,
 }) {
     return (
-            <div class="card"
+            <div onClick={()=>onFriendClick(friendId)} className="card"
                 style={{ background: "white", border:'none', width:'100%' }}
             >
-                {avatar ?<img class="card-img-top" src={avatar} alt="Card image cap" />
+                {avatar ?<img className="card-img-top" src={avatar} alt="Card image cap" />
                         :<FaUserAlt size="100" className='user-profile-img-default'/>}
-                <div class="card-body p-0"
+                <div className="card-body p-0"
                     style={{ background: "transparent" }}
                 >
-                    <h5 class="card-title ml-2" style={{ background: "transparent" }}>{name}</h5>
+                    <h5 className="card-title ml-2" style={{ background: "transparent" }}>{name}</h5>
                 </div>
             </div>
     )
