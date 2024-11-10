@@ -61,55 +61,33 @@ function Header({
     useEffect(() => {
         if (!isEmpty(socket) && !ignore) {
             //user post like notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_POST_LIKE_NOTIFICATION, (data) => {
-                getNotificationFromSocket(data)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_LIKE_NOTIFICATION, handleSocketGetNotificationFromSocket)
             //user post unlike notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_POST_UNLIKE_NOTIFICATION, (data) => {
-                removeNotificationFromSocket(data)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_UNLIKE_NOTIFICATION, handleSocketRemoveNotificationFromSocket)
             //user post comment notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,(data)=>{
-                
-                getNotificationFromSocket(data)
-
-                //In order to add the comment on users post in real time
-                const commentData = {
-                    id: data.notification.at(0).action_item_id,
-                    data: { 
-                      user: data.notification.at(0).source.user,
-                      name: data.notification.at(0).source.name,
-                      text: data.new_comment,
-                      avatar: data.notification.at(0).source.avatar,
-                      date: new Date().toISOString()
-                    },
-                  };
-                  addCommentRealTimeOnNotification(commentData)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,handleSocketGetPostCommentNotification)
 
             //user friend request notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,(data)=>{
-                getNotificationFromSocket(data)
-                const user_data = {
-                    user_id:user.id,
-                    friend_id: data.notification[0].source.user
-                }
-                checkIfFriendWithUser(user_data)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,handleSocketGetNotificationFriendRequest)
 
             //on friend request cancel notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,()=>{
-                getNotificationFromDB(user.id)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,handleSocketGetNotificationFromDB)
 
             //on friend request reject notification
-            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,()=>{
-                getNotificationFromDB(user.id)
-            })
+            socket.on(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,handleSocketGetNotificationFromDB)
         }
 
         return () => {
             ignore = true
+            //cleanup
+            if(!isEmpty(socket)){
+                socket.off(NOTIFICATION.EVENT_ON.GET_POST_LIKE_NOTIFICATION,handleSocketGetNotificationFromSocket);
+                socket.off(NOTIFICATION.EVENT_ON.GET_POST_UNLIKE_NOTIFICATION, handleSocketRemoveNotificationFromSocket)
+                socket.off(NOTIFICATION.EVENT_ON.GET_POST_COMMENT_NOTIFICATION,handleSocketGetPostCommentNotification)
+                socket.off(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_NOTIFICATION,handleSocketGetNotificationFriendRequest)
+                socket.off(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_CANCEL_NOTIFICATION,handleSocketGetNotificationFromDB);
+                socket.off(NOTIFICATION.EVENT_ON.GET_FRIEND_REQUEST_REJECT_NOTIFICATION,handleSocketGetNotificationFromDB)
+            }
         }
 
     }, [socket])
@@ -118,6 +96,45 @@ function Header({
         searchResult(userFind);
 
     }, [state.searchtext])
+
+    const handleSocketRemoveNotificationFromSocket = (data) => {
+        removeNotificationFromSocket(data)
+    }
+
+    const handleSocketGetPostCommentNotification = (data)=>{
+                
+        getNotificationFromSocket(data)
+
+        //In order to add the comment on users post in real time
+        const commentData = {
+            id: data.notification.at(0).action_item_id,
+            data: { 
+              user: data.notification.at(0).source.user,
+              name: data.notification.at(0).source.name,
+              text: data.new_comment,
+              avatar: data.notification.at(0).source.avatar,
+              date: new Date().toISOString()
+            },
+          };
+          addCommentRealTimeOnNotification(commentData)
+    }
+
+    const handleSocketGetNotificationFriendRequest = (data)=>{
+        getNotificationFromSocket(data)
+        const user_data = {
+            user_id:user.id,
+            friend_id: data.notification[0].source.user
+        }
+        checkIfFriendWithUser(user_data)
+    }
+
+    const handleSocketGetNotificationFromDB = ()=>{
+        getNotificationFromDB(user.id)
+    }
+
+    const handleSocketGetNotificationFromSocket = (data) => {
+        getNotificationFromSocket(data)
+    }
 
     const onSearch = (e) => {
         setState({

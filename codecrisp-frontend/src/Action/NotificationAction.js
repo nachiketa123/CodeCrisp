@@ -4,7 +4,6 @@ import axios from "axios"
 //Based on different type of notification, dispatch action and change redux state
 export const dispatchStateChanger = (data,dispatch) => {
     const {user, notification} = data;
-    console.log('inside dispatchStateChanger')
     switch(notification[0].type){
         case 'post_like':
             // dispatch({

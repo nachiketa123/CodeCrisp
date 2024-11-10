@@ -8,6 +8,7 @@ import NOTIFICATION from '../../Notification_Config/notification-config';
 import InfiniteScrollableComponent from './infinite-scrollable-component/InfiniteScrollableComponent';
 import getClassNames from '../../utility/getClassNames';
 import { MdOutlineTextSnippet } from "react-icons/md";
+import {FaUserCircle} from "react-icons/fa";
 
 
 const ListGroupComponent = ({ 
@@ -41,7 +42,10 @@ const ListGroupComponent = ({
         return (
             <div className="cs-list-group">
                 <div className="cs-list-item">
-                    <img className="user-avatar-notification" src={item.source.avatar} alt=""/>
+                   {item.source.avatar?
+                        <img className="user-avatar-notification" src={item.source.avatar} alt=""/>
+                        :<FaUserCircle style={{color:"black"}} size="50"  />
+                    }
                 </div>
                 <div className="cs-list-item">
                     <div className={getClassNames({dc:'item-user-info',cc:'item-user-info-seen'},item.seen,true)}>{item.source.name}</div>

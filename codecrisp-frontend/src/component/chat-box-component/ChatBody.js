@@ -25,8 +25,11 @@ const ChatBody = ({
   const location = useLocation()
   const [friend_id,setFriend_id] = useState('');
   let ignore = false
+  let ignore1 = false
   useEffect(()=>{
-    setFriend_id(location.pathname.toString().split("/").at(-1));
+    if(!ignore){
+      setFriend_id(location.pathname.toString().split("/").at(-1));
+    }
     return ()=>{
       ignore = true
     }
@@ -34,18 +37,27 @@ const ChatBody = ({
    
   useEffect(() => {
     if(!isEmpty(socket)){
-        socket.on(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, (data) =>{
-          reciveMessage(data);
-        })
+        socket.on(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, handleRecieveMessage)
     }
+    // Cleanup to remove the event listener on unmount or socket change
+    return () => {
+      if(!isEmpty(socket))
+        socket.off(NOTIFICATION.EVENT_ON.GET_NEW_MESSAGE_REQUEST_NOTIFICATION, handleRecieveMessage);
+    };
   },[socket])
 
   useEffect(()=>{
-    if(!isEmpty(friend_id)){
-      // loadChatOfUser({user_id,friend_id,page:0})
+    if(!ignore && !isEmpty(friend_id)){
       setCurrentFriendFromURLForChat(friend_id)
     }
+    return ()=>{
+      ignore1 = true
+    }
   },[friend_id])
+
+  const handleRecieveMessage = (data) => {
+    reciveMessage(data);
+  }
 
   return (
    

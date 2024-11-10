@@ -2,7 +2,7 @@ import axios from "axios"
 import { SEND_MESSAGE , RECIEVE_MESSAGE,GET_ALL_MESSAGES_OF_FRIEND, RESET_CHAT_MESSAGES, SET_CHAT_MESSAGES_LOADING } from "./Types"
 
 export const sendMessage = (data) => (dispatch) =>{
-   
+   console.log('in send message')
    axios.post(`/api/chat/send/${data.user_id}`,{friend_id:data.friend_id,text:data.text})
       .then(res=>{
          if(res.data.success === true){
@@ -22,7 +22,7 @@ export const sendMessage = (data) => (dispatch) =>{
 
 
 export const reciveMessage = (data) => (dispatch) =>{
-       
+   console.log('in recieve Message')
     dispatch({
        type:RECIEVE_MESSAGE,
        payload:data

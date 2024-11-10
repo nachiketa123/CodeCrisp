@@ -56,11 +56,11 @@ const ReverseInfiniteScrollableComponent = ({
         containerRef.current.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [page]);
+  }, [page,identifier.friend_id]);
 
   useEffect(() => {
     setPage(pageNo);
-  }, [pageNo]);
+  }, [pageNo,identifier.friend_id]);
 
   const observer = useRef();
 
